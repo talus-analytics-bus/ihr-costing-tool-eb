@@ -4,6 +4,7 @@
   "description": "Prototype user interface for the IHR Costing Tool",
   "private": true,
   "dependencies": {
+    "material-ui": "^0.17.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
