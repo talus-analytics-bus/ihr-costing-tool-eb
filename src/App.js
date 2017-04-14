@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-import { List, ListItem } from 'material-ui/List';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+
+import { Sidebar } from './components/Sidebar';
 
 class App extends Component {
   render() {
@@ -17,10 +17,7 @@ class App extends Component {
                     </ToolbarGroup>
                 </Toolbar>
                 <div className="main">
-                    <List className="sidebar">
-                        <ListItem>Test</ListItem>
-                        <ListItem>Test2</ListItem>
-                    </List>
+                    <Sidebar />
                     <div className="content">Main Content</div>
                 </div>
             </div>
