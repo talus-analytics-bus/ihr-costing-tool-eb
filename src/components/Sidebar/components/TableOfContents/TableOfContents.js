@@ -11,9 +11,9 @@ const listItems = (items) => items.map((item) =>
 class ListGroup extends Component {
   render() {
     return (
-      <List>
-        <Subheader>{this.props.label}</Subheader>
-        {listItems(this.props.items)}
+      <List style={this.props.group.style}>
+        <Subheader>{this.props.group.label}</Subheader>
+        {listItems(this.props.group.items)}
       </List>
     );
   }
@@ -39,7 +39,7 @@ export class TableOfContents extends Component {
         {listWithDividers(this.props.contents).map((grouping) => {
           if (grouping.type === 'listGroup') {
             return (
-              <ListGroup label={grouping.data.label} items={grouping.data.items}/>
+              <ListGroup group={grouping.data} />
             )
           }
           return (

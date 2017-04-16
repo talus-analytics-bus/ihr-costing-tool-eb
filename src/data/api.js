@@ -1,6 +1,9 @@
 const tableOfContents = [
   {
     label: 'Prevent',
+    style: {
+      background: 'rgba(215, 231, 246, 1)',
+    },
     items: [
       {
         label: 'National Library System',
@@ -15,6 +18,9 @@ const tableOfContents = [
   },
   {
     label: 'Detect',
+    style: {
+      background: 'rgba(251, 223, 195, 1)',
+    },
     items: [
       {
         label: 'National Library System',
@@ -29,6 +35,9 @@ const tableOfContents = [
   },
   {
     label: 'Respond',
+    style: {
+      background: 'rgba(237, 234, 245, 1)',
+    },
     items: [
       {
         label: 'National Library System',
