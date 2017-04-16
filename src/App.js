@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 
-import './App.css';
+import styles from './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
 import { Api } from './data/api';
 import {Sidebar} from './components/Sidebar/Sidebar';
+
 
 class App extends Component {
   constructor(props) {
@@ -28,15 +29,15 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="container">
-          <Toolbar className="header">
+        <div className={styles.container}>
+          <Toolbar className={styles.header}>
             <ToolbarGroup firstChild={true}>
               Test
             </ToolbarGroup>
           </Toolbar>
-          <div className="main">
+          <div className={styles.main}>
             <Sidebar contents={this.state.tableOfContents} />
-            <div className="content">Main Content</div>
+            <div className={styles.content}>Main Content</div>
           </div>
         </div>
       </MuiThemeProvider>
