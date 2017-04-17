@@ -3,5 +3,5 @@
 }
 
 .content {
-  flex: auto;
+  flex-basis: 67%;
 }
