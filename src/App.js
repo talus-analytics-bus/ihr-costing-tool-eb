@@ -1,43 +1,35 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import styles from './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
+import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
-import { Api } from './data/api';
-import {Sidebar} from './components/Sidebar/Sidebar';
+import { Home } from './scenes/Home/Home';
+import { Costing } from './scenes/Costing/Costing';
+import { Results } from './scenes/Results/Results';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      tableOfContents: [],
-    };
-  }
-
-  componentDidMount() {
-    Api.fetchTableOfContents()
-      .then((tableOfContents) => {
-        this.setState({
-          tableOfContents,
-        })
-      });
-  }
-
   render() {
     return (
       <MuiThemeProvider>
         <div className={styles.container}>
           <Toolbar className={styles.header}>
-            <ToolbarGroup firstChild={true}>
-              Test
-            </ToolbarGroup>
+            <ToolbarTitle text="IHR Costing Tool" />
           </Toolbar>
           <div className={styles.main}>
-            <Sidebar contents={this.state.tableOfContents} />
-            <div className={styles.content}>Main Content</div>
+            <Tabs className={styles.tabs}>
+              <Tab label="Home">
+                <Home />
+              </Tab>
+              <Tab label="Assessment/Costing">
+                <Costing />
+              </Tab>
+              <Tab label="Results">
+                <Results />
+              </Tab>
+            </Tabs>
           </div>
         </div>
       </MuiThemeProvider>

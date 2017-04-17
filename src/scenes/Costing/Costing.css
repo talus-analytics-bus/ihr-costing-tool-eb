@@ -1,0 +1,7 @@
+.costing {
+  composes: main from '../../App.css';
+}
+
+.content {
+  flex: auto;
+}
