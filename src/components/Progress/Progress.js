@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import styles from './Progress.css';
+
 import LinearProgress from 'material-ui/LinearProgress';
 
 export class Progress extends Component {
@@ -30,7 +32,7 @@ export class Progress extends Component {
 
   render() {
     return (
-      <div className="progress">
+      <div className={styles.progress}>
         <LinearProgress mode="determinate" value={this.state.completed/this.state.overall*100} />
         <div className="progress-text">
           current progress ({this.state.completed}/{this.state.overall})
