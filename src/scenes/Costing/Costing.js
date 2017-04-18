@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import Divider from 'material-ui/Divider';
+import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import { Api } from '../../data/api';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
@@ -18,6 +20,7 @@ export class Costing extends Component {
         columns: [],
         data: [],
       },
+      open: false,
     };
   }
 
@@ -37,6 +40,18 @@ export class Costing extends Component {
       });
   }
 
+  handleTouchTap = () => {
+    this.setState({
+      open: true,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
   render() {
     return (
       <div className={styles.costing}>
@@ -54,7 +69,16 @@ export class Costing extends Component {
           <Divider />
           <p>Choose the capacity that most closely aligns with Argentina's capacity.</p>
           <CapacityTable capacity={this.state.capacity} />
+          <div className={styles.action}>
+            <RaisedButton onTouchTap={this.handleTouchTap} label="Next"/>
+          </div>
         </div>
+        <Snackbar
+          open={this.state.open}
+          message="Go to next step"
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     )
   }
