@@ -18,3 +18,12 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     command: yarn serve
+  mongo:
+    container_name: 'ihr-mongo'
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data:
