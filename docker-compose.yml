@@ -20,7 +20,7 @@ services:
     command: yarn serve
   mongo:
     container_name: 'ihr-mongo'
-    image: mongo
+    image: mongo:3.0.14
     ports:
       - "27017:27017"
     volumes:
