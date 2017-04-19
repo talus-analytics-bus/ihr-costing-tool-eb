@@ -1,0 +1,11 @@
+FROM node:7.9.0-alpine
+
+ADD package.json /tmp/package.json
+ADD yarn.lock /tmp/yarn.lock
+WORKDIR /tmp
+
+RUN yarn
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+RUN cp -a /tmp/node_modules /usr/src/app
