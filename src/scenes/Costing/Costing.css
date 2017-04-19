@@ -4,4 +4,34 @@
 
 .content {
   flex-basis: 67%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.hint {
+  display: flex;
+  flex-direction: column;
+}
+
+.peep {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.peepActive svg {
+  transform: rotate(90deg);
+}
+
+.hintText {
+  padding: 12px;
 }
