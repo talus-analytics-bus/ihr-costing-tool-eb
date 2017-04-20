@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import styles from './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
-import { Tabs, Tab } from 'material-ui/Tabs';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom'
 
 import { Home } from './scenes/Home/Home';
 import { Costing } from './scenes/Costing/Costing';
@@ -19,17 +22,13 @@ class App extends Component {
             <ToolbarTitle text="IHR Costing Tool" />
           </Toolbar>
           <div className={styles.main}>
-            <Tabs className={styles.tabs}>
-              <Tab label="Home">
-                <Home />
-              </Tab>
-              <Tab label="Assessment/Costing">
-                <Costing />
-              </Tab>
-              <Tab label="Results">
-                <Results />
-              </Tab>
-            </Tabs>
+            <Router>
+              <div>
+                <Route exact path="/" component={Home}></Route>
+                <Route path="/Costing" component={Costing}></Route>
+                <Route path="/Results" component={Results}></Route>
+              </div>
+            </Router>
           </div>
         </div>
       </MuiThemeProvider>
