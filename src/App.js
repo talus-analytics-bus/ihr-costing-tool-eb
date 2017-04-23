@@ -6,9 +6,11 @@ import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 import {
   BrowserRouter as Router,
   Route,
+  Link,
 } from 'react-router-dom'
 
 import { Home } from './scenes/Home/Home';
+import { Identification } from './scenes/Identification/Identification';
 import { Costing } from './scenes/Costing/Costing';
 import { Results } from './scenes/Results/Results';
 
@@ -17,20 +19,19 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className={styles.container}>
-          <Toolbar className={styles.header}>
-            <ToolbarTitle text="IHR Costing Tool" />
-          </Toolbar>
-          <div className={styles.main}>
-            <Router>
-              <div>
-                <Route exact path="/" component={Home}></Route>
-                <Route path="/Costing" component={Costing}></Route>
-                <Route path="/Results" component={Results}></Route>
-              </div>
-            </Router>
+        <Router>
+          <div className={styles.container}>
+            <Toolbar className={styles.header}>
+                <ToolbarTitle text={<Link to="/">IHR Costing Tool</Link>} />
+            </Toolbar>
+            <div className={styles.main}>
+              <Route exact path="/" component={Home}></Route>
+              <Route path="/identification" component={Identification}></Route>
+              <Route path="/Costing" component={Costing}></Route>
+              <Route path="/Results" component={Results}></Route>
+            </div>
           </div>
-        </div>
+        </Router>
       </MuiThemeProvider>
     );
   }

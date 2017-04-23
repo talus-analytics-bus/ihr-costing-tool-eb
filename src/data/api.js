@@ -51,7 +51,6 @@ const tableOfContents = [
     ],
   }
 ];
-
 const capacityTable = {
   columns: [
     'Laboratory testing for detection of diseases',
@@ -95,6 +94,8 @@ const capacityTable = {
     },
   ],
 };
+const countries = require('./json/countries-by-abbr.json');
+const currencies = require('./json/currencies.json');
 
 export class Api {
 
@@ -104,6 +105,14 @@ export class Api {
 
   static fetchCapacityTable() {
     return Promise.resolve(capacityTable);
+  }
+
+  static fetchCountriesByAbbr() {
+    return Promise.resolve(countries);
+  }
+
+  static fetchCurrencies() {
+    return Promise.resolve(currencies);
   }
 
 }
