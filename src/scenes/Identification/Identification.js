@@ -21,29 +21,39 @@ export class Identification extends Component {
   componentDidMount() {
     Api.fetchCountriesByAbbr()
       .then((countries) => {
+      console.log(countries);
         this.setState({
           countries,
-          activeCountry: countries[0].country,
+          activeCountry: countries.find((country) => country.country === 'USA').country,
         });
       });
     Api.fetchCurrencies()
       .then((currencies) => {
-        console.log(currencies);
         this.setState({
           currencies,
-          activeCurrency: currencies[Object.keys(currencies)[0]].iso.code,
-
+          activeCurrency: 'USD',
         });
       });
   }
 
-  handleCountrySelect = (event, index, value) => this.setState({
-    activeCountry: value,
-  });
+  handleCountrySelect = (event, index, value) => {
+    const country = this.state.countries.find((c) => c.country === value);
+    const activeCurrency = Object.keys(this.state.currencies).find((currencyKey) => this.state.currencies[currencyKey].iso.code === country.currency_code);
 
-  handleCurrencySelect = (event, index, value) => this.setState({
-    activeCurrency: value,
-  });
+    return this.setState({
+      activeCountry: value,
+      activeCurrency,
+    });
+  }
+
+  handleCurrencySelect = (event, index, value) => {
+    const activeCountry = this.state.countries.find((country) => country.currency_code === value);
+
+    this.setState({
+      activeCurrency: value,
+      activeCountry: activeCountry.country,
+    });
+  }
 
   render() {
     return (
