@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import styles from './Identification.css';
+import Datamap from 'react-datamaps'
 
 import { Api } from '../../data/api';
 
@@ -33,7 +34,7 @@ export class Identification extends Component {
           activeCurrency: currencies[Object.keys(currencies)[0]].iso.code,
 
         });
-      })
+      });
   }
 
   handleCountrySelect = (event, index, value) => this.setState({
@@ -77,7 +78,9 @@ export class Identification extends Component {
                 </DropDownMenu>
               </div>
             </div>
-            <div className={styles.countryPickerMap} id="map"></div>
+            <div className={styles.countryPickerMap} id="map">
+              <Datamap/>
+            </div>
           </div>
         </div>
       </div>
