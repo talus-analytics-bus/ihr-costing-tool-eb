@@ -4,14 +4,15 @@
   "description": "Prototype user interface for the IHR Costing Tool",
   "private": true,
   "dependencies": {
+    "d3": "^3.5.17",
     "express": "^4.15.2",
     "material-ui": "^0.17.3",
     "mongoose": "^4.9.5",
     "react": "^15.5.4",
-    "react-datamaps": "^0.3.0",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "topojson": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",

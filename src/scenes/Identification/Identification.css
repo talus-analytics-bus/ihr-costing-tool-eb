@@ -9,8 +9,8 @@ h2 {
   font-family: Raleway, 'Open Sans', sans-serif;
 }
 
-.countryPicker {
-  /*flex-grow: 1;*/
+.countryPicker,
+.countryDetails {
   display: flex;
   flex-direction: column;
 }
@@ -21,6 +21,12 @@ h2 {
   flex-direction: row;
 }
 
+.countryDetailsContent {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .countryPickerSelect {
   flex-basis: 50%;
 }
@@ -28,4 +34,13 @@ h2 {
 .countryPickerMap {
   flex-grow: 1;
   border: 1px solid black;
+}
+
+.countryDetailsPop {
+  display: flex;
+  flex-direction: row;
+}
+
+.countryDetailsPop p {
+  flex-basis: 33%;
 }
