@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+const baseUrl = 'http://localhost:9500';
+
 const tableOfContents = [
   {
     label: 'Prevent',
@@ -95,7 +99,6 @@ const capacityTable = {
   ],
 };
 const countries = require('./json/countries-by-abbr.json');
-const currencies = require('./json/currencies.json');
 const countriesShort = require('./json/countries-by-short.json');
 const countryMap = require('./json/countries.topo.json');
 
@@ -119,12 +122,16 @@ export class Api {
     return Promise.resolve(merged);
   }
 
-  static fetchCurrencies() {
-    return Promise.resolve(currencies);
-  }
-
   static fetchMap() {
     return Promise.resolve(countryMap);
+  }
+
+  static fetchCurrencies() {
+    return axios.get(`${baseUrl}/currencies`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch(console.error);
   }
 
 }

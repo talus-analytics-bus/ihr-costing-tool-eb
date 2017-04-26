@@ -18,15 +18,17 @@ db.once('open', () => {
   console.log('connected to mongo');
 
   const models = initialData();
-  [Country, Currency] = [models.Country, models.Country];
+  [Country, Currency] = [models.Country, models.Currency];
+});
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 app.get('/', (req, res) => {
   res.send('Hello, world!');
-  Chocolate.find((err, chocolates) => {
-    if (err) res.send('Hello, world');
-    res.send(chocolates);
-  });
 });
 
 app.get('/countries', (req, res) => {

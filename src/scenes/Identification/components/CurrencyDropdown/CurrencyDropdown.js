@@ -11,9 +11,9 @@ export class CurrencyDropdown extends Component {
         </p>
         <DropDownMenu value={this.props.active} onChange={this.props.handleChange}>
           {
-            Object.keys(this.props.currencies)
-              .map((currencyKey) => (
-                <MenuItem value={currencyKey} primaryText={`${this.props.currencies[currencyKey].name} (${this.props.currencies[currencyKey].iso.code})`} />
+            this.props.currencies
+              .map((currency) => (
+                <MenuItem value={currency.key} primaryText={`${currency.name} (${currency.key})`} />
               ))
           }
         </DropDownMenu>
