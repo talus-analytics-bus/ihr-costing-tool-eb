@@ -12,7 +12,7 @@ export class CountryDropdown extends Component {
         <DropDownMenu value={this.props.active} onChange={this.props.handleChange}>
           {
             this.props.countries.map((country) => (
-              <MenuItem value={country.country} primaryText={country.country} />
+              <MenuItem value={country.abbreviation} primaryText={country.name} />
             ))
           }
         </DropDownMenu>

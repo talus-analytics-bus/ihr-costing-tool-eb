@@ -98,8 +98,6 @@ const capacityTable = {
     },
   ],
 };
-const countries = require('./json/countries-by-abbr.json');
-const countriesShort = require('./json/countries-by-short.json');
 const countryMap = require('./json/countries.topo.json');
 
 export class Api {
@@ -112,14 +110,12 @@ export class Api {
     return Promise.resolve(capacityTable);
   }
 
-  static fetchCountriesByAbbr() {
-    const merged = countries.map((country) => {
-      const match = countriesShort.find((cs) => cs.name === country.country);
-      return Object.assign({}, country, {
-        code: match ? countriesShort.find((cs) => cs.name === country.country)['alpha-3'] : '',
-      });
-    });
-    return Promise.resolve(merged);
+  static fetchCountries() {
+    return axios.get(`${baseUrl}/countries`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch(console.error);
   }
 
   static fetchMap() {

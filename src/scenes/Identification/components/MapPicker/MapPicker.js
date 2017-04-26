@@ -51,9 +51,9 @@ export class MapPicker extends Component {
 
   selectCountry = (country) => {
     this.setState({
-      activeCountry: country.ISO_A3,
+      activeCountry: country.ISO_A2,
     });
-    this.props.handleChange(country.ISO_A3);
+    this.props.handleChange(country.ISO_A2);
   }
 
   componentWillUpdate(nextProps) {
@@ -79,7 +79,7 @@ export class MapPicker extends Component {
             <CountryPath
               d={pathEl(feature)}
               countryDetails={feature.properties}
-              active={this.state.activeCountry === feature.properties.ISO_A3}
+              active={this.state.activeCountry === feature.properties.ISO_A2}
               handleTouchTap={this.selectCountry}
             ></CountryPath>
           )

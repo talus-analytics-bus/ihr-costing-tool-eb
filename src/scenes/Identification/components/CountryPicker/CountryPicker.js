@@ -22,11 +22,11 @@ export class CountryPicker extends Component {
   }
 
   componentDidMount() {
-    Api.fetchCountriesByAbbr()
+    Api.fetchCountries()
       .then((countries) => {
         this.setState({
           countries,
-          activeCountry: 'USA',
+          activeCountry: 'US',
         });
       });
     Api.fetchCurrencies()
@@ -43,10 +43,10 @@ export class CountryPicker extends Component {
   }
 
   handleCountrySelect = (event, index, value) => {
-    const country = this.state.countries.find((c) => c.country === value);
-    const activeCurrency = this.state.currencies.find((currency) => currency.key === country.currency_code).key;
+    const country = this.state.countries.find((c) => c.name === value);
+    const activeCurrency = this.state.currencies.find((currency) => currency.key === country.currency).key;
     const activeCountryShort = {
-      [country.code]: {
+      [country.abbreviation]: {
         fillKey: 'active',
       }
     }
@@ -65,8 +65,8 @@ export class CountryPicker extends Component {
   }
 
   handleMapPickCountry = (countryCode) => {
-    const country = this.state.countries.find((c) => c.code === countryCode);
-    const activeCurrency = this.state.currencies.find((currency) => currency.key === country.currency_code).key;
+    const country = this.state.countries.find((c) => c.abbreviation === countryCode);
+    const activeCurrency = this.state.currencies.find((currency) => currency.key === country.currency).key;
     const activeCountryShort = {
       [countryCode]: {
         fillKey: 'active',
@@ -74,7 +74,7 @@ export class CountryPicker extends Component {
     }
 
     this.setState({
-      activeCountry: country.country,
+      activeCountry: country.abbreviation,
       activeCurrency,
       activeCountryShort,
     });
@@ -99,7 +99,7 @@ export class CountryPicker extends Component {
           </div>
 
           <MapPicker
-            activeCountry={Object.keys(this.state.activeCountryShort)[0]}
+            activeCountry={this.state.activeCountry}
             countryMap={this.state.countryMap}
             handleChange={this.handleMapPickCountry}
           />
