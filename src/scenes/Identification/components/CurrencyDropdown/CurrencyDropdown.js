@@ -13,7 +13,7 @@ export class CurrencyDropdown extends Component {
           {
             this.props.currencies
               .map((currency) => (
-                <MenuItem value={currency.key} primaryText={`${currency.name} (${currency.key})`} />
+                <MenuItem key={currency.key} value={currency.key} primaryText={`${currency.name} (${currency.key})`} />
               ))
           }
         </DropDownMenu>

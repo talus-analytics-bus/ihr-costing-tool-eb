@@ -77,6 +77,7 @@ export class MapPicker extends Component {
         {
           this.state.features.map((feature) =>
             <CountryPath
+              key={feature.properties.NAME_LONG}
               d={pathEl(feature)}
               countryDetails={feature.properties}
               active={this.state.activeCountry === feature.properties.ISO_A2}
