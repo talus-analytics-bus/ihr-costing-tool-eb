@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+const baseUrl = 'http://localhost:9500';
+
 const tableOfContents = [
   {
     label: 'Prevent',
@@ -51,7 +55,6 @@ const tableOfContents = [
     ],
   }
 ];
-
 const capacityTable = {
   columns: [
     'Laboratory testing for detection of diseases',
@@ -95,6 +98,7 @@ const capacityTable = {
     },
   ],
 };
+const countryMap = require('./json/countries.topo.json');
 
 export class Api {
 
@@ -104,6 +108,26 @@ export class Api {
 
   static fetchCapacityTable() {
     return Promise.resolve(capacityTable);
+  }
+
+  static fetchCountries() {
+    return axios.get(`${baseUrl}/countries`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch(console.error);
+  }
+
+  static fetchMap() {
+    return Promise.resolve(countryMap);
+  }
+
+  static fetchCurrencies() {
+    return axios.get(`${baseUrl}/currencies`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch(console.error);
   }
 
 }

@@ -1,32 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
+import { initialData } from './initialDb';
+
 const port = 9500;
 let app = express();
 
 mongoose.connect('mongodb://mongo:27017');
 
-let Chocolate;
-
-const testMongo = () => {
-  const chocolateSchema = mongoose.Schema({
-    name: String,
-    type: String,
-    bars: Number,
-    sugarFree: Boolean,
-  });
-
-  Chocolate = mongoose.model('Chocolate', chocolateSchema);
-
-  const KitKat = new Chocolate({
-    name: 'KitKat',
-    type: 'dark',
-    bars: 4,
-    sugarFree: false,
-  });
-
-  KitKat.save();
-};
+let Country, Currency;
 
 const db = mongoose.connection;
 db.on('error', () => {
@@ -35,13 +17,29 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('connected to mongo');
 
-  testMongo();
+  const models = initialData();
+  [Country, Currency] = [models.Country, models.Currency];
+});
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 app.get('/', (req, res) => {
-  Chocolate.find((err, chocolates) => {
-    if (err) res.send('Hello, world');
-    res.send(chocolates);
+  res.send('Hello, world!');
+});
+
+app.get('/countries', (req, res) => {
+  Country.find((err, countries) => {
+    res.send(countries)
+  });
+});
+
+app.get('/currencies', (req, res) => {
+  Currency.find((err, currencies) => {
+    res.send(currencies)
   });
 });
 

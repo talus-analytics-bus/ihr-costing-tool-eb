@@ -2,9 +2,18 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Sidebar } from './Sidebar';
 
-it('renders without crashing', () => {
-  const sidebar = shallow(
+let sidebar;
+
+beforeEach(() => {
+  sidebar = shallow(
     <Sidebar />
   );
-  expect(sidebar.find('.sidebar').length).toEqual(1);
+});
+
+it('renders table of contents component', () => {
+  expect(sidebar.find('TableOfContents')).toBeDefined();
+});
+
+it('renders progress component', () => {
+  expect(sidebar.find('Progress')).toBeDefined();
 });

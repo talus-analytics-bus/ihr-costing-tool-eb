@@ -1,0 +1,20 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.homeCenterContents {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeTitle h1 {
+  font-family: Raleway, 'Open Sans', sans-serif;
+}
+
+.homeSection {
+  margin-top: 20px;
+}
