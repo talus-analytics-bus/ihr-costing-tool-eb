@@ -1,14 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-import { initialData } from './initialDb';
+import { Country } from './data/models/Country';
+import { Currency } from './data/models/Currency';
 
 const port = 9500;
 let app = express();
 
-mongoose.connect('mongodb://mongo:27017');
+mongoose.connect('mongodb://mongo:27017/ihr');
 
-let Country, Currency;
 
 const db = mongoose.connection;
 db.on('error', () => {
@@ -16,9 +16,6 @@ db.on('error', () => {
 });
 db.once('open', () => {
   console.log('connected to mongo');
-
-  const models = initialData();
-  [Country, Currency] = [models.Country, models.Currency];
 });
 
 app.use(function(req, res, next) {
