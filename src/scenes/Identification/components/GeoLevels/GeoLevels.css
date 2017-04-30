@@ -1,0 +1,33 @@
+.geoLevels {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.geoLevel {
+  display: flex;
+  flex-direction: row;
+}
+
+.geoLevelRow,
+.geoLevelName {
+  flex-basis: 35%;
+}
+
+.geoLevelCount {
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.geoLevelCount .geoLevelCountNumber {
+  align-self: flex-end;
+}
+
+.geoLevelAction {
+  display: flex;
+  flex-basis: 5%;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 12px;
+}
