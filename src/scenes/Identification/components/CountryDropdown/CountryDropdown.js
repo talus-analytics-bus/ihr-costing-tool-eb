@@ -3,10 +3,6 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 export class CountryDropdown extends Component {
-  super(props) {
-    console.log(props);
-  }
-
   render() {
     return (
       <div>

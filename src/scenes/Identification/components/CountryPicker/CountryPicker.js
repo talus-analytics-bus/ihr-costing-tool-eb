@@ -29,53 +29,23 @@ export class CountryPicker extends Component {
       });
     Api.fetchCurrencies()
       .then((currencies) => {
-        this.setState({
-          currencies,
-          activeCurrency: 'USD',
-        });
+        this.props.populateCurrencies(currencies);
       });
     Api.fetchMap()
       .then((countryMap) => {
-        this.setState({countryMap});
+        this.props.populateCountryMap(countryMap);
       });
   }
 
-  handleCountrySelect = (event, index, value) => {
-    const country = this.state.countries.find((c) => c.name === value);
-    const activeCurrency = this.state.currencies.find((currency) => currency.key === country.currency).key;
-    const activeCountryShort = {
-      [country.abbreviation]: {
-        fillKey: 'active',
-      }
-    }
+  getCurrencyOfCountry = (countryCode) => {
+    const country = this.props.countries.find((c) => c.abbreviation === countryCode);
 
-    this.setState({
-      activeCountry: value,
-      activeCurrency,
-      activeCountryShort,
-    });
+    return this.props.currencies
+      .find((currency) => currency.key === country.currency).key;
   }
 
-  handleCurrencySelect = (event, index, value) => {
-    this.setState({
-      activeCurrency: value,
-    });
-  }
-
-  handleMapPickCountry = (countryCode) => {
-    const country = this.state.countries.find((c) => c.abbreviation === countryCode);
-    const activeCurrency = this.state.currencies.find((currency) => currency.key === country.currency).key;
-    const activeCountryShort = {
-      [countryCode]: {
-        fillKey: 'active',
-      }
-    }
-
-    this.setState({
-      activeCountry: country.abbreviation,
-      activeCurrency,
-      activeCountryShort,
-    });
+  selectCountry = (countryCode) => {
+    this.props.onCountrySelect(countryCode, this.getCurrencyOfCountry(countryCode));
   }
 
   render() {
@@ -85,21 +55,21 @@ export class CountryPicker extends Component {
         <div className={styles.countryPickerContent}>
           <div className={styles.countryPickerSelect}>
             <CountryDropdown
-              handleChange={this.props.onCountrySelect}
+              handleChange={this.selectCountry}
               countries={this.props.countries}
               active={this.props.activeCountry}
             />
             <CurrencyDropdown
-              handleChange={this.handleCurrencySelect}
-              currencies={this.state.currencies}
-              active={this.state.activeCurrency}
+              handleChange={this.props.onCurrencySelect}
+              currencies={this.props.currencies}
+              active={this.props.activeCurrency}
             />
           </div>
 
           <MapPicker
             activeCountry={this.props.activeCountry}
-            countryMap={this.state.countryMap}
-            handleChange={this.handleMapPickCountry}
+            countryMap={this.props.countryMap}
+            handleChange={this.selectCountry}
           />
         </div>
       </div>

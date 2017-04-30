@@ -9,7 +9,7 @@ export class CurrencyDropdown extends Component {
         <p>
           What currency would you like to work with?
         </p>
-        <DropDownMenu value={this.props.active} onChange={this.props.handleChange}>
+        <DropDownMenu value={this.props.active} onChange={ (e, i, v) => this.props.handleChange(v) }>
           {
             this.props.currencies
               .map((currency) => (
