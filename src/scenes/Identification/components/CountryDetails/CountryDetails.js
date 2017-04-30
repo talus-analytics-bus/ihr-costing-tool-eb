@@ -1,19 +1,11 @@
 import React, { Component} from 'react';
 
+import RaisedButton from 'material-ui/RaisedButton';
 import styles from './CountryDetails.css'
+import { GeoLevels } from '../GeoLevels/GeoLevels';
 
 export class CountryDetails extends Component {
 
-  geoLevel = (key) => {
-    return (
-      <tr>
-        <td>{ key }</td>
-        <td>{ this.props.geoLevels[key].name }</td>
-        <td>{ this.props.geoLevels[key].count && this.props.geoLevels[key].count.toLocaleString() }</td>
-        <td>Modify</td>
-      </tr>
-    )
-  }
 
   render() {
     return (
@@ -21,35 +13,22 @@ export class CountryDetails extends Component {
         <h2>Modify country details</h2>
         <div className={styles.countryDetailsContent}>
           <div className={styles.countryDetailsPop}>
-            <p>
-              What is the population of your country?
-            </p>
-            <p>
-              {this.props.population && this.props.population.toLocaleString()}
-            </p>
-            <p>
-              Modify
-            </p>
+            <div className={styles.populationText}>
+              <p>
+                What is the population of your country?
+              </p>
+            </div>
+            <div className={styles.populationCount}>
+              <p>
+                {this.props.population && this.props.population.toLocaleString()}
+              </p>
+            </div>
+            <div className={styles.populationAction}>
+                <RaisedButton label="Modify"/>
+            </div>
           </div>
         </div>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <td>Geographic Level</td>
-                <td>Name</td>
-                <td>Approximate Count</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-            {
-              Object.keys(this.props.geoLevels)
-                .map(this.geoLevel.bind(this))
-            }
-            </tbody>
-          </table>
-        </div>
+        <GeoLevels geoLevels={this.props.geoLevels} />
         <div>
           <p>Advanced Options</p>
           <table>

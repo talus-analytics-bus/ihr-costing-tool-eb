@@ -18,3 +18,31 @@
 .countryDetailsPop p {
   flex-basis: 33%;
 }
+
+.populationText {
+  flex-basis: 70%;
+}
+
+.populationCount {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 20%;
+}
+
+.populationCount p {
+  align-self: flex-end;
+}
+
+.populationAction {
+  display: flex;
+  flex-basis: 10%;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 12px;
+}
+
+.populationAction > button {
+  flex: auto;
+}
+
+
