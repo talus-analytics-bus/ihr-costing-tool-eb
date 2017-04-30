@@ -1,0 +1,9 @@
+.countryDropdown {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.countryDropdown > p, .countryDropdown > div {
+  margin: 0;
+}

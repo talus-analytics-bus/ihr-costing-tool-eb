@@ -14,11 +14,13 @@ export class Identification extends Component {
       <div className={styles.identification}>
         <CountryPickerActive />
         <CountryDetailsActive />
-        <RaisedButton
-          label="Continue"
-          containerElement={<Link to="/start/" />}
-          linkButton={true}
-        />
+        <div>
+          <RaisedButton
+            label="Continue"
+            containerElement={<Link to="/start/" />}
+            linkButton={true}
+          />
+        </div>
       </div>
     )
   }

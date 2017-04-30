@@ -6,7 +6,7 @@ import {CountryPath} from "../CountryPath/CountryPath";
 
 const projection = (width, height) => {
   return d3.geo.mercator()
-    .scale(60)
+    .scale(80)
     .translate([width / 2, height / 1.5]);
 }
 
