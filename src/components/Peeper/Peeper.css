@@ -1,0 +1,27 @@
+.peeper {
+  margin: 20px 0;
+}
+
+.peeperLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: -20px;
+  cursor: pointer;
+}
+
+.peeperLabel svg {
+  margin-right: 10px;
+}
+
+.peeperActive svg {
+  transform: rotate(90deg);
+}
+
+.peeperContent {
+  display: none;
+}
+
+.peeperActive .peeperContent {
+  display: block;
+}

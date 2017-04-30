@@ -205,6 +205,17 @@ export const ihrApp = (state = initialState, action) => {
       return editTargets(state, action.target);
     case 'SET_COUNTRY_INFO_VALUE':
       return saveTargets(state, action.target, action.value);
+    case 'TOGGLE_SHOW_ADVANCED':
+      return {
+        ...state,
+        identification: {
+          ...state.identification,
+          advanced: {
+            ...state.identification.advanced,
+            show: !state.identification.advanced.show,
+          }
+        }
+      }
     default:
       return state;
   }

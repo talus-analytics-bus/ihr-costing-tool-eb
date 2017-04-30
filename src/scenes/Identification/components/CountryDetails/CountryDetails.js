@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import styles from './CountryDetails.css'
 import { GeoLevels } from '../GeoLevels/GeoLevels';
+import { Peeper } from '../../../../components/Peeper/Peeper';
 
 export class CountryDetails extends Component {
   constructor(props) {
@@ -53,10 +54,14 @@ export class CountryDetails extends Component {
           </div>
         </div>
         <GeoLevels geoLevels={this.props.geoLevels} toggleEdit={this.props.toggleEdit} />
-        <div>
-          <p>Advanced Options</p>
-          <table>
-            <tbody>
+        <Peeper
+          label="Advanced Options"
+          show={this.props.showAdvanced}
+          togglePeeper={this.props.toggleShowAdvanced}
+        >
+          <div>
+            <table>
+              <tbody>
               <tr>
                 <td>epidemiologists</td>
                 <td>{this.props.staff.epi_count}</td>
@@ -87,9 +92,11 @@ export class CountryDetails extends Component {
                 <td>{this.props.hospitals.chc_count}</td>
                 <td>Modify</td>
               </tr>
-            </tbody>
-          </table>
-        </div>
+              </tbody>
+            </table>
+          </div>
+        </Peeper>
+
       </div>
     )
   }

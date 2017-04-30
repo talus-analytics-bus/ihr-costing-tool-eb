@@ -9,6 +9,7 @@ const SET_COUNTRY_MAP = 'SET_COUNTRY_MAP';
 const SET_COUNTRY_DETAILS = 'SET_COUNTRY_DETAILS';
 const SET_COUNTRY_INFO_VALUE = 'SET_COUNTRY_INFO_VALUE';
 const TOGGLE_EDIT = 'TOGGLE_EDIT';
+const TOGGLE_SHOW_ADVANCED = 'TOGGLE_SHOW_ADVANCED';
 
 export const chooseCountry = (country) => ({
   type: CHOOSE_COUNTRY,
@@ -49,4 +50,8 @@ export const setCountryInfoValue = (target, value) => ({
   type: SET_COUNTRY_INFO_VALUE,
   target,
   value,
+})
+
+export const toggleShowAdvanced = () => ({
+  type: TOGGLE_SHOW_ADVANCED,
 })
