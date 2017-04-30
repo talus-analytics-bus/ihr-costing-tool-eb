@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { chooseCountry, setCountries, chooseCurrency, setCurrencies, setCountryMap } from '../../../../actions'
+import { chooseCountry, setCountries, chooseCurrency, setCurrencies, setCountryMap, setCountryDetails } from '../../../../actions'
 import { CountryPicker } from '../CountryPicker/CountryPicker';
 
 const mapStateToProps = (state) => {
@@ -14,9 +14,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCountrySelect: (country, currency) => {
+    onCountrySelect: (country, currency, details) => {
+      console.log(details);
       dispatch(chooseCountry(country));
       dispatch(chooseCurrency(currency));
+      dispatch(setCountryDetails(details))
     },
     populateCountries: (countries) => {
       dispatch(setCountries(countries));

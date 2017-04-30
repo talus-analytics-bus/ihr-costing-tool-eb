@@ -6,6 +6,8 @@ const SET_COUNTRIES = 'SET_COUNTRIES';
 const SET_CURRENCIES = 'SET_CURRENCIES';
 const SET_COUNTRY_MAP = 'SET_COUNTRY_MAP';
 
+const SET_COUNTRY_DETAILS = 'SET_COUNTRY_DETAILS';
+
 export const chooseCountry = (country) => ({
   type: CHOOSE_COUNTRY,
   country,
@@ -29,4 +31,9 @@ export const setCurrencies = (currencies) => ({
 export const setCountryMap = (countryMap) => ({
   type: SET_COUNTRY_MAP,
   countryMap,
+})
+
+export const setCountryDetails = (details) => ({
+  type: SET_COUNTRY_DETAILS,
+  details,
 })

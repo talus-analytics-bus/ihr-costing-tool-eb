@@ -8,33 +8,24 @@ import { Api } from '../../../../data/api';
 import {MapPicker} from "../MapPicker/MapPicker";
 
 export class CountryPicker extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-
-    this.state = {
-      activeCountry: '',
-      countries: [],
-      currencies: [],
-      activeCurrency: '',
-      activeCountryShort: {},
-      countryMap: {},
-    }
-  }
-
   componentDidMount() {
-    Api.fetchCountries()
+    Promise.all([
+      Api.fetchCountries()
       .then((countries) => {
         this.props.populateCountries(countries);
-      });
-    Api.fetchCurrencies()
-      .then((currencies) => {
-        this.props.populateCurrencies(currencies);
-      });
-    Api.fetchMap()
-      .then((countryMap) => {
-        this.props.populateCountryMap(countryMap);
-      });
+      }),
+      Api.fetchCurrencies()
+        .then((currencies) => {
+          this.props.populateCurrencies(currencies);
+        }),
+      Api.fetchMap()
+        .then((countryMap) => {
+          this.props.populateCountryMap(countryMap);
+        }),
+      ])
+      .then(() => {
+        this.selectCountry('US');
+      })
   }
 
   getCurrencyOfCountry = (countryCode) => {
@@ -44,8 +35,12 @@ export class CountryPicker extends Component {
       .find((currency) => currency.key === country.currency).key;
   }
 
+  getCountryDetails = (countryCode) => {
+    return this.props.countries.find((c) => c.abbreviation === countryCode);
+  }
+
   selectCountry = (countryCode) => {
-    this.props.onCountrySelect(countryCode, this.getCurrencyOfCountry(countryCode));
+    this.props.onCountrySelect(countryCode, this.getCurrencyOfCountry(countryCode), this.getCountryDetails(countryCode));
   }
 
   render() {

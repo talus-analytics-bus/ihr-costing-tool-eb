@@ -1,0 +1,19 @@
+.countryDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.countryDetailsContent {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.countryDetailsPop {
+  display: flex;
+  flex-direction: row;
+}
+
+.countryDetailsPop p {
+  flex-basis: 33%;
+}
