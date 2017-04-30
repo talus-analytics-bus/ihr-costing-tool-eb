@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { CountryDetails } from './CountryDetails'
+import { toggleEdit, setCountryInfoValue } from '../../../../actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -10,6 +11,18 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleEdit: (target, editing, value) => {
+      dispatch(toggleEdit(target))
+      if (editing) {
+        dispatch(setCountryInfoValue(target, value));
+      }
+    }
+  }
+}
+
 export const CountryDetailsActive = connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(CountryDetails);

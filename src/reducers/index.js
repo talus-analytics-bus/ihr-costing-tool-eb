@@ -7,23 +7,30 @@ const initialState = {
   identification: {
     country: '',
     currency: '',
-    population: null,
+    population: {
+      editing: false,
+      value: null,
+    },
     geo_levels: {
       'Level 1': {
+        editing: false,
         name: '',
-        count: ''
+        value: null
       },
       'Level 2': {
+        editing: false,
         name: '',
-        count: ''
+        value: null
       },
       'Level 3': {
+        editing: false,
         name: '',
-        count: ''
+        value: null
       },
       'Level 4': {
+        editing: false,
         name: '',
-        count: ''
+        value: null
       }
     },
     advanced: {
@@ -43,7 +50,77 @@ const initialState = {
   }
 };
 
+const editTargets = (state, target) => {
+  const geoLevel = (s, key) => {
+    return {...state, identification: {
+      ...state.identification,
+      geo_levels: {
+        ...state.identification.geo_levels,
+        [key]: {
+          ...state.identification.geo_levels[key],
+          editing: !state.identification.geo_levels[key].editing,
+        }
+      }
+    }}
+  }
+  switch (target) {
+    case 'population':
+      return {...state, identification: {
+        ...state.identification,
+        population: {
+          ...state.identification.population,
+          editing: !state.identification.population.editing
+        }
+      }}
+    case 'geo_Level 1':
+    case 'geo_Level 2':
+    case 'geo_Level 3':
+    case 'geo_Level 4':
+      const prefix = 'geo_'
+      const key = target.slice(target.indexOf(prefix) + prefix.length);
 
+      return geoLevel(state, key);
+    default:
+      return state;
+  }
+}
+
+const saveTargets = (state, target, value) => {
+  const geoLevel = (s, key, v) => {
+    return {...state, identification: {
+      ...state.identification,
+      geo_levels: {
+        ...state.identification.geo_levels,
+        [key]: {
+          ...state.identification.geo_levels[key],
+          value: v,
+        }
+      }
+    }}
+  }
+  switch (target) {
+    case 'population':
+      return {
+        ...state, identification: {
+          ...state.identification,
+          population: {
+            ...state.identification.population,
+            value,
+          }
+        }
+      }
+    case 'geo_Level 1':
+    case 'geo_Level 2':
+    case 'geo_Level 3':
+    case 'geo_Level 4':
+      const prefix = 'geo_'
+      const key = target.slice(target.indexOf(prefix) + prefix.length);
+
+      return geoLevel(state, key, value);
+    default:
+      return state;
+  }
+}
 
 export const ihrApp = (state = initialState, action) => {
   console.log(action);
@@ -107,12 +184,15 @@ export const ihrApp = (state = initialState, action) => {
       }
 
       identification = Object.assign({}, state.identification, {
-        population: action.details.basic_info.population,
+        population: {
+          value: action.details.basic_info.population,
+          editing: false,
+        },
         geo_levels: Object.keys(geoLevelMapping)
           .reduce((prev, curr) => {
             prev[geoLevelMapping[curr]] = {
               name: action.details.basic_info[curr].area_name,
-              count: action.details.basic_info[curr].area_count,
+              value: action.details.basic_info[curr].area_count,
             }
             return prev;
           }, {}),
@@ -121,6 +201,10 @@ export const ihrApp = (state = initialState, action) => {
       return Object.assign({}, state, {
         identification,
       });
+    case 'TOGGLE_EDIT':
+      return editTargets(state, action.target);
+    case 'SET_COUNTRY_INFO_VALUE':
+      return saveTargets(state, action.target, action.value);
     default:
       return state;
   }

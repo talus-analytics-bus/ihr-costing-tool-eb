@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     populateCountryMap: (countryMap) => {
       dispatch(setCountryMap(countryMap));
-    }
+    },
   }
 }
 

@@ -1,11 +1,24 @@
 import React, { Component} from 'react';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import styles from './CountryDetails.css'
 import { GeoLevels } from '../GeoLevels/GeoLevels';
 
 export class CountryDetails extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      population: null,
+    }
+  }
+
+  handleChange = (event, key) => {
+    this.setState({
+      [key]: event.target.value,
+    })
+  }
 
   render() {
     return (
@@ -19,16 +32,27 @@ export class CountryDetails extends Component {
               </p>
             </div>
             <div className={styles.populationCount}>
-              <p>
-                {this.props.population && this.props.population.toLocaleString()}
-              </p>
+            {
+              !this.props.population.editing && (
+                <p>
+                  {this.props.population.value && Number(this.props.population.value).toLocaleString()}
+                </p>
+              )
+            }
+            {
+              this.props.population.editing && (
+                <TextField defaultValue={this.props.population.value || 0} onChange={(e) => this.handleChange(e, 'population')}/>
+              )
+            }
             </div>
             <div className={styles.populationAction}>
-                <RaisedButton label="Modify"/>
+                <RaisedButton
+                  label={this.props.population.editing ? 'Save' : 'Modify'}
+                  onClick={() => this.props.toggleEdit('population', this.props.population.editing, this.state.population)}/>
             </div>
           </div>
         </div>
-        <GeoLevels geoLevels={this.props.geoLevels} />
+        <GeoLevels geoLevels={this.props.geoLevels} toggleEdit={this.props.toggleEdit} />
         <div>
           <p>Advanced Options</p>
           <table>
