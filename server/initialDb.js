@@ -7,7 +7,11 @@ import { currencySchema } from './data/schemas/Currency';
 export const initialData = () => {
 
   const Country = mongoose.model('Country', countrySchema);
-  Country.insertMany(countryParams);
+  Country.find((err, countries) => {
+    if (countries.length === 0) {
+      Country.insertMany(countryParams);
+    }
+  });
 
   const Currency = mongoose.model('Currency', currencySchema);
   const currenciesObj = require('./data/currencies.json');
@@ -17,7 +21,11 @@ export const initialData = () => {
         key: currencyKey,
       });
     });
-  Currency.insertMany(currenciesArr);
+  Currency.find((err, currency) => {
+    if (currency.length === 0) {
+      Currency.insertMany(currenciesArr);
+    }
+  });
 
   return {
     Currency,

@@ -10,6 +10,7 @@ import {MapPicker} from "../MapPicker/MapPicker";
 export class CountryPicker extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
 
     this.state = {
       activeCountry: '',
@@ -24,10 +25,7 @@ export class CountryPicker extends Component {
   componentDidMount() {
     Api.fetchCountries()
       .then((countries) => {
-        this.setState({
-          countries,
-          activeCountry: 'US',
-        });
+        this.props.populateCountries(countries);
       });
     Api.fetchCurrencies()
       .then((currencies) => {
@@ -87,9 +85,9 @@ export class CountryPicker extends Component {
         <div className={styles.countryPickerContent}>
           <div className={styles.countryPickerSelect}>
             <CountryDropdown
-              handleChange={this.handleCountrySelect}
-              countries={this.state.countries}
-              active={this.state.activeCountry}
+              handleChange={this.props.onCountrySelect}
+              countries={this.props.countries}
+              active={this.props.activeCountry}
             />
             <CurrencyDropdown
               handleChange={this.handleCurrencySelect}
@@ -99,7 +97,7 @@ export class CountryPicker extends Component {
           </div>
 
           <MapPicker
-            activeCountry={this.state.activeCountry}
+            activeCountry={this.props.activeCountry}
             countryMap={this.state.countryMap}
             handleChange={this.handleMapPickCountry}
           />
