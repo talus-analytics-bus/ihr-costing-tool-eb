@@ -5,9 +5,9 @@ import { CountryPicker } from './CountryPicker';
 const mapStateToProps = (state) => {
   return {
     countries: state.data.countries,
-    activeCountry: state.identification.country,
+    activeCountry: state.identification.country.key,
     currencies: state.data.currencies,
-    activeCurrency: state.identification.currency,
+    activeCurrency: state.identification.currency.key,
     countryMap: state.data.countryMap,
   };
 };

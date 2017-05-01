@@ -40,7 +40,7 @@ export class CapacityTable extends Component {
     console.log(this.props);
     return (
       <div>
-        <p>Choose the capacity the most closely aligns with Argentina's policy</p>
+        <p>Choose the capacity the most closely aligns with {this.props.activeCountry.details.name || 'the country'}'s policy</p>
         <div>
           <div className={styles.capacityTable}>
             <div className={styles.capacityRow}>

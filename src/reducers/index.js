@@ -5,8 +5,14 @@ const initialState = {
     countryMap: {},
   },
   identification: {
-    country: '',
-    currency: '',
+    country: {
+      key: '',
+      details: {}
+    },
+    currency: {
+      key: '',
+      details: {},
+    },
     population: {
       editing: false,
       value: null,
@@ -135,8 +141,12 @@ export const ihrApp = (state = initialState, action) => {
   let data, identification;
   switch (action.type) {
     case 'CHOOSE_COUNTRY':
+      const country = state.data.countries.find((c) => c.abbreviation === action.country);
       identification = Object.assign({}, state.identification, {
-        country: action.country,
+        country: {
+          key: action.country,
+          details: country
+        }
       });
       return Object.assign({}, state, {
         identification,
@@ -149,8 +159,12 @@ export const ihrApp = (state = initialState, action) => {
         data,
       })
     case 'CHOOSE_CURRENCY':
+      const currency = state.data.currencies.find((c) => c.key === action.currency);
       identification = Object.assign({}, state.identification, {
-        currency: action.currency,
+        currency: {
+          key: action.currency,
+          details: currency,
+        }
       });
       return Object.assign({}, state, {
         identification,

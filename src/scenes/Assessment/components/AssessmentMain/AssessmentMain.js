@@ -16,8 +16,15 @@ export class AssessmentMain extends Component {
           <AssessmentDescription activeCapacity={this.props.activeCapacity} />
           {
             this.props.activeCapacity.stage === 'assessment' ?
-              <CapacityTable activeCapacity={this.props.activeCapacity} setActiveCapacityLevel={this.props.setActiveCapacityLevel}/> :
-              <Costing activeCapacity={this.props.activeCapacity} />
+              <CapacityTable
+                activeCapacity={this.props.activeCapacity}
+                setActiveCapacityLevel={this.props.setActiveCapacityLevel}
+                activeCountry={this.props.activeCountry}
+              /> :
+              <Costing
+                activeCapacity={this.props.activeCapacity}
+                activeCurrency={this.props.activeCurrency}
+              />
           }
           <div className={styles.assessmentAction}>
             <RaisedButton

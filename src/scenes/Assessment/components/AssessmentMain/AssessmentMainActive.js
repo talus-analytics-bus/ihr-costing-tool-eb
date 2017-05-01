@@ -6,7 +6,9 @@ export const mapStateToProps = (state) => {
   return {
     activeCapacity: ((state.assessment.jeeTree
       .find((core) => core.active) || {}).capacities || [])
-      .find((capacity) => capacity.active)
+      .find((capacity) => capacity.active),
+    activeCountry: state.identification.country,
+    activeCurrency: state.identification.currency,
   }
 }
 

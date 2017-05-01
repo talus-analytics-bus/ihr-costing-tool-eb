@@ -36,9 +36,9 @@ export class Costing extends Component {
         >
           <div>
             <p>Current Capacity: <strong>({(indicator.selectedLevel || 0) + 1})</strong></p>
-            <p>Upgrade capacity to <strong>({(Math.min(indicator.selectedLevel || 0) + 2, 5)})</strong></p>
+            <p>Upgrade capacity to <strong>({Math.min((indicator.selectedLevel || 0) + 2, 5)})</strong></p>
           </div>
-          <ExpenseTable expenses={indicator.expenses} />
+          <ExpenseTable expenses={indicator.expenses} activeCurrency={this.props.activeCurrency} />
         </Peeper>
         )
       }
