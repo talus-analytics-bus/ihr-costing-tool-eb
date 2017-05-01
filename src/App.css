@@ -37,7 +37,7 @@
 }
 
 .sidebar {
-  flex-basis: 33%;
+  flex-basis: 25%;
   border-right: 1px solid black;
 }
 
