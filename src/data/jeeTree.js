@@ -1,4 +1,4 @@
-const jeeTree = [
+export const jeeTree = [
   {
     name: 'Prevent',
     type: 'core_element',

@@ -4,6 +4,7 @@ const CHOOSE_CURRENCY = 'CHOOSE_CURRENCY';
 const SET_COUNTRIES = 'SET_COUNTRIES';
 const SET_CURRENCIES = 'SET_CURRENCIES';
 const SET_COUNTRY_MAP = 'SET_COUNTRY_MAP';
+const SET_JEE_TREE = 'SET_JEE_TREE';
 
 const SET_COUNTRY_DETAILS = 'SET_COUNTRY_DETAILS';
 const SET_COUNTRY_INFO_VALUE = 'SET_COUNTRY_INFO_VALUE';
@@ -35,6 +36,11 @@ export const setCurrencies = (currencies) => ({
 export const setCountryMap = (countryMap) => ({
   type: SET_COUNTRY_MAP,
   countryMap,
+})
+
+export const setJeeTree = (jeeTree) => ({
+  type: SET_JEE_TREE,
+  jeeTree,
 })
 
 export const setCountryDetails = (details) => ({

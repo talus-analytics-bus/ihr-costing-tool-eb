@@ -52,6 +52,9 @@ const initialState = {
     manual: {
       assessmentFirst: true,
     }
+  },
+  assessment: {
+    jeeTree: []
   }
 };
 
@@ -230,6 +233,14 @@ export const ihrApp = (state = initialState, action) => {
             ...state.start.manual,
             assessmentFirst: action.assessmentFirst,
           }
+        }
+      }
+    case 'SET_JEE_TREE':
+      return {
+        ...state,
+        assessment: {
+          ...state.assessment,
+          jeeTree: action.jeeTree,
         }
       }
     default:

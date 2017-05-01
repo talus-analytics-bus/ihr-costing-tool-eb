@@ -9,8 +9,9 @@ export class Sidebar extends Component {
   render() {
     return (
       <div className={styles.sidebar}>
-        <TableOfContents contents={this.props.contents} />
-        <Progress />
+        {/*<TableOfContents contents={this.props.contents} />*/}
+        {/*<Progress />*/}
+        {this.props.children}
       </div>
     )
   }
