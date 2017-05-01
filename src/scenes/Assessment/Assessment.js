@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Api } from '../../data/api';
 import { Sidebar} from '../../components/Sidebar/Sidebar';
 import { TableOfContentsActive } from './components/TableOfContents/TableOfContentsActive';
+import { AssessmentMainActive } from './components/AssessmentMain/AssessmentMainActive';
 
 import styles from './Assessment.css';
 
@@ -11,13 +12,13 @@ export class Assessment extends Component {
     if (this.props.jeeTree !== []) {
       Api.fetchJeeTree()
         .then((jeeTree) => {
-          this.props.populateJeeTree(jeeTree.map((indicator) => ({
+          this.props.populateJeeTree(jeeTree.map((indicator, indicatorIndex) => ({
             ...indicator,
-            active: false,
+            active: indicatorIndex === 0,
             completed: false,
-            capacities: (indicator.capacities || []).map((capacity) => ({
+            capacities: (indicator.capacities || []).map((capacity, capacityIndex) => ({
               ...capacity,
-              active: false,
+              active: indicatorIndex + capacityIndex === 0,
               completed: false,
             }))
           })));
@@ -32,7 +33,7 @@ export class Assessment extends Component {
           <Sidebar>
             <TableOfContentsActive/>
           </Sidebar>
-          <div>Hello</div>
+          <AssessmentMainActive/>
         </div>
       </div>
     )
