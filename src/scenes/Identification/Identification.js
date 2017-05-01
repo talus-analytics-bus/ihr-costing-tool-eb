@@ -14,7 +14,7 @@ export class Identification extends Component {
       <div className={styles.identification}>
         <CountryPickerActive />
         <CountryDetailsActive />
-        <div>
+        <div className={styles.continueAction}>
           <RaisedButton
             label="Continue"
             containerElement={<Link to="/start/" />}
