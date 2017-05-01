@@ -47,6 +47,11 @@ const initialState = {
         chc: 0,
       }
     }
+  },
+  start: {
+    manual: {
+      assessmentFirst: true,
+    }
   }
 };
 
@@ -213,6 +218,17 @@ export const ihrApp = (state = initialState, action) => {
           advanced: {
             ...state.identification.advanced,
             show: !state.identification.advanced.show,
+          }
+        }
+      }
+    case 'SET_ASSESSMENT_FIRST':
+      return {
+        ...state,
+        start: {
+          ...state.start,
+          manual: {
+            ...state.start.manual,
+            assessmentFirst: action.assessmentFirst,
           }
         }
       }
