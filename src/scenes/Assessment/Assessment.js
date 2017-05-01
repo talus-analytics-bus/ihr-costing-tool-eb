@@ -20,6 +20,10 @@ export class Assessment extends Component {
               ...capacity,
               active: indicatorIndex + capacityIndex === 0,
               completed: false,
+              indicators: capacity.indicators.map((ind) => ({
+                ...ind,
+                selectedLevel: null,
+              }))
             }))
           })));
         });

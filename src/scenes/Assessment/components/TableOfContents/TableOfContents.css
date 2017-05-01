@@ -33,3 +33,7 @@
 .capacity {
   padding: 5px 0;
 }
+
+.activeCapacity {
+  font-weight: 900;
+}

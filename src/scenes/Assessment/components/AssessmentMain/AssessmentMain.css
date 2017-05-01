@@ -6,6 +6,13 @@
 
 }
 
+.assessmentAction {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .capacityTable {
   display: flex;
   flex-direction: column;

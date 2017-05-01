@@ -14,6 +14,7 @@ const TOGGLE_SHOW_ADVANCED = 'TOGGLE_SHOW_ADVANCED';
 const SET_ASSESSMENT_FIRST = 'SET_ASSESSMENT_FIRST';
 
 const SET_ACTIVE_CAPACITY = 'SET_ACTIVE_CAPACITY';
+const SET_ACTIVE_CAPACITY_LEVEL = 'SET_ACTIVE_CAPACITY_LEVEL';
 
 export const chooseCountry = (country) => ({
   type: CHOOSE_COUNTRY,
@@ -73,4 +74,10 @@ export const setAssessmentFirst = (assessmentFirst) => ({
 export const setActiveCapacity = (capacityName = '') => ({
   type: SET_ACTIVE_CAPACITY,
   capacityName,
+})
+
+export const setActiveCapacityLevel = (indicator, level) => ({
+  type: SET_ACTIVE_CAPACITY_LEVEL,
+  indicator,
+  level,
 })

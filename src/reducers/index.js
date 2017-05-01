@@ -244,29 +244,7 @@ export const ihrApp = (state = initialState, action) => {
         }
       }
     case 'SET_ACTIVE_CAPACITY':
-      console.log(state, action.capacityName);
       if (action.capacityName === '' && state.assessment.jeeTree.length > 0) {
-        console.log(state.assessment.jeeTree)
-        console.log({
-          ...state,
-          assessment: {
-            ...state.assessment,
-            jeeTree: [
-              {
-                ...state.assessment.jeeTree[0],
-                active: true,
-                capacities: [
-                  {
-                    ...state.assessment.jeeTree[0].capacities[0],
-                    active: true,
-                  },
-                  ...state.assessment.jeeTree[0].capacities.slice(1),
-                ]
-              },
-              ...state.assessment.jeeTree.slice(1)
-            ]
-          }
-        })
         return {
           ...state,
           assessment: {
@@ -289,6 +267,23 @@ export const ihrApp = (state = initialState, action) => {
         }
       }
       return state;
+    case 'SET_ACTIVE_CAPACITY_LEVEL':
+      return {
+        ...state,
+        assessment: {
+          ...state.assessment,
+          jeeTree: state.assessment.jeeTree.map((core) => ({
+            ...core,
+            capacities: core.capacities.map((capacity) => ({
+              ...capacity,
+              indicators: capacity.indicators.map((indicator) => ({
+                ...indicator,
+                selectedLevel: indicator.jee_id === action.indicator ? action.level : indicator.selectedLevel,
+              }))
+            }))
+          }))
+        }
+      };
     default:
       return state;
   }

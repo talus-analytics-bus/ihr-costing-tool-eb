@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { RadioButton } from 'material-ui/RadioButton';
+import Checkbox from 'material-ui/Checkbox';
 import styles from './AssessmentMain.css';
 
 export class CapacityTable extends Component {
@@ -32,11 +32,12 @@ export class CapacityTable extends Component {
       ...row,
       values: this.props.activeCapacity.indicators.map((indicator) => {
         return indicator.score_descriptions[index + 1] || ''
-      })
+      }),
     }))
   }
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <p>Choose the capacity the most closely aligns with Argentina's policy</p>
@@ -53,13 +54,17 @@ export class CapacityTable extends Component {
               }
             </div>
             {
-              this.capacityRows().map((capacityRow) =>
+              this.capacityRows().map((capacityRow, index) =>
                 <div className={styles.capacityRow}>
                   <div className={styles.capacityCell}><p>{capacityRow.name}</p></div>
                   {
-                    capacityRow.values.map((c) =>
+                    capacityRow.values.map((c, cIndex) =>
                       <div className={styles.capacityCellWithRadio}>
-                        <RadioButton className={styles.capacityCellRadio}/>
+                        <Checkbox
+                          className={styles.capacityCellRadio}
+                          checked={this.props.activeCapacity.indicators[cIndex].selectedLevel === index}
+                          onCheck={(e) => this.props.setActiveCapacityLevel(this.props.activeCapacity.indicators[cIndex].jee_id, index)}
+                        />
                         <p>{c}</p>
                       </div>
                     )
