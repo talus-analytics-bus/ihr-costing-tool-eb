@@ -50,3 +50,28 @@
   display: flex !important;
   flex-basis: 10%;
 }
+
+.expenseTable {
+  font-size: 14px;
+}
+
+.expenseRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.expenseRowSelect {
+  flex-basis: 5%;
+}
+
+.expenseRowName {
+  flex-basis: 60%;
+}
+
+.expenseRowCosts {
+  flex-basis: 10%;
+}
+
+.expenseFlowAction {
+  flex-basis: 10%;
+}

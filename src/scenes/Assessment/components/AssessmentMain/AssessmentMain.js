@@ -4,6 +4,7 @@ import styles from './AssessmentMain.css';
 import {AssessmentDescription} from "./AssessmentDescription";
 import {CapacityTable} from "./CapacityTable";
 import RaisedButton from 'material-ui/RaisedButton';
+import { Costing } from './Costing';
 
 export class AssessmentMain extends Component {
 
@@ -16,7 +17,7 @@ export class AssessmentMain extends Component {
           {
             this.props.activeCapacity.stage === 'assessment' ?
               <CapacityTable activeCapacity={this.props.activeCapacity} setActiveCapacityLevel={this.props.setActiveCapacityLevel}/> :
-              <div>Costing</div>
+              <Costing activeCapacity={this.props.activeCapacity} />
           }
           <div className={styles.assessmentAction}>
             <RaisedButton
