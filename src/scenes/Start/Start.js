@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { ManualAssessmentActive } from './components/ManualAssessmentActive';
 
+import styles from './Start.css';
+
 export class Start extends Component {
   render() {
     return (
-      <div>
+      <div className={styles.start}>
         <div>
           <h2>Upload JEE Report</h2>
           <p>Upload a JEE report, if available. Or if you hae downloaded report scores from this application before, upload them here.</p>
