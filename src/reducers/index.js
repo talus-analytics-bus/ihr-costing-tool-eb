@@ -284,6 +284,25 @@ export const ihrApp = (state = initialState, action) => {
           }))
         }
       };
+    case 'NEXT_STEP':
+      const toggle = [
+        'assessment',
+        'costing',
+      ];
+
+      return {
+        ...state,
+        assessment: {
+          ...state.assessment,
+          jeeTree: state.assessment.jeeTree.map((core) => ({
+            ...core,
+            capacities: core.capacities.map((capacity) => ({
+              ...capacity,
+              stage: capacity.active ? toggle[1 - toggle.indexOf(capacity.stage)] : capacity.stage,
+            }))
+          }))
+        }
+      };
     default:
       return state;
   }

@@ -12,16 +12,17 @@ export class Assessment extends Component {
     if (this.props.jeeTree !== []) {
       Api.fetchJeeTree()
         .then((jeeTree) => {
-          this.props.populateJeeTree(jeeTree.map((indicator, indicatorIndex) => ({
-            ...indicator,
-            active: indicatorIndex === 0,
+          this.props.populateJeeTree(jeeTree.map((core, coreIndex) => ({
+            ...core,
+            active: coreIndex === 0,
             completed: false,
-            capacities: (indicator.capacities || []).map((capacity, capacityIndex) => ({
+            capacities: (core.capacities || []).map((capacity, capacityIndex) => ({
               ...capacity,
-              active: indicatorIndex + capacityIndex === 0,
+              active: coreIndex + capacityIndex === 0,
+              stage: 'assessment',
               completed: false,
-              indicators: capacity.indicators.map((ind) => ({
-                ...ind,
+              indicators: capacity.indicators.map((indicator) => ({
+                ...indicator,
                 selectedLevel: null,
               }))
             }))
