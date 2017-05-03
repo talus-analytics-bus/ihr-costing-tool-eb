@@ -17,9 +17,10 @@ const SET_ACTIVE_CAPACITY = 'SET_ACTIVE_CAPACITY';
 const SET_ACTIVE_CAPACITY_LEVEL = 'SET_ACTIVE_CAPACITY_LEVEL';
 const NEXT_STEP = 'NEXT_STEP';
 
-export const chooseCountry = (country) => ({
+export const chooseCountry = (country, details) => ({
   type: CHOOSE_COUNTRY,
   country,
+  details
 });
 
 export const setCountries = (countries) => ({
@@ -27,9 +28,10 @@ export const setCountries = (countries) => ({
   countries,
 })
 
-export const chooseCurrency = (currency) => ({
+export const chooseCurrency = (currency, details) => ({
   type: CHOOSE_CURRENCY,
   currency,
+  details
 });
 
 export const setCurrencies = (currencies) => ({

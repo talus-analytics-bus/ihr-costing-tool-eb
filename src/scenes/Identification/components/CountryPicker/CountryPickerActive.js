@@ -14,16 +14,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCountrySelect: (country, currency, details) => {
-      dispatch(chooseCountry(country));
-      dispatch(chooseCurrency(currency));
+    onCountrySelect: (country, currency, details, currencyDetails) => {
+      dispatch(chooseCountry(country, details));
+      dispatch(chooseCurrency(currency, currencyDetails));
       dispatch(setCountryDetails(details))
     },
     populateCountries: (countries) => {
       dispatch(setCountries(countries));
     },
-    onCurrencySelect: (currency) => {
-      dispatch(chooseCurrency(currency));
+    onCurrencySelect: (currency, details) => {
+      dispatch(chooseCurrency(currency, details));
     },
     populateCurrencies: (currencies) => {
       dispatch(setCurrencies(currencies));
