@@ -21,8 +21,8 @@ class IndicatorGroup extends Component {
         </div>
         <div className={`${styles.capacities} ${this.props.indicator.capacities.length === 0 ? styles.capacitiesEmpty: null}`}>
         {
-          this.props.indicator.capacities.map((capacity) =>
-            <Capacity capacity={capacity}/>
+          this.props.indicator.capacities.map((capacity, index) =>
+            <Capacity capacity={capacity} key={index}/>
           )
         }
         </div>
@@ -36,8 +36,8 @@ export class TableOfContents extends Component {
     return (
       <div className={styles.tableOfContents}>
       {
-        this.props.entries.map((indicator) =>
-          <IndicatorGroup indicator={indicator} />
+        this.props.entries.map((indicator, index) =>
+          <IndicatorGroup indicator={indicator} key={index}/>
         )
       }
       </div>

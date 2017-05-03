@@ -47,7 +47,7 @@ export class CapacityTable extends Component {
               <div className={styles.capacityCell}></div>
               {
                 this.props.activeCapacity.indicators.map((indicator) =>
-                  <div className={styles.capacityCell}>
+                  <div className={styles.capacityCell} key={indicator.jee_id}>
                     <p>{indicator.name}</p>
                   </div>
                 )
@@ -55,11 +55,11 @@ export class CapacityTable extends Component {
             </div>
             {
               this.capacityRows().map((capacityRow, index) =>
-                <div className={styles.capacityRow}>
+                <div className={styles.capacityRow} key={index}>
                   <div className={styles.capacityCell}><p>{capacityRow.name}</p></div>
                   {
                     capacityRow.values.map((c, cIndex) =>
-                      <div className={styles.capacityCellWithRadio}>
+                      <div className={styles.capacityCellWithRadio} key={cIndex}>
                         <Checkbox
                           className={styles.capacityCellRadio}
                           checked={this.props.activeCapacity.indicators[cIndex].selectedLevel === index}

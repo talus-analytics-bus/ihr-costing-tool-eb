@@ -137,7 +137,6 @@ const saveTargets = (state, target, value) => {
 }
 
 export const ihrApp = (state = initialState, action) => {
-  console.log(action);
   let data, identification;
   switch (action.type) {
     case 'CHOOSE_COUNTRY':

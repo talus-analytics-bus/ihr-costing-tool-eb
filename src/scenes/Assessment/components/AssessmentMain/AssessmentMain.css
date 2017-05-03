@@ -60,6 +60,11 @@
   flex-direction: row;
 }
 
+.expenseRow > div {
+  display: flex;
+  align-items: center;
+}
+
 .expenseRowSelect {
   flex-basis: 5%;
 }
@@ -72,6 +77,6 @@
   flex-basis: 10%;
 }
 
-.expenseFlowAction {
+.expenseRowAction {
   flex-basis: 10%;
 }

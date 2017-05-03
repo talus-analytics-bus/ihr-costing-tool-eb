@@ -8,10 +8,10 @@ export class Peeper extends Component {
     return (
       <div
         className={`${styles.peeper} ${this.props.show ? styles.peeperActive: null}`}
-        onClick={this.props.togglePeeper}
       >
         <div
           className={styles.peeperLabel}
+          onClick={this.props.togglePeeper}
         >
           <AVPlayArrow/>
           <strong>{this.props.label}</strong>

@@ -24,6 +24,13 @@ export class Assessment extends Component {
               indicators: capacity.indicators.map((indicator) => ({
                 ...indicator,
                 selectedLevel: null,
+                expenses: indicator.expenses.reduce((prev, expense) => {
+                  return prev.concat([{
+                    ...expense,
+                    editing: false,
+                    selected: prev.length === 0 || prev.slice(-1)[0].expense_id !== expense.expense_id
+                  }])
+                }, [])
               }))
             }))
           })));
