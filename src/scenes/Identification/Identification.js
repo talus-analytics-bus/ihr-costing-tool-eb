@@ -18,7 +18,6 @@ export class Identification extends Component {
           <RaisedButton
             label="Continue"
             containerElement={<Link to="/start/" />}
-            linkButton={true}
           />
         </div>
       </div>

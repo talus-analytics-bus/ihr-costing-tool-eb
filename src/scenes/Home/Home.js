@@ -24,7 +24,6 @@ export class Home extends Component {
           <RaisedButton
             label="Enter"
             containerElement={<Link to="/identification/" />}
-            linkButton={true}
           />
         </div>
       </div>

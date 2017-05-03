@@ -22,10 +22,9 @@ export class GeoLevels extends Component {
     })
   }
 
-  geoLevel = (key) => {
+  geoLevel = (key, index) => {
     return (
-
-      <div className={styles.geoLevel}>
+      <div className={styles.geoLevel} key={index}>
         <div className={styles.geoLevelRow}>
           <p>{key}</p>
         </div>
