@@ -60,6 +60,23 @@ export const assessmentReducer = (state = initialState, action) => {
           }))
         }))
       };
+    case 'TOGGLE_EDITING_EXPENSE':
+      return {
+        ...state,
+        jeeTree: state.jeeTree.map((core) => ({
+          ...core,
+          capacities: core.capacities.map((capacity) => ({
+            ...capacity,
+            indicators: capacity.indicators.map((indicator) => ({
+              ...indicator,
+              expenses: indicator.expenses.map((expense) => ({
+                ...expense,
+                editing: expense.expense_id === action.expense_id && expense.sophistication_level.includes(action.sophistication_level) ? !expense.editing : expense.editing,
+              }))
+            }))
+          }))
+        }))
+      }
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import styles from './AssessmentMain.css';
-import {ExpenseRow} from "./ExpenseRow";
+import { ExpenseRowActive } from './ExpenseRowActive';
 
 export class ExpenseTable extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export class ExpenseTable extends Component {
               this.props.expenses
                 .filter((expense) => expense.expense_id === expenseGroup.id)
                 .map((expense, index) =>
-                  <ExpenseRow expense={expense} activeCurrency={this.props.activeCurrency} key={index}/>
+                  <ExpenseRowActive expense={expense} activeCurrency={this.props.activeCurrency} key={index}/>
                 )
             }
           </div>

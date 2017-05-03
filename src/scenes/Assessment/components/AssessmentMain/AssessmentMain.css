@@ -57,10 +57,15 @@
 
 .expenseRow {
   display: flex;
+  flex-direction: column;
+}
+
+.expenseRowSummary {
+  display: flex;
   flex-direction: row;
 }
 
-.expenseRow > div {
+.expenseRowSummary > div {
   display: flex;
   align-items: center;
 }
@@ -79,4 +84,9 @@
 
 .expenseRowAction {
   flex-basis: 10%;
+}
+
+.expenseRowForm {
+  display: flex;
+  flex-direction: column;
 }

@@ -17,6 +17,8 @@ const SET_ACTIVE_CAPACITY = 'SET_ACTIVE_CAPACITY';
 const SET_ACTIVE_CAPACITY_LEVEL = 'SET_ACTIVE_CAPACITY_LEVEL';
 const NEXT_STEP = 'NEXT_STEP';
 
+const TOGGLE_EDITING_EXPENSE = 'TOGGLE_EDITING_EXPENSE';
+
 export const chooseCountry = (country, details) => ({
   type: CHOOSE_COUNTRY,
   country,
@@ -87,4 +89,10 @@ export const setActiveCapacityLevel = (indicator, level) => ({
 
 export const nextStep = () => ({
   type: NEXT_STEP,
+})
+
+export const toggleEditingExpense = (expense_id, sophistication_level) => ({
+  type: TOGGLE_EDITING_EXPENSE,
+  expense_id,
+  sophistication_level,
 })
