@@ -32,8 +32,8 @@ export class ExpenseTable extends Component {
             {
               this.props.expenses
                 .filter((expense) => expense.expense_id === expenseGroup.id)
-                .map((expense) =>
-                  <ExpenseRow expense={expense} activeCurrency={this.props.activeCurrency}/>
+                .map((expense, index) =>
+                  <ExpenseRow expense={expense} activeCurrency={this.props.activeCurrency} key={index}/>
                 )
             }
           </div>

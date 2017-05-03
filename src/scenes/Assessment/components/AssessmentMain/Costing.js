@@ -30,6 +30,7 @@ export class Costing extends Component {
       {
         this.props.activeCapacity.indicators.map((indicator, index) =>
         <Peeper
+          key={index}
           label={`Indicator ${index + 1} of ${this.props.activeCapacity.indicators.length}: ${indicator.name}`}
           show={this.state.peep[indicator.jee_id]}
           togglePeeper={() => this.handlePeep(indicator.jee_id)}
