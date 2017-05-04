@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import styles from './AssessmentMain.css';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 export class ExpenseRow extends Component {
   formatCurrency = (value) => {
@@ -49,9 +51,81 @@ export class ExpenseRow extends Component {
         </div>
         {
           this.props.expense.editing ?
-            <div className={styles.expenseRowForm}>
-              Editing
-            </div>
+            <Card>
+              <CardText>
+                <div className={styles.expenseRowForm}>
+                  <div className={styles.expenseRowFormStartup}>
+                    <div>
+                      <TextField
+                        floatingLabelText="salary per year"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                        value={100}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        floatingLabelText="salary per year"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        floatingLabelText="salary per year"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        floatingLabelText="salary per year"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        floatingLabelText="salary per year"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        floatingLabelText="salary per year"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.expenseRowFormRecurring}>
+                    <div>
+                      <TextField
+                        floatingLabelText="salary per year"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardText>
+              <CardActions>
+                <RaisedButton
+                  label="Set to defaults"
+                />
+                <RaisedButton
+                  label="Cancel"
+                />
+                <RaisedButton
+                  label="Confirm"
+                />
+                <RaisedButton
+                  label="View sources"
+                />
+              </CardActions>
+            </Card>
+
             :null
         }
       </div>

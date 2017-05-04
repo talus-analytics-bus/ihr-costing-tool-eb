@@ -90,3 +90,44 @@
   display: flex;
   flex-direction: column;
 }
+
+.expenseRowFormStartup,
+.expenseRowFormRecurring {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.expenseRowFormStartup > div,
+.expenseRowFormRecurring > div {
+  min-height: 20px;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.expenseRowFormStartup > div {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.expenseRowFormRecurring > div {
+  flex-basis: 16%;
+  flex-grow: 0;
+}
+
+.expenseRowFormStartup > div:before {
+  content: 'x';
+  position: relative;
+  top: 50%;
+  left: -13%;
+}
+
+.expenseRowFormStartup > div:first-child:before {
+  content: '';
+}
+
+.expenseRowInput {
+  display: flex;
+  width: 80% !important;
+}
