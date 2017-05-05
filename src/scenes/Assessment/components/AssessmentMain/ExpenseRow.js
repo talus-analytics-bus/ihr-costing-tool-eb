@@ -7,6 +7,28 @@ import styles from './AssessmentMain.css';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 export class ExpenseRow extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...this.props.expense,
+    };
+
+  }
+
+  nullHintText = (value) => {
+    if (value) {
+      return '';
+    }
+    return 'n/a';
+  }
+
+  handleChange = (key, value) => {
+    this.setState({
+      [key]: value,
+    });
+  }
+
   formatCurrency = (value) => {
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -29,12 +51,12 @@ export class ExpenseRow extends Component {
           <div className={styles.expenseRowName}>{this.props.expense.sophistication_name}</div>
           <div className={styles.expenseRowCosts}>
             {this.formatCurrency([
-              this.props.expense.cost || 0,
-              this.props.expense.cost_duration || 1,
-              this.props.expense.multiplier_staff || 1,
-              this.props.expense.multiplier_health_capacity || 1,
-              this.props.expense.multiplier_population || 1,
-              this.props.expense.multiplier_depreciation || 1,
+              this.state.cost || 0,
+              this.state.cost_duration || 1,
+              this.state.multiplier_staff || 1,
+              this.state.multiplier_health_capacity || 1,
+              this.state.multiplier_population || 1,
+              this.state.multiplier_depreciation || 1,
             ].reduce((acc, el) => acc * el, 1))}
           </div>
           <div className={styles.expenseRowCosts}>{this.formatCurrency(0)}</div>
@@ -57,54 +79,71 @@ export class ExpenseRow extends Component {
                   <div className={styles.expenseRowFormStartup}>
                     <div>
                       <TextField
-                        floatingLabelText="salary per year"
+                        floatingLabelText={this.props.expense.cost_unit}
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                        value={100}
+                        value={this.state.cost}
+                        hintText={this.nullHintText(this.state.cost)}
+                        onChange={(e) => this.handleChange('cost', e.target.value)}
                       />
                     </div>
                     <div>
                       <TextField
-                        floatingLabelText="salary per year"
+                        floatingLabelText={this.props.expense.cost_duration_unit}
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                        value={this.state.cost_duration}
+                        hintText={this.nullHintText(this.state.cost_duration)}
+                        onChange={(e) => this.handleChange('cost_duration', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        floatingLabelText="staff"
+                        floatingLabelFixed={true}
+                        className={styles.expenseRowInput}
+                        value={this.state.multiplier_staff}
+                        hintText={this.nullHintText(this.state.multiplier_staff)}
+                        onChange={(e) => this.handleChange('multiplier_staff', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        floatingLabelText="countries"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
                       />
                     </div>
                     <div>
                       <TextField
-                        floatingLabelText="salary per year"
+                        floatingLabelText="population"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
+                        value={this.state.multiplier_population}
+                        hintText={this.nullHintText(this.state.multiplier_population)}
+                        onChange={(e) => this.handleChange('multiplier_population', e.target.value)}
                       />
                     </div>
                     <div>
                       <TextField
-                        floatingLabelText="salary per year"
+                        floatingLabelText="staff"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        floatingLabelText="salary per year"
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        floatingLabelText="salary per year"
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
+                        value={this.state.multiplier_health_capacity}
+                        hintText={this.nullHintText(this.state.multiplier_health_capacity)}
+                        onChange={(e) => this.handleChange('multiplier_health_capacity', e.target.value)}
                       />
                     </div>
                   </div>
                   <div className={styles.expenseRowFormRecurring}>
                     <div>
                       <TextField
-                        floatingLabelText="salary per year"
+                        floatingLabelText="depreciation factor"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
+                        value={this.state.multiplier_depreciation}
+                        hintText={this.nullHintText(this.state.multiplier_depreciation)}
+                        onChange={(e) => this.handleChange('multiplier_depreciation', e.target.value)}
                       />
                     </div>
                   </div>
