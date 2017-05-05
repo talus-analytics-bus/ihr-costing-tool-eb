@@ -77,6 +77,23 @@ export const assessmentReducer = (state = initialState, action) => {
           }))
         }))
       }
+    case 'UPDATE_EXPENSE_VALUES':
+      return {
+        ...state,
+        jeeTree: state.jeeTree.map((core) => ({
+          ...core,
+          capacities: core.capacities.map((capacity) => ({
+            ...capacity,
+            indicators: capacity.indicators.map((indicator) => ({
+              ...indicator,
+              expenses: indicator.expenses.map((expense) => ({
+                ...expense,
+                ...action.values,
+              }))
+            }))
+          }))
+        }))
+      }
     default:
       return state;
   }

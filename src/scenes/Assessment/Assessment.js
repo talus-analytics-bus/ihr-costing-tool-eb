@@ -28,7 +28,8 @@ export class Assessment extends Component {
                   return prev.concat([{
                     ...expense,
                     editing: false,
-                    selected: prev.length === 0 || prev.slice(-1)[0].expense_id !== expense.expense_id
+                    selected: prev.length === 0 || prev.slice(-1)[0].expense_id !== expense.expense_id,
+                    defaults: expense,
                   }])
                 }, [])
               }))
