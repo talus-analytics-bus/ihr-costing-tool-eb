@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Peeper} from "../../../../components/Peeper/Peeper";
 import { ExpenseTable } from './ExpenseTable';
+import { capacityLevels } from '../../Assessment';
 
 export class Costing extends Component {
   constructor(props) {
@@ -36,8 +37,8 @@ export class Costing extends Component {
           togglePeeper={() => this.handlePeep(indicator.jee_id)}
         >
           <div>
-            <p>Current Capacity: <strong>({(indicator.selectedLevel || 0) + 1})</strong></p>
-            <p>Upgrade capacity to <strong>({Math.min((indicator.selectedLevel || 0) + 2, 5)})</strong></p>
+            <p>Current Capacity: <strong>{capacityLevels[indicator.selectedLevel || 0]} ({(indicator.selectedLevel || 0) + 1})</strong></p>
+            <p>Upgrade capacity to <strong>{capacityLevels[(indicator.selectedLevel || 0) + 1] || capacityLevels[4]} ({Math.min((indicator.selectedLevel || 0) + 2, 5)})</strong></p>
           </div>
           <ExpenseTable expenses={indicator.expenses} activeCurrency={this.props.activeCurrency} />
         </Peeper>

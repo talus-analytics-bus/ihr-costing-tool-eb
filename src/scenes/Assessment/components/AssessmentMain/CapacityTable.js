@@ -2,31 +2,32 @@ import React, { Component } from 'react';
 
 import Checkbox from 'material-ui/Checkbox';
 import styles from './AssessmentMain.css';
+import { capacityLevels } from '../../Assessment';
 
 export class CapacityTable extends Component {
   capacityRows = () => {
+    const name = (index) => `${capacityLevels[index]} Capacity - ${index + 1}`;
+
     const rows = [
       {
-        name: 'No Capacity - 1',
         color: 'red',
       },
       {
-        name: 'Limited Capacity - 2',
         color: 'yellow',
       },
       {
-        name: 'Developed Capacity - 3',
         color: 'yellw',
       },
       {
-        name: 'Demonstrated Capacity - 4',
         color: 'green',
       },
       {
-        name: 'Sustainable Capacity - 5',
         color: 'green',
       },
-    ]
+    ].map((row, index) => ({
+      ...row,
+      name: name(index)
+    }))
 
     return rows.map((row, index) => ({
       ...row,

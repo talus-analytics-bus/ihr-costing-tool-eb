@@ -7,6 +7,14 @@ import { AssessmentMainActive } from './components/AssessmentMain/AssessmentMain
 
 import styles from './Assessment.css';
 
+export const capacityLevels = [
+  'No',
+  'Limited',
+  'Developed',
+  'Demonstrated',
+  'Sustainable',
+]
+
 export class Assessment extends Component {
   setDefaults = (expense) => {
     const geoLevelMapping = (name) => {
