@@ -19,6 +19,7 @@ const NEXT_STEP = 'NEXT_STEP';
 
 const TOGGLE_EDITING_EXPENSE = 'TOGGLE_EDITING_EXPENSE';
 const UPDATE_EXPENSE_VALUES = 'UPDATE_EXPENSE_VALUES';
+const SELECT_EXPENSE = 'SELECT_EXPENSE';
 
 export const chooseCountry = (country, details) => ({
   type: CHOOSE_COUNTRY,
@@ -103,4 +104,10 @@ export const updateExpenseValues = (expense_id, sophistication_level, values) =>
   expense_id,
   sophistication_level,
   values,
+})
+
+export const selectExpense = (expense_id, sophistication_level) => ({
+  type: SELECT_EXPENSE,
+  expense_id,
+  sophistication_level,
 })

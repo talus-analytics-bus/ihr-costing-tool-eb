@@ -85,6 +85,7 @@ export class ExpenseRow extends Component {
           <div className={styles.expenseRowSelect}>
             <Checkbox
               checked={this.props.expense.selected}
+              onCheck={() => this.props.selectExpense(this.props.expense.expense_id, this.props.expense.sophistication_level[0])}
             />
           </div>
           <div className={styles.expenseRowName}>{this.props.expense.sophistication_name}</div>
@@ -203,8 +204,8 @@ export class ExpenseRow extends Component {
                 />
                 <RaisedButton
                   label="View sources"
-                  onClick={this.toggleSource}
-                  onRequestClose={this.toggleSource}
+                  // onClick={this.toggleSource}
+                  // onRequestClose={this.toggleSource}
                 />
                 <Popover
                   open={this.state.sourceOpen}

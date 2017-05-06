@@ -94,6 +94,33 @@ export const assessmentReducer = (state = initialState, action) => {
           }))
         }))
       }
+    case 'SELECT_EXPENSE':
+      const isSelected = ({expense_id, sophistication_level, selected}) => {
+        if (expense_id === action.expense_id && sophistication_level.includes(action.sophistication_level)) {
+          return true;
+        }
+        if (expense_id === action.expense_id) {
+          return false;
+        }
+        return selected;
+      }
+
+      return {
+        ...state,
+        jeeTree: state.jeeTree.map((core) => ({
+          ...core,
+          capacities: core.capacities.map((capacity) => ({
+            ...capacity,
+            indicators: capacity.indicators.map((indicator) => ({
+              ...indicator,
+              expenses: indicator.expenses.map((expense) => ({
+                ...expense,
+                selected: isSelected(expense),
+              }))
+            }))
+          }))
+        }))
+      }
     default:
       return state;
   }
