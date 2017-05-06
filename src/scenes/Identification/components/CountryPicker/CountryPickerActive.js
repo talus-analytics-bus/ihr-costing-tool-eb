@@ -1,30 +1,29 @@
 import { connect } from 'react-redux';
-import { chooseCountry, setCountries, chooseCurrency, setCurrencies, setCountryMap, setCountryDetails } from '../../../../actions'
-import { CountryPicker } from '../CountryPicker/CountryPicker';
+import { chooseCountry, setCountries, chooseCurrency, setCurrencies, setCountryMap, setCountryDetails } from '../../../../actions/index'
+import { CountryPicker } from './CountryPicker';
 
 const mapStateToProps = (state) => {
   return {
     countries: state.data.countries,
-    activeCountry: state.identification.country,
+    activeCountry: state.identification.country.key,
     currencies: state.data.currencies,
-    activeCurrency: state.identification.currency,
+    activeCurrency: state.identification.currency.key,
     countryMap: state.data.countryMap,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCountrySelect: (country, currency, details) => {
-      console.log(details);
-      dispatch(chooseCountry(country));
-      dispatch(chooseCurrency(currency));
+    onCountrySelect: (country, currency, details, currencyDetails) => {
+      dispatch(chooseCountry(country, details));
+      dispatch(chooseCurrency(currency, currencyDetails));
       dispatch(setCountryDetails(details))
     },
     populateCountries: (countries) => {
       dispatch(setCountries(countries));
     },
-    onCurrencySelect: (currency) => {
-      dispatch(chooseCurrency(currency));
+    onCurrencySelect: (currency, details) => {
+      dispatch(chooseCurrency(currency, details));
     },
     populateCurrencies: (currencies) => {
       dispatch(setCurrencies(currencies));

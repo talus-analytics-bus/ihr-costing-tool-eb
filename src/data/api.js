@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { jeeTree } from './jeeTree';
 
 const baseUrl = 'http://localhost:9500';
 
@@ -128,6 +129,10 @@ export class Api {
         return response.data;
       })
       .catch(console.error);
+  }
+
+  static fetchJeeTree() {
+    return Promise.resolve(jeeTree);
   }
 
 }

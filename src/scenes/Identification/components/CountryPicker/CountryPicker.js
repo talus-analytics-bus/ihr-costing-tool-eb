@@ -39,8 +39,14 @@ export class CountryPicker extends Component {
     return this.props.countries.find((c) => c.abbreviation === countryCode);
   }
 
+  getCurrencyDetails = (currency) => {
+    return this.props.currencies.find((curr) => curr.key === currency);
+  }
+
   selectCountry = (countryCode) => {
-    this.props.onCountrySelect(countryCode, this.getCurrencyOfCountry(countryCode), this.getCountryDetails(countryCode));
+    const currency = this.getCurrencyOfCountry(countryCode);
+
+    this.props.onCountrySelect(countryCode, currency, this.getCountryDetails(countryCode), this.getCurrencyDetails(currency));
   }
 
   render() {
@@ -55,7 +61,7 @@ export class CountryPicker extends Component {
               active={this.props.activeCountry}
             />
             <CurrencyDropdown
-              handleChange={this.props.onCurrencySelect}
+              handleChange={(currency) => this.props.onCurrencySelect(currency, this.getCurrencyDetails(currency))}
               currencies={this.props.currencies}
               active={this.props.activeCurrency}
             />

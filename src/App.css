@@ -20,24 +20,24 @@
   padding-bottom: 20px;
 }
 
-.main > div {
+.fixedWidth {
   flex-basis: 70%;
 }
 
 @media (max-width: 1024px) {
-  .main > div {
+  .fixedWidth {
     flex-basis: 85%;
   }
 }
 
 @media (max-width: 768px) {
-  .main > div {
+  .fixedWidth {
     flex: auto;
   }
 }
 
 .sidebar {
-  flex-basis: 33%;
+  flex-basis: 30%;
   border-right: 1px solid black;
 }
 

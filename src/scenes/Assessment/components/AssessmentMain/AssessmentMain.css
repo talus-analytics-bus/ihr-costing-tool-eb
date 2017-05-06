@@ -1,0 +1,133 @@
+.assessmentMain {
+  padding: 20px;
+}
+
+.assessmentDescription {
+
+}
+
+.assessmentAction {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.capacityTable {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.capacityRow {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid gray;
+}
+
+.capacityCell {
+  flex: 1;
+  border-right: 1px solid gray;
+  padding: 10px 5px;
+}
+
+.capacityCell:last-child {
+  border-right: none;
+}
+
+.capacityCellWithRadio {
+  composes: capacityCell;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.capacityCellWithRadio > p {
+  flex-grow: 1;
+}
+
+.capacityCellRadio {
+  display: flex !important;
+  flex-basis: 10%;
+}
+
+.expenseTable {
+  font-size: 14px;
+}
+
+.expenseRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.expenseRowSummary {
+  display: flex;
+  flex-direction: row;
+}
+
+.expenseRowSummary > div {
+  display: flex;
+  align-items: center;
+}
+
+.expenseRowSelect {
+  flex-basis: 5%;
+}
+
+.expenseRowName {
+  flex-basis: 60%;
+}
+
+.expenseRowCosts {
+  flex-basis: 10%;
+}
+
+.expenseRowAction {
+  flex-basis: 10%;
+}
+
+.expenseRowForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.expenseRowFormStartup,
+.expenseRowFormRecurring {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.expenseRowFormStartup > div,
+.expenseRowFormRecurring > div {
+  min-height: 20px;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.expenseRowFormStartup > div {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.expenseRowFormRecurring > div {
+  flex-basis: 16%;
+  flex-grow: 0;
+}
+
+.expenseRowFormStartup > div:before {
+  content: 'x';
+  position: relative;
+  top: 50%;
+  left: -13%;
+}
+
+.expenseRowFormStartup > div:first-child:before {
+  content: '';
+}
+
+.expenseRowInput {
+  display: flex;
+  width: 80% !important;
+}

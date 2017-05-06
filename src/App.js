@@ -12,6 +12,7 @@ import {
 import { Home } from './scenes/Home/Home';
 import { Identification } from './scenes/Identification/Identification';
 import { Start } from './scenes/Start/Start';
+import { AssessmentActive } from './scenes/Assessment/AssessmentActive';
 import { Costing } from './scenes/Costing/Costing';
 import { Results } from './scenes/Results/Results';
 
@@ -29,6 +30,7 @@ class App extends Component {
               <Route exact path="/" component={Home}></Route>
               <Route path="/identification" component={Identification}></Route>
               <Route path="/start" component={Start}></Route>
+              <Route path="/assessment" component={AssessmentActive}></Route>
               <Route path="/Costing" component={Costing}></Route>
               <Route path="/Results" component={Results}></Route>
             </div>
