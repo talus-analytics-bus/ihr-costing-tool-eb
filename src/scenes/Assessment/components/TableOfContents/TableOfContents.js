@@ -4,9 +4,18 @@ import styles from './TableOfContents.css';
 
 class Capacity extends Component {
   render() {
+    console.log(this.props);
     return (
-      <div className={`${styles.capacity} ${this.props.capacity.active ? styles.activeCapacity : null}`}>
-        {this.props.capacity.name}
+      <div className={`${styles.capacity} ${this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex ? styles.activeCapacity : null}`}>
+        <p>{this.props.capacity.name}</p>
+        <ul>
+          <li>
+            Self-assessment
+          </li>
+          <li>
+            Costing
+          </li>
+        </ul>
       </div>
     )
   }
@@ -22,7 +31,7 @@ class IndicatorGroup extends Component {
         <div className={`${styles.capacities} ${this.props.indicator.capacities.length === 0 ? styles.capacitiesEmpty: null}`}>
         {
           this.props.indicator.capacities.map((capacity, index) =>
-            <Capacity capacity={capacity} key={index}/>
+            <Capacity capacity={capacity} key={index} active={this.props.active} coreIndex={this.props.coreIndex} capacityIndex={index}/>
           )
         }
         </div>
@@ -37,7 +46,7 @@ export class TableOfContents extends Component {
       <div className={styles.tableOfContents}>
       {
         this.props.entries.map((indicator, index) =>
-          <IndicatorGroup indicator={indicator} key={index}/>
+          <IndicatorGroup indicator={indicator} key={index} active={this.props.active} coreIndex={index}/>
         )
       }
       </div>

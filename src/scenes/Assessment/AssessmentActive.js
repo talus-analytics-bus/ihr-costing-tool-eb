@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
     jeeTree: state.assessment.jeeTree,
     population: state.identification.population,
     geo_levels: state.identification.geo_levels,
-    advanced: state.identification.advanced,
+    advanced: state.identification.advanced
   }
 }
 

@@ -4,11 +4,13 @@ import { AssessmentMain } from './AssessmentMain';
 
 export const mapStateToProps = (state) => {
   return {
-    activeCapacity: ((state.assessment.jeeTree
-      .find((core) => core.active) || {}).capacities || [])
-      .find((capacity) => capacity.active),
+    activeCapacity: state.assessment.jeeTree.length > 0 ?
+      state.assessment.jeeTree[state.assessment.active.core]
+      .capacities[state.assessment.active.capacity] : null,
+    activeStage: state.assessment.active.stage,
     activeCountry: state.identification.country,
     activeCurrency: state.identification.currency,
+    assessmentFirst: state.start.manual.assessmentFirst,
   }
 }
 
@@ -20,8 +22,8 @@ export const mapDispatchToProps = (dispatch) => {
     setActiveCapacityLevel: (indicator, level) => {
       dispatch(setActiveCapacityLevel(indicator, level));
     },
-    nextStep: () => {
-      dispatch(nextStep());
+    nextStep: (assessmentFirst) => {
+      dispatch(nextStep(assessmentFirst));
     }
   }
 }

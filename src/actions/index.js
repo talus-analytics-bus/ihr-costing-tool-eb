@@ -89,8 +89,9 @@ export const setActiveCapacityLevel = (indicator, level) => ({
   level,
 })
 
-export const nextStep = () => ({
+export const nextStep = (assessmentFirst) => ({
   type: NEXT_STEP,
+  assessmentFirst,
 })
 
 export const toggleEditingExpense = (expense_id, sophistication_level) => ({

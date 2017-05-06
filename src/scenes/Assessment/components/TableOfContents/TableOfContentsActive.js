@@ -4,6 +4,7 @@ import { TableOfContents } from './TableOfContents';
 const mapStateToProps = (state) => {
   return {
     entries: state.assessment.jeeTree,
+    active: state.assessment.active,
   }
 }
 

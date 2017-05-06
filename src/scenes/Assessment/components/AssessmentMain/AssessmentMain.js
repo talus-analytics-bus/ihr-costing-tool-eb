@@ -15,7 +15,7 @@ export class AssessmentMain extends Component {
         <div className={styles.assessmentMain}>
           <AssessmentDescription activeCapacity={this.props.activeCapacity} />
           {
-            this.props.activeCapacity.stage === 'assessment' ?
+            this.props.activeStage === 'assessment' ?
               <CapacityTable
                 activeCapacity={this.props.activeCapacity}
                 setActiveCapacityLevel={this.props.setActiveCapacityLevel}
@@ -29,7 +29,7 @@ export class AssessmentMain extends Component {
           <div className={styles.assessmentAction}>
             <RaisedButton
               label="Next"
-              onClick={this.props.nextStep}
+              onClick={() => this.props.nextStep(this.props.assessmentFirst)}
             />
           </div>
         </div>

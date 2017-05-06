@@ -1,5 +1,10 @@
 const initialState = {
-  jeeTree: []
+  jeeTree: [],
+  active: {
+    core: 0,
+    capacity: 0,
+    stage: 'assessment',
+  }
 }
 
 export const assessmentReducer = (state = initialState, action) => {
@@ -50,16 +55,30 @@ export const assessmentReducer = (state = initialState, action) => {
         'costing',
       ];
 
+      if (action.assessmentFirst) {
+        return {
+          ...state,
+          active: {
+            core: state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1 ? (state.active.core === state.jeeTree.length - 1 ? 0 : state.active.core + 1) : state.active.core,
+            capacity: state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1 ? 0 : state.active.capacity + 1,
+            stage: state.active.stage === 'costing' ? 'costing' :
+              (
+                state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1
+                && state.active.core === state.jeeTree.length - 1
+                && state.active.stage === 'assessment' ? 'costing' : 'assessment'
+              )
+          }
+        }
+      }
+
       return {
         ...state,
-        jeeTree: state.jeeTree.map((core) => ({
-          ...core,
-          capacities: core.capacities.map((capacity) => ({
-            ...capacity,
-            stage: capacity.active ? toggle[1 - toggle.indexOf(capacity.stage)] : capacity.stage,
-          }))
-        }))
-      };
+        active: {
+          core: state.active.stage === 'assessment' ? state.active.core : (state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1 ? state.active.core + 1 : state.active.core),
+          capacity: state.active.stage === 'assessment' ? state.active.capacity : (state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1 ? 0 : state.active.capacity + 1),
+          stage: toggle[1- toggle.indexOf(state.active.stage)]
+        }
+      }
     case 'TOGGLE_EDITING_EXPENSE':
       return {
         ...state,
