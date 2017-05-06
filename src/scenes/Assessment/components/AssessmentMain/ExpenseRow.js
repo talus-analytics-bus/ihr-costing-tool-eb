@@ -11,7 +11,7 @@ export class ExpenseRow extends Component {
   constructor(props) {
     super(props);
 
-    const { cost, cost_unit, cost_duration, multiplier_staff, multiplier_health_capacity, multiplier_population, multiplier_depreciation } = this.props.expense;
+    const { cost, cost_unit, cost_duration, multiplier_staff, multiplier_health_capacity, multiplier_population, multiplier_depreciation, multiplier_area_name, multiplier_area_value } = this.props.expense;
 
     this.state = {
       cost,
@@ -21,6 +21,8 @@ export class ExpenseRow extends Component {
       multiplier_health_capacity,
       multiplier_population,
       multiplier_depreciation,
+      multiplier_area_name,
+      multiplier_area_value,
       sourceOpen: false
     };
 
@@ -96,10 +98,24 @@ export class ExpenseRow extends Component {
               this.state.multiplier_staff || 1,
               this.state.multiplier_health_capacity || 1,
               this.state.multiplier_population || 1,
-              this.state.multiplier_depreciation || 1,
             ].reduce((acc, el) => acc * el, 1))}
           </div>
-          <div className={styles.expenseRowCosts}>{this.formatCurrency(0)}</div>
+          <div className={styles.expenseRowCosts}>
+            {
+              this.formatCurrency(
+                this.state.multiplier_depreciation ?
+                  [
+                    this.state.cost || 0,
+                    this.state.cost_duration || 1,
+                    this.state.multiplier_staff || 1,
+                    this.state.multiplier_health_capacity || 1,
+                    this.state.multiplier_population || 1,
+                    this.state.multiplier_depreciation,
+                  ].reduce((acc, el) => acc * el, 1)
+                  : 0
+              )
+            }
+          </div>
           <div className={styles.expenseRowAction}>
             {
               !this.props.expense.editing ?
@@ -149,9 +165,12 @@ export class ExpenseRow extends Component {
                     </div>
                     <div>
                       <TextField
-                        floatingLabelText="countries"
+                        floatingLabelText={this.props.expense.multiplier_area_name}
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
+                        value={this.state.multiplier_area_value}
+                        hintText={this.nullHintText(this.state.multiplier_area_value)}
+                        onChange={(e) => this.handleChange('multiplier_area_value', e.target.value)}
                       />
                     </div>
                     <div>

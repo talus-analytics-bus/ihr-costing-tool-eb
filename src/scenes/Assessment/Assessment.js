@@ -8,6 +8,23 @@ import { AssessmentMainActive } from './components/AssessmentMain/AssessmentMain
 import styles from './Assessment.css';
 
 export class Assessment extends Component {
+  setDefaults = (expense) => {
+    const geoLevelMapping = (name) => {
+      const key = expense.multiplier_area.split('_').join(' ');
+
+      return `${key.slice(0, 1).toUpperCase()}${key.slice(1)}`;
+    }
+
+    return {
+      ...expense,
+      multiplier_staff: this.props.advanced.staff.epi_count || this.props.advanced.staff.chw_count,
+      multiplier_health_capacity: this.props.advanced.hospitals[expense.multiplier_area ? expense.multiplier_area.split('_').join('') : 'chc'],
+      multiplier_population: this.props.population.value,
+      multiplier_area_name: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].name.toLowerCase(),
+      multiplier_area_value: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].value,
+    }
+  }
+
   componentDidMount() {
     if (this.props.jeeTree !== []) {
       Api.fetchJeeTree()
@@ -26,10 +43,10 @@ export class Assessment extends Component {
                 selectedLevel: null,
                 expenses: indicator.expenses.reduce((prev, expense) => {
                   return prev.concat([{
-                    ...expense,
+                    ...this.setDefaults(expense),
                     editing: false,
                     selected: false,//prev.length === 0 || prev.slice(-1)[0].expense_id !== expense.expense_id,
-                    defaults: expense,
+                    defaults: this.setDefaults(expense),
                   }])
                 }, [])
               }))

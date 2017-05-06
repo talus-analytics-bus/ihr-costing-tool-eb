@@ -3,7 +3,9 @@ import { ExpenseRow } from './ExpenseRow';
 import { toggleEditingExpense, updateExpenseValues, selectExpense } from '../../../../actions';
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    geo_levels: state.identification.geo_levels,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
