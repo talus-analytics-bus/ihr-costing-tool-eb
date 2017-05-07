@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import ActionHome from 'material-ui/svg-icons/action/home';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom'
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 export class ManualAssessment extends Component {
   render() {
@@ -20,10 +19,20 @@ export class ManualAssessment extends Component {
           </IconButton>
         </p>
         <div>
-          <DropDownMenu value={this.props.manual.assessmentFirst} onChange={(e, i, v) => this.props.setAssessmentFirst(v)}>
-            <MenuItem value={true} primaryText="Complete all assessments first"></MenuItem>
-            <MenuItem value={false} primaryText="Assess when needed"></MenuItem>
-          </DropDownMenu>
+          <RadioButtonGroup
+            name="assessFirst"
+            valueSelected={this.props.manual.assessmentFirst}
+            onChange={(e) => this.props.setAssessmentFirst(e.target.value)}
+          >
+            <RadioButton
+              value={true}
+              label="Complete all assessments first"
+            />
+            <RadioButton
+              value={false}
+              label="Assess and cost each indicator"
+            />
+          </RadioButtonGroup>
         </div>
         <div>
           <RaisedButton
