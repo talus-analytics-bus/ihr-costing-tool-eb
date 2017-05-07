@@ -9,6 +9,7 @@ import { Peeper } from '../../../../components/Peeper/Peeper';
 export class CountryDetails extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
 
     this.state = {
       population: null,
@@ -64,32 +65,32 @@ export class CountryDetails extends Component {
               <tbody>
               <tr>
                 <td>epidemiologists</td>
-                <td>{this.props.staff.epi_count}</td>
+                <td>{this.props.staff.epi_count.value}</td>
                 <td>Modify</td>
               </tr>
               <tr>
                 <td>community health workers</td>
-                <td>{this.props.staff.chw_count}</td>
+                <td>{this.props.staff.chw_count.value}</td>
                 <td>Modify</td>
               </tr>
               <tr>
                 <td>national hospitals</td>
-                <td>{this.props.hospitals.level_1_count}</td>
+                <td>{this.props.hospitals.level1.value}</td>
                 <td>Modify</td>
               </tr>
               <tr>
                 <td>state hospitals</td>
-                <td>{this.props.hospitals.level_2_count}</td>
+                <td>{this.props.hospitals.level2.value}</td>
                 <td>Modify</td>
               </tr>
               <tr>
                 <td>county hospitals</td>
-                <td>{this.props.hospitals.level_3_count}</td>
+                <td>{this.props.hospitals.level3.value}</td>
                 <td>Modify</td>
               </tr>
               <tr>
                 <td>community health centers</td>
-                <td>{this.props.hospitals.chc_count}</td>
+                <td>{this.props.hospitals.chc.value}</td>
                 <td>Modify</td>
               </tr>
               </tbody>
