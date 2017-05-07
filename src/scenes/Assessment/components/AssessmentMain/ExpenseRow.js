@@ -91,7 +91,7 @@ export class ExpenseRow extends Component {
             />
           </div>
           <div className={styles.expenseRowName}>{this.props.expense.sophistication_name}</div>
-          <div className={styles.expenseRowCosts}>
+          <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
             {this.formatCurrency([
               this.state.cost || 0,
               this.state.cost_duration || 1,
@@ -100,7 +100,7 @@ export class ExpenseRow extends Component {
               this.state.multiplier_population || 1,
             ].reduce((acc, el) => acc * el, 1))}
           </div>
-          <div className={styles.expenseRowCosts}>
+          <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
             {
               this.formatCurrency(
                 this.state.multiplier_depreciation ?

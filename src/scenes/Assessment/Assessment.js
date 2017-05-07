@@ -8,7 +8,7 @@ import { AssessmentMainActive } from './components/AssessmentMain/AssessmentMain
 import styles from './Assessment.css';
 
 export const capacityLevels = [
-  'No',
+  'None',
   'Limited',
   'Developed',
   'Demonstrated',

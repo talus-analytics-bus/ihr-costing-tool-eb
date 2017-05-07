@@ -66,24 +66,33 @@
 }
 
 .expenseRowSummary > div {
-  display: flex;
-  align-items: center;
+  /*align-items: center;*/
 }
 
 .expenseRowSelect {
-  flex-basis: 5%;
+  flex: 1 0 0;
 }
 
 .expenseRowName {
-  flex-basis: 60%;
+  flex: 12 0 0;
 }
 
 .expenseRowCosts {
-  flex-basis: 10%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 5px;
+  flex: 2 0 0px;
+  max-width: 10%;
 }
 
 .expenseRowAction {
-  flex-basis: 10%;
+  flex: 2 0 0;
+}
+
+.expenseCurrency {
+
+  text-align: right;
 }
 
 .expenseRowForm {
@@ -130,4 +139,10 @@
 .expenseRowInput {
   display: flex;
   width: 80% !important;
+}
+
+.expenseTableLabels {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
 }

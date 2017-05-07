@@ -6,7 +6,7 @@ import { capacityLevels } from '../../Assessment';
 
 export class CapacityTable extends Component {
   capacityRows = () => {
-    const name = (index) => `${capacityLevels[index]} Capacity - ${index + 1}`;
+    const name = (index) => `${capacityLevels[index] === 'None' ? 'No' : capacityLevels[index]} Capacity - ${index + 1}`;
 
     const rows = [
       {

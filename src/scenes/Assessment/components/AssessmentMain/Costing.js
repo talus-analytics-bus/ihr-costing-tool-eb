@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Peeper} from "../../../../components/Peeper/Peeper";
 import { ExpenseTable } from './ExpenseTable';
 import { capacityLevels } from '../../Assessment';
+import styles from './AssessmentMain.css';
 
 export class Costing extends Component {
   constructor(props) {
@@ -39,6 +40,12 @@ export class Costing extends Component {
           <div>
             <p>Current Capacity: <strong>{capacityLevels[indicator.selectedLevel || 0]} ({(indicator.selectedLevel || 0) + 1})</strong></p>
             <p>Upgrade capacity to <strong>{capacityLevels[(indicator.selectedLevel || 0) + 1] || capacityLevels[4]} ({Math.min((indicator.selectedLevel || 0) + 2, 5)})</strong></p>
+          </div>
+          <div className={styles.expenseTableLabels}>
+            <div className={styles.expenseRowName}>&nbsp;</div>
+            <div className={styles.expenseRowCosts}>Start-up costs</div>
+            <div className={styles.expenseRowCosts}>Recurring annual costs</div>
+            <div className={styles.expenseRowAction}>&nbsp;</div>
           </div>
           <ExpenseTable expenses={indicator.expenses} activeCurrency={this.props.activeCurrency} />
         </Peeper>

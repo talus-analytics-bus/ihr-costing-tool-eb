@@ -1,6 +1,6 @@
 const initialState = {
   manual: {
-    assessmentFirst: true,
+    assessmentFirst: false,
   }
 }
 
