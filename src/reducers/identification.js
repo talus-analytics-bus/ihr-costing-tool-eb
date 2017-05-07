@@ -36,41 +36,62 @@ const initialState = {
   advanced: {
     show: false,
     staff: {
-      epi_count: 0,
-      chw_count: 0,
+      epi_count: {
+        value: 0,
+        editing: false,
+      },
+      chw_count: {
+        value: 0,
+        editing: false,
+      },
     },
     hospitals: {
-      level1: 0,
-      level2: 0,
-      level3: 0,
-      level4: 0,
-      chc: 0,
+      level1: {
+        value: 0,
+        editing: false,
+      },
+      level2: {
+        value: 0,
+        editing: false,
+      },
+      level3: {
+        value: 0,
+        editing: false,
+      },
+      level4: {
+        value: 0,
+        editing: false,
+      },
+      chc: {
+        value: 0,
+        editing: false,
+      },
     }
   }
 };
 
 const editTargets = (state, target) => {
   const geoLevel = (s, key) => {
-    return {...state, identification: {
-      ...state.identification,
+    return {
+      ...state,
       geo_levels: {
-        ...state.identification.geo_levels,
+        ...state.geo_levels,
         [key]: {
-          ...state.identification.geo_levels[key],
-          editing: !state.identification.geo_levels[key].editing,
+          ...state.geo_levels[key],
+          editing: !state.geo_levels[key].editing,
         }
       }
-    }}
+    }
   }
   switch (target) {
     case 'population':
-      return {...state, identification: {
-        ...state.identification,
+      return {
+        ...state,
         population: {
-          ...state.identification.population,
-          editing: !state.identification.population.editing
+          ...state.population,
+          editing: !state.population.editing
         }
-      }}
+      }
     case 'geo_Level 1':
     case 'geo_Level 2':
     case 'geo_Level 3':
@@ -149,15 +170,36 @@ export const identificationReducer = (state = initialState, action) => {
         ...state,
         advanced: {
           staff: {
-            epi_count: action.details.advanced_info.staff.national_epi_count,
-            chw_count: action.details.advanced_info.staff.national_chw_count,
+            epi_count: {
+              editing: false,
+              value: action.details.advanced_info.staff.national_epi_count
+            },
+            chw_count: {
+              editing: false,
+              value: action.details.advanced_info.staff.national_chw_count
+            },
           },
           hospitals: {
-            level1: action.details.advanced_info.hospitals.level_1_count,
-            level2: action.details.advanced_info.hospitals.level_2_count,
-            level3: action.details.advanced_info.hospitals.level_3_count,
-            level4: action.details.advanced_info.hospitals.level_4_count,
-            chc: action.details.advanced_info.hospitals.chc_count,
+            level1: {
+              editing: false,
+              value: action.details.advanced_info.hospitals.level_1_count
+            },
+            level2: {
+              editing: false,
+              value: action.details.advanced_info.hospitals.level_2_count
+            },
+            level3: {
+              editing: false,
+              value: action.details.advanced_info.hospitals.level_3_count
+            },
+            level4: {
+              editing: false,
+              value: action.details.advanced_info.hospitals.level_4_count
+            },
+            chc: {
+              editing: false,
+              value: action.details.advanced_info.hospitals.chc_count
+            },
           },
         },
         population: {

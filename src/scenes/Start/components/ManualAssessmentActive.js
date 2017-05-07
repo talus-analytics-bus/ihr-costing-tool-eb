@@ -12,6 +12,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAssessmentFirst: (assessmentFirst) => {
+      if (typeof assessmentFirst === 'string') {
+        assessmentFirst = assessmentFirst === "true";
+      }
       dispatch(setAssessmentFirst(assessmentFirst));
     }
   }

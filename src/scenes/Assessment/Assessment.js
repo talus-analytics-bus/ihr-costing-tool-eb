@@ -25,8 +25,8 @@ export class Assessment extends Component {
 
     return {
       ...expense,
-      multiplier_staff: this.props.advanced.staff.epi_count || this.props.advanced.staff.chw_count,
-      multiplier_health_capacity: this.props.advanced.hospitals[expense.multiplier_area ? expense.multiplier_area.split('_').join('') : 'chc'],
+      multiplier_staff: this.props.advanced.staff.epi_count.value || this.props.advanced.staff.chw_count,
+      multiplier_health_capacity: this.props.advanced.hospitals[expense.multiplier_area ? expense.multiplier_area.split('_').join('') : 'chc'].value,
       multiplier_population: this.props.population.value,
       multiplier_area_name: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].name.toLowerCase(),
       multiplier_area_value: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].value,
