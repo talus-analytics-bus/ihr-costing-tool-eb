@@ -51,26 +51,26 @@ const initialState = {
 
 const editTargets = (state, target) => {
   const geoLevel = (s, key) => {
-    return {...state, identification: {
-      ...state.identification,
+    return {
+      ...state,
       geo_levels: {
-        ...state.identification.geo_levels,
+        ...state.geo_levels,
         [key]: {
-          ...state.identification.geo_levels[key],
-          editing: !state.identification.geo_levels[key].editing,
+          ...state.geo_levels[key],
+          editing: !state.geo_levels[key].editing,
         }
       }
-    }}
+    }
   }
   switch (target) {
     case 'population':
-      return {...state, identification: {
-        ...state.identification,
+      return {
+        ...state,
         population: {
-          ...state.identification.population,
-          editing: !state.identification.population.editing
+          ...state.population,
+          editing: !state.population.editing
         }
-      }}
+      }
     case 'geo_Level 1':
     case 'geo_Level 2':
     case 'geo_Level 3':
