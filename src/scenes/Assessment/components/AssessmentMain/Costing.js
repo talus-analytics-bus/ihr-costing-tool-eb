@@ -28,7 +28,7 @@ export class Costing extends Component {
   render() {
 
     return (
-      <div>
+      <div className={styles.costingContainer}>
       {
         this.props.activeCapacity.indicators.map((indicator, index) =>
         <Peeper

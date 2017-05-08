@@ -1,5 +1,5 @@
 .peeper {
-  margin: 20px 0;
+  margin: 10px 15px;
 }
 
 .peeperLabel {
@@ -25,3 +25,8 @@
 .peeperActive .peeperContent {
   display: block;
 }
+.peeperActive .peeperContent p {
+  margin-top: 10px;
+}
+
+.peeper strong { font-weight: 400; }

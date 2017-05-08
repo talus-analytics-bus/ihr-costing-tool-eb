@@ -16,7 +16,7 @@ export class CapacityTable extends Component {
         color: 'yellow',
       },
       {
-        color: 'yellw',
+        color: 'yellow',
       },
       {
         color: 'green',
@@ -40,8 +40,8 @@ export class CapacityTable extends Component {
   render() {
     console.log(this.props);
     return (
-      <div>
-        <p>Choose the capacity the most closely aligns with {this.props.activeCountry.details.name || 'the country'}'s policy</p>
+      <div className={styles.capacityTableContainer}>
+        <p>Choose the capacity the most closely aligns with {this.props.activeCountry.details.name || 'the country'}&#39;s policy:</p>
         <div>
           <div className={styles.capacityTable}>
             <div className={styles.capacityRow}>
