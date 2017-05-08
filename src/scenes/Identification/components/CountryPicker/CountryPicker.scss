@@ -1,0 +1,35 @@
+.countryPicker {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  h2 {
+    margin-bottom: 30px;
+  }
+}
+
+.countryPickerContent {
+  flex: auto;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+}
+
+.countryPickerSelect {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .countryPickerSelect {
+    flex-basis: 50%;
+  }
+}
+
+.countryPickerMap {
+  flex-grow: 1;
+  border: 1px solid black;
+}

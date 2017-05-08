@@ -2,10 +2,19 @@
   composes: fixedWidth from '../../App.css';
   display: flex;
   flex-direction: column;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 20px 50px;
 }
 
 h2 {
   font-family: Raleway, 'Open Sans', sans-serif;
+}
+
+.countryDetailsContainer {
+	padding-top: 20px;
+	border-top: 1px solid #ccc;
+	margin-top: 20px;
 }
 
 .continueAction {

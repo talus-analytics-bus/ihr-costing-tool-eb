@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
+import styles from './ManualAssessment.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import { Link } from 'react-router-dom'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
@@ -12,11 +13,9 @@ export class ManualAssessment extends Component {
       <div>
         <h2>Complete assessments manually</h2>
         <p>
-          Would you like to complete all assessments before costing? <br />
-          Or would you like to assess each indicator as you cost?
-          <IconButton tooltip="Help text here">
-            <ActionHome />
-          </IconButton>
+          Assess the country&#39;s score for each capacity. Would you rather
+          complete all assessments before costing or 
+          assess each capacity as you cost?
         </p>
         <div>
           <RadioButtonGroup
@@ -25,17 +24,20 @@ export class ManualAssessment extends Component {
             onChange={(e) => this.props.setAssessmentFirst(e.target.value)}
           >
             <RadioButton
+              className={styles.radioButton}
               value={true}
               label="Complete all assessments first"
             />
             <RadioButton
+              className={styles.radioButton}
               value={false}
               label="Assess and cost each indicator"
             />
           </RadioButtonGroup>
         </div>
-        <div>
+        <div className={styles.continueButtonContainer}>
           <RaisedButton
+            primary={true}
             label="Start"
             containerElement={<Link to="/assessment/" />}
           />

@@ -1,3 +1,18 @@
 .start {
   composes: fixedWidth from '../../App.css';
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 20px 50px;
+  max-width: 900px;
+}
+
+.uploadButton {
+	margin-right: 10px;
+}
+
+.orText {
+	margin: 30px;
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: 600;
 }

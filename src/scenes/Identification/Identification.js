@@ -12,10 +12,15 @@ export class Identification extends Component {
   render() {
     return (
       <div className={styles.identification}>
-        <CountryPickerActive />
-        <CountryDetailsActive />
+        <div className={styles.countryPickerContainer}>
+          <CountryPickerActive />
+        </div>
+        <div className={styles.countryDetailsContainer}>
+          <CountryDetailsActive />
+        </div>
         <div className={styles.continueAction}>
           <RaisedButton
+            primary={true}
             label="Continue"
             containerElement={<Link to="/start/" />}
           />
