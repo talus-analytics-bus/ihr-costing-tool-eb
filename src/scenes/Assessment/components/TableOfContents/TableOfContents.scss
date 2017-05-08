@@ -1,0 +1,47 @@
+.tableOfContents {
+  display: flex;
+  flex-direction: column;
+}
+
+.indicatorGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.indicatorTitle {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.capacities {
+  margin-left: 20px;
+  padding: 0px 15px;
+  border-left: 1px dashed #555;
+  font-size: 0.9em;
+}
+
+.capacitiesEmpty {
+  display: none;
+}
+
+.capacity {
+  padding-bottom: 5px;
+  cursor: pointer;
+
+  p {
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+  ul { margin-top: 5px; }
+  li { margin-top: 5px; }
+  li:first-child { margin-top: 10px; }
+}
+
+.activeCapacity {
+  font-weight: 900;
+}
