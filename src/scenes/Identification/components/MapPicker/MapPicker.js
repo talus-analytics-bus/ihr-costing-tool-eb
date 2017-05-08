@@ -30,9 +30,9 @@ export class MapPicker extends Component {
 
   componentWillReceiveProps(nextProps) {
     const cMap = nextProps.countryMap;
-    let checkMap, features;
+    let checkMap, features, limit = 0;
 
-    if (this.props.countryMap !== {}) {
+    if (this.props.countryMap !== {} && Object.keys(cMap).length > 0) {
       features = topojson.feature(cMap, cMap.objects['countries-simplified']).features;
 
       this.setState({
@@ -42,13 +42,17 @@ export class MapPicker extends Component {
     }
 
     checkMap = setInterval(() => {
-      if (cMap !== {} && cMap !== this.props.countryMap) {
+      limit++;
+      if (Object.keys(cMap).length > 0 && cMap !== this.props.countryMap) {
         features = topojson.feature(cMap, cMap.objects['countries-simplified']).features;
 
         this.setState({
           features
         });
-        checkMap();
+        clearInterval(checkMap);
+      }
+      if (limit > 5) {
+        clearInterval(checkMap);
       }
     }, 1000);
 
