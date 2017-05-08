@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import styles from './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
+import logo from './images/WHO.png';
 import {
   BrowserRouter as Router,
   Route,
@@ -16,15 +18,28 @@ import { AssessmentActive } from './scenes/Assessment/AssessmentActive';
 import { Costing } from './scenes/Costing/Costing';
 import { Results } from './scenes/Results/Results';
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#3071a9',
+  },
+});
+
 
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <Router>
           <div className={styles.container}>
             <Toolbar className={styles.header}>
-                <ToolbarTitle text={<Link to="/">IHR Costing Tool</Link>} />
+              <img
+                alt={'World Health Organization'}
+                className={styles.logo}
+                src={logo}
+              />
+              <div className={styles.toolbarTitle}>
+                {<Link to="/">IHR Costing Tool</Link>}
+              </div>
             </Toolbar>
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
