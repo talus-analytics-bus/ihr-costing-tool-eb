@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { Country } from './data/models/Country';
 import { Currency } from './data/models/Currency';
 import { CountryTopo } from './data/models/CountryTopo';
+import { CoreCapacity } from './data/models/CoreCapacity';
 
 const port = 9500;
 let app = express();
@@ -44,6 +45,12 @@ app.get('/currencies', (req, res) => {
 app.get('/countries-map', (req, res) => {
   CountryTopo.findOne((err, countryTopo) => {
     res.send(countryTopo);
+  });
+});
+
+app.get('/jeetree', (req, res) => {
+  CoreCapacity.find((err, coreCapacities) => {
+    res.send(coreCapacities);
   });
 });
 
