@@ -32,3 +32,5 @@ export const currencySchema = mongoose.Schema({
     multiplier: Number,
   }],
 });
+
+export const Currency = mongoose.model('Currency', currencySchema);

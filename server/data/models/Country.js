@@ -38,3 +38,5 @@ export const countrySchema = mongoose.Schema({
     },
   },
 });
+
+export const Country = mongoose.model('Country', countrySchema);

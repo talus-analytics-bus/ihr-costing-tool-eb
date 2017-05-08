@@ -1,0 +1,5 @@
+{
+  "dbConnectionUri": "mongodb://mongo:27017/ihr",
+  "migrationsDir": "db/migrations",
+  "es6": true
+}

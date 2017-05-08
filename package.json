@@ -8,6 +8,7 @@
     "d3": "^3.5.17",
     "express": "^4.15.2",
     "material-ui": "^0.17.3",
+    "migrate-mongoose": "^3.2.2",
     "mongoose": "^4.9.5",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

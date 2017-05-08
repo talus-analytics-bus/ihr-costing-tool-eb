@@ -120,7 +120,11 @@ export class Api {
   }
 
   static fetchMap() {
-    return Promise.resolve(countryMap);
+    return axios.get(`${baseUrl}/countries-map`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch(console.error);
   }
 
   static fetchCurrencies() {
@@ -132,7 +136,11 @@ export class Api {
   }
 
   static fetchJeeTree() {
-    return Promise.resolve(jeeTree);
+    return axios.get(`${baseUrl}/jeetree`)
+      .then((response) => {
+        return response.data;
+      })
+      .catch(console.error);
   }
 
 }

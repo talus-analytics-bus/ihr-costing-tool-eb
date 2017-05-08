@@ -1,14 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-import { initialData } from './initialDb';
+import { Country } from './data/models/Country';
+import { Currency } from './data/models/Currency';
+import { CountryTopo } from './data/models/CountryTopo';
+import { CoreCapacity } from './data/models/CoreCapacity';
 
 const port = 9500;
 let app = express();
 
-mongoose.connect('mongodb://mongo:27017');
+mongoose.connect('mongodb://mongo:27017/ihr');
 
-let Country, Currency;
 
 const db = mongoose.connection;
 db.on('error', () => {
@@ -16,9 +18,6 @@ db.on('error', () => {
 });
 db.once('open', () => {
   console.log('connected to mongo');
-
-  const models = initialData();
-  [Country, Currency] = [models.Country, models.Currency];
 });
 
 app.use(function(req, res, next) {
@@ -40,6 +39,18 @@ app.get('/countries', (req, res) => {
 app.get('/currencies', (req, res) => {
   Currency.find((err, currencies) => {
     res.send(currencies)
+  });
+});
+
+app.get('/countries-map', (req, res) => {
+  CountryTopo.findOne((err, countryTopo) => {
+    res.send(countryTopo);
+  });
+});
+
+app.get('/jeetree', (req, res) => {
+  CoreCapacity.find((err, coreCapacities) => {
+    res.send(coreCapacities);
   });
 });
 
