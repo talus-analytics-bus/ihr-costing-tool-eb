@@ -3,17 +3,16 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import styles from './GeoLevels.css';
+import { geoLevels, labels } from './GeoLevels.constants';
 
 export class GeoLevels extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      'Level 1': null,
-      'Level 2': null,
-      'Level 3': null,
-      'Level 4': null,
-    }
+    this.state = geoLevels.reduce((prev, level) => {
+      prev[level] = null;
+      return prev;
+    }, {});
   }
 
   handleChange = (event, key) => {
@@ -22,24 +21,11 @@ export class GeoLevels extends Component {
     })
   }
 
-  getGeoLevelKeyName = (key) => {
-    switch(key) {
-      case 'Level 1':
-        return 'Country Level';
-      case 'Level 2':
-        return 'Intermediate Level 1';
-      case 'Level 3':
-        return 'Intermediate Level 2';
-      case 'Level 4':
-        return 'Local Level';
-    }
-  }
-
   geoLevel = (key, index) => {
     return (
       <div className={styles.geoLevel} key={index}>
         <div className={styles.geoLevelRow}>
-          <p>{this.getGeoLevelKeyName(key)}</p>
+          <p>{labels[key]}</p>
         </div>
         <div className={styles.geoLevelName}>
           <p>{ this.props.geoLevels[key].name }</p>
