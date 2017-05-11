@@ -4,6 +4,10 @@
 
 .assessmentDescription {
   font-size: 0.95em;
+
+  .peeperLabel strong {
+    font-weight: 600;
+  }
 }
 
 .assessmentAction {
@@ -16,7 +20,7 @@
 
 /* --- Assessment --- */
 .capacityTableContainer {
-  margin-top: 40px;
+  margin-top: 20px;
   border-top: 1px solid #ccc;
   padding-top: 10px;
 }
@@ -66,8 +70,11 @@
   }
 }
 
-.capacityRow:nth-child(n+2) .capacityCell:nth-child(n+2):hover {
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.4);  
+.capacityRow:nth-child(n+2) .capacityCell:nth-child(n+2)
+  cursor: pointer;
+  &:hover {
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  }
 }
 
 .capacityCellWithRadio {

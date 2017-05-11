@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import activeImage from '../../../../images/active.png';
 import xMarkImage from '../../../../images/x.png';
 import checkMarkImage from '../../../../images/check.png';
 import arrowImage from '../../../../images/chevron_right.png';
@@ -20,17 +21,17 @@ class Capacity extends Component {
         <div className={styles.capacityChildContainer}>
           <div className={styles.capacityChild}>
             <img
-              alt='Complete'
+              alt=''
               className={styles.completeIcon}
-              src={true ? xMarkImage : checkMarkImage}
+              src={this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex && this.props.capacity.stage === 'assessment' ? activeImage : (this.props.capacity.completed ? checkMarkImage : xMarkImage)}
             />
             <span>Self-assessment</span>
           </div>
           <div className={styles.capacityChild}>
             <img
-              alt='Incomplete'
+              alt=''
               className={styles.completeIcon}
-              src={true ? xMarkImage : checkMarkImage}
+              src={this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex && this.props.capacity.stage === 'costing' ? activeImage : (this.props.capacity.completed ? checkMarkImage : xMarkImage)}
             />
             <span>Costing</span>
           </div>

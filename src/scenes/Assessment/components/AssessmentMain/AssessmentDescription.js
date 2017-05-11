@@ -24,13 +24,13 @@ export class AssessmentDescription extends Component {
       <div className={styles.assessmentDescription}>
         <h2>{this.props.activeCapacity.name}</h2>
         <Peeper
-          label="Details"
+          label="Capacity Information"
           show={this.state.showingDetails}
           togglePeeper={() => this.handlePeeperToggle('showingDetails')}
         >
           <div>
             <p>
-              <strong>Target: </strong>
+              <b>Target: </b>
               {this.props.activeCapacity.target_description}
             </p>
           </div>
@@ -38,7 +38,7 @@ export class AssessmentDescription extends Component {
             this.props.activeCapacity.as_measured_by
             ? <div>
               <p>
-                <strong>How is this capacity measured? </strong>
+                <b>How is this capacity measured? </b>
                 {this.props.activeCapacity.as_measured_by}
               </p>
             </div>
@@ -48,7 +48,7 @@ export class AssessmentDescription extends Component {
             this.props.activeCapacity.desired_impact
             ? <div>
               <p>
-                <strong>What are the desired outcomes of building this capacity? </strong>
+                <b>What are the desired outcomes of building this capacity? </b>
                 {this.props.activeCapacity.desired_impact}
               </p>
             </div>
@@ -58,7 +58,7 @@ export class AssessmentDescription extends Component {
             this.props.activeCapacity.as_measured_by
             ? <div>
               <p>
-                <strong>Additional notes: </strong>
+                <b>Additional notes: </b>
                 {this.props.activeCapacity.notes}
               </p>
             </div>
