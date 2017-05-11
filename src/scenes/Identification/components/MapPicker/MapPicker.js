@@ -43,7 +43,7 @@ export class MapPicker extends Component {
 
   componentWillReceiveProps(nextProps) {
     const zoom = d3.behavior.zoom().on('zoom', redraw);
-    this.refs.svgEl.call(zoom);
+    d3.select(this.refs.svgEl).call(zoom);
 
     const cMap = nextProps.countryMap;
     let checkMap, features, limit = 0;

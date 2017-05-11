@@ -6,6 +6,10 @@
   max-width: 900px;
 }
 
+.uploadButton {
+	margin-right: 10px;
+}
+
 .noUploadButton {
 	margin-top: 20px;
 }
