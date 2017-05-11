@@ -27,6 +27,7 @@ export class CountryDetails extends Component {
       <div className={styles.countryDetails}>
         <h2>Modify country details</h2>
         <div className={styles.countryDetailsContent}>
+          <div className={styles.countryDetailsPopTitle}>Population</div>
           <div className={styles.countryDetailsPop}>
             <div className={styles.populationText}>
               <p>
@@ -55,12 +56,9 @@ export class CountryDetails extends Component {
           </div>
         </div>
         <GeoLevels geoLevels={this.props.geoLevels} toggleEdit={this.props.toggleEdit} />
-        <Peeper
-          label="Advanced Options"
-          show={this.props.showAdvanced}
-          togglePeeper={this.props.toggleShowAdvanced}
-        >
-          <div>
+        <div className={styles.otherDetailsContainer}>
+          <div className={styles.otherDetailsTitle}>Other</div>
+          <div className={styles.otherDetailsContent}>
             <table>
               <tbody>
               <tr>
@@ -117,8 +115,7 @@ export class CountryDetails extends Component {
               </tbody>
             </table>
           </div>
-        </Peeper>
-
+        </div>
       </div>
     )
   }

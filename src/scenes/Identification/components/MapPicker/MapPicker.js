@@ -4,9 +4,10 @@ import * as topojson from 'topojson';
 import styles from './MapPicker.css';
 import {CountryPath} from "../CountryPath/CountryPath";
 
+let currentProjection;
 const projection = (width, height) => {
-  return d3.geo.mercator()
-    .scale(80)
+  return currentProjection = d3.geo.mercator()
+    .scale(120)
     .translate([width / 2, height / 1.5]);
 }
 
@@ -14,6 +15,18 @@ const path = ({width = 0, height = 0}) => {
   return d3.geo.path()
     .projection(projection(width, height));
 }
+
+const redraw = () => {
+  const t = currentProjection.translate();
+  const s = currentProjection.scale();
+
+  const tx = t[0] * d3.event.scale + d3.event.translate[0];
+  const ty = t[1] * d3.event.scale + d3.event.translate[1];
+  currentProjection.translate([tx, ty]);
+  currentProjection.scale(s * d3.event.scale);
+  // TODO need to update d attribute in CountryPath
+}
+
 
 let pathEl;
 
@@ -29,6 +42,9 @@ export class MapPicker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const zoom = d3.behavior.zoom().on('zoom', redraw);
+    this.refs.svgEl.call(zoom);
+
     const cMap = nextProps.countryMap;
     let checkMap, features, limit = 0;
 
@@ -91,6 +107,7 @@ export class MapPicker extends Component {
         <svg
           width={this.state.dimensions.width}
           height={this.state.dimensions.height}
+          ref="svgEl"
         >
         {
           this.state.features.map((feature) =>

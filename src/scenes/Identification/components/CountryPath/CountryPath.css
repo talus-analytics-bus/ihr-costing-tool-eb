@@ -1,12 +1,10 @@
 .countryPath {
-  fill: rgba(193, 193, 193, 1);
-  stroke: black;
+  /*fill: lightsteelblue;*/
+  fill: #cadef8;
+  stroke: #555;
 }
 
-.countryPathActive {
-  fill: red;
-}
-
+.countryPathActive,
 .countryPathHover {
-  fill: red;
+  fill: steelblue;
 }

@@ -61,6 +61,7 @@ export class GeoLevels extends Component {
   render() {
     return (
       <div className={styles.geoLevels}>
+        <div className={styles.geoLevelsTitle}>Geographic Level</div>
         <div className={`${styles.geoLevel} ${styles.geoLevelHeadings}`}>
           <div className={styles.geoLevelRow}>
             <p>Geographic Level</p>

@@ -35,7 +35,6 @@
   flex-direction: row;
   flex-grow: 1;
   justify-content: center;
-  padding-bottom: 20px;
 }
 
 .fixedWidth {
@@ -61,4 +60,37 @@
   padding: 0px 20px 20px;
   background-color: #fdfdfd;
   border-right: 1px solid #ccc;
+}
+
+.footer {
+  position: relative;
+  padding: 4px 0 22px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9em;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #fcfcfc;
+  color: #555;
+}
+
+.georgetownLink a,
+.talusLink a {
+  color: #555;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  &:hover { text-decoration: underline; }
+}
+
+.georgetownLogo,
+.talusLogo {
+  position: relative;
+  top: 12px;
+  left: 7px;
+  margin-right: 10px;
+  height: 35px;
+}
+.georgetownLogo {
+  margin-left: 5px;
 }

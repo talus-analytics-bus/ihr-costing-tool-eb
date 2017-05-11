@@ -4,9 +4,15 @@
   margin-top: 20px;
 }
 
+.geoLevelsTitle {
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
 .geoLevel {
   display: flex;
   flex-direction: row;
+  margin-top: 10px;
 }
 
 .geoLevelRow,

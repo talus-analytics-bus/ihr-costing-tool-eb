@@ -8,19 +8,18 @@
   flex: auto;
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
+}
+
+.countryDetailsPopTitle,
+.otherDetailsTitle {
+  font-weight: 600;
+  font-size: 1.1em;
 }
 
 .countryDetailsPop {
   display: flex;
   flex-direction: row;
-}
-
-.countryDetailsPop p {
-  flex-basis: 33%;
-}
-
-.populationText {
-  flex-basis: 70%;
 }
 
 .populationCount {
@@ -45,4 +44,11 @@
   flex: auto;
 }
 
+.otherDetailsContainer {
+  margin-top: 20px;
+}
+
+.otherDetailsContent {
+  margin-top: 10px;
+}
 
