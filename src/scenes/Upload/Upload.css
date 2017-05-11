@@ -1,4 +1,4 @@
-.start {
+.upload {
   composes: fixedWidth from '../../App.css';
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
@@ -6,6 +6,6 @@
   max-width: 900px;
 }
 
-.uploadButton {
-	margin-right: 10px;
+.noUploadButton {
+	margin-top: 20px;
 }

@@ -22,7 +22,7 @@ export class Identification extends Component {
           <RaisedButton
             primary={true}
             label="Continue"
-            containerElement={<Link to="/start/" />}
+            containerElement={<Link to="/upload/" />}
           />
         </div>
       </div>

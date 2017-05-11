@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import styles from './ManualAssessment.css';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
-import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import { Link } from 'react-router-dom'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 

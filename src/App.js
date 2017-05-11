@@ -16,6 +16,7 @@ import talusLogo from './images/talus.png';
 
 import { Home } from './scenes/Home/Home';
 import { Identification } from './scenes/Identification/Identification';
+import { Upload } from './scenes/Upload/Upload';
 import { Start } from './scenes/Start/Start';
 import { AssessmentActive } from './scenes/Assessment/AssessmentActive';
 import { Costing } from './scenes/Costing/Costing';
@@ -47,6 +48,7 @@ class App extends Component {
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
               <Route path="/identification" component={Identification}></Route>
+              <Route path="/upload" component={Upload}></Route>
               <Route path="/start" component={Start}></Route>
               <Route path="/assessment" component={AssessmentActive}></Route>
               <Route path="/Costing" component={Costing}></Route>
