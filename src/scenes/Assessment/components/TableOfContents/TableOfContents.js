@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import xMarkImage from '../../../../images/x.png';
+import checkMarkImage from '../../../../images/check.png';
+import arrowImage from '../../../../images/chevron_right.png';
+
 import styles from './TableOfContents.css';
 
 class Capacity extends Component {
@@ -7,15 +11,30 @@ class Capacity extends Component {
     console.log(this.props);
     return (
       <div className={`${styles.capacity} ${this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex ? styles.activeCapacity : null}`}>
+        {
+          (this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex)
+            ? <img alt='Active capacity' className={styles.arrowImage} src={arrowImage} />
+            : ''
+        }
         <p>{this.props.capacity.name}</p>
-        <ul>
-          <li>
-            Self-assessment
-          </li>
-          <li>
-            Costing
-          </li>
-        </ul>
+        <div className={styles.capacityChildContainer}>
+          <div className={styles.capacityChild}>
+            <img
+              alt='Complete'
+              className={styles.completeIcon}
+              src={true ? xMarkImage : checkMarkImage}
+            />
+            <span>Self-assessment</span>
+          </div>
+          <div className={styles.capacityChild}>
+            <img
+              alt='Incomplete'
+              className={styles.completeIcon}
+              src={true ? xMarkImage : checkMarkImage}
+            />
+            <span>Costing</span>
+          </div>
+        </div>
       </div>
     )
   }

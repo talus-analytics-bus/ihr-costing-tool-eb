@@ -49,8 +49,38 @@ export const assessmentReducer = (state = initialState, action) => {
           }))
         }))
       };
+    case 'PREV_STEP':
+      const prevToggle = [
+        'assessment',
+        'costing',
+      ];
+
+      if (action.assessmentFirst) {
+        return {
+          ...state,
+          active: {
+            core: state.active.capacity === 0 ? (state.active.core === 0 ? state.jeeTree.length - 1 : state.active.core - 1) : state.active.core,
+            capacity: state.active.capacity === 0 ? state.jeeTree[state.active.core].capacities.length - 1 : state.active.capacity - 1,
+            stage: state.active.stage === 'costing' ? 'costing' :
+              (
+                state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1
+                && state.active.core === state.jeeTree.length - 1
+                && state.active.stage === 'assessment' ? 'costing' : 'assessment'
+              )
+          }
+        }
+      }
+
+      return {
+        ...state,
+        active: {
+          core: state.active.stage === 'assessment' ? state.active.core : (state.active.capacity === 0 ? state.jeeTree.length - 1 : state.active.core - 1),
+          capacity: state.active.stage === 'assessment' ? state.active.capacity : (state.active.capacity === 0 ? state.jeeTree[state.active.core].capacities.length - 1 : state.active.capacity - 1),
+          stage: prevToggle[1 - prevToggle.indexOf(state.active.stage)]
+        }
+      }
     case 'NEXT_STEP':
-      const toggle = [
+      const nextToggle = [
         'assessment',
         'costing',
       ];
@@ -76,7 +106,7 @@ export const assessmentReducer = (state = initialState, action) => {
         active: {
           core: state.active.stage === 'assessment' ? state.active.core : (state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1 ? state.active.core + 1 : state.active.core),
           capacity: state.active.stage === 'assessment' ? state.active.capacity : (state.active.capacity === state.jeeTree[state.active.core].capacities.length - 1 ? 0 : state.active.capacity + 1),
-          stage: toggle[1- toggle.indexOf(state.active.stage)]
+          stage: nextToggle[1 - nextToggle.indexOf(state.active.stage)]
         }
       }
     case 'TOGGLE_EDITING_EXPENSE':

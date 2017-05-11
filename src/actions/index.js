@@ -15,6 +15,7 @@ const SET_ASSESSMENT_FIRST = 'SET_ASSESSMENT_FIRST';
 
 const SET_ACTIVE_CAPACITY = 'SET_ACTIVE_CAPACITY';
 const SET_ACTIVE_CAPACITY_LEVEL = 'SET_ACTIVE_CAPACITY_LEVEL';
+const PREV_STEP = 'PREV_STEP';
 const NEXT_STEP = 'NEXT_STEP';
 
 const TOGGLE_EDITING_EXPENSE = 'TOGGLE_EDITING_EXPENSE';
@@ -88,6 +89,11 @@ export const setActiveCapacityLevel = (indicator, level) => ({
   indicator,
   level,
 })
+
+export const prevStep = (assessmentFirst) => ({
+  type: PREV_STEP,
+  assessmentFirst,
+});
 
 export const nextStep = (assessmentFirst) => ({
   type: NEXT_STEP,

@@ -28,8 +28,15 @@ export class AssessmentMain extends Component {
           }
           <div className={styles.assessmentAction}>
             <RaisedButton
+              className={styles.backButton}
               primary={true}
-              label="Next"
+              label="Back"
+              onClick={() => this.props.prevStep(this.props.assessmentFirst)}
+            />
+             <RaisedButton
+              className={styles.submitButton}
+              primary={true}
+              label="Submit"
               onClick={() => this.props.nextStep(this.props.assessmentFirst)}
             />
           </div>
