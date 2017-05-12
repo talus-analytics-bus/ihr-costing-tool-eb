@@ -9,11 +9,10 @@ export class ManualAssessment extends Component {
   render() {
     return (
       <div>
-        <h2>Complete assessments manually</h2>
+        <h2>Enter JEE scores manually</h2>
         <p>
-          Assess the country&#39;s score for each capacity. Would you rather
-          complete all assessments before costing or 
-          assess each capacity as you cost?
+          Would you like to enter all JEE indicator scores before costing
+          or enter the score for each indicator as you cost?
         </p>
         <div>
           <RadioButtonGroup
@@ -24,12 +23,12 @@ export class ManualAssessment extends Component {
             <RadioButton
               className={styles.radioButton}
               value={true}
-              label="Complete all assessments first"
+              label="Enter all indicator scores first"
             />
             <RadioButton
               className={styles.radioButton}
               value={false}
-              label="Assess and cost each indicator"
+              label="Enter scores as I cost each indicator"
             />
           </RadioButtonGroup>
         </div>
