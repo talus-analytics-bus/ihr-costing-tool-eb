@@ -11,7 +11,7 @@ export class ManualAssessment extends Component {
       <div>
         <h2>Enter JEE scores manually</h2>
         <p>
-          AWould you like to enter all JEE indicator scores before costing
+          Would you like to enter all JEE indicator scores before costing
           or enter the score for each indicator as you cost?
         </p>
         <div>
