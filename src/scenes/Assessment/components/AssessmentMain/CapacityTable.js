@@ -41,7 +41,7 @@ export class CapacityTable extends Component {
     console.log(this.props);
     return (
       <div className={styles.capacityTableContainer}>
-        <p>Choose the capacity the most closely aligns with {this.props.activeCountry.details.name || 'the country'}&#39;s policy:</p>
+        <p>Choose each capacity score below based on the {this.props.activeCountry.details.name || 'the country'}&#39;s current capacity, per the JEE assessment:</p>
         <div>
           <div className={styles.capacityTable}>
             <div className={styles.capacityRow}>
