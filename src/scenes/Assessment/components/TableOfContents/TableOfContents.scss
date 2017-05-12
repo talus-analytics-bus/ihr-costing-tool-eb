@@ -3,6 +3,14 @@
   flex-direction: column;
 }
 
+.capacityProgress {
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 600;
+  background-color: #f9f9f9;
+}
+
 .indicatorGroup {
   flex: 1;
   display: flex;
@@ -71,7 +79,8 @@
 }
 
 .activeCapacity {
-  font-weight: 900;
+  & > p { font-weight: 900; }
+  .ccActive { font-weight: 900; }
 }
 
 .arrowImage {

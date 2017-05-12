@@ -28,42 +28,44 @@ export class AssessmentDescription extends Component {
           show={this.state.showingDetails}
           togglePeeper={() => this.handlePeeperToggle('showingDetails')}
         >
-          <div>
-            <p>
-              <b>Target: </b>
-              {this.props.activeCapacity.target_description}
-            </p>
+          <div className={styles.assessmentDescriptionContent}>
+            <div>
+              <p>
+                <b>Target: </b>
+                {this.props.activeCapacity.target_description}
+              </p>
+            </div>
+            {
+              this.props.activeCapacity.as_measured_by
+              ? <div>
+                <p>
+                  <b>How is this capacity measured? </b>
+                  {this.props.activeCapacity.as_measured_by}
+                </p>
+              </div>
+              : ''
+            }
+            {
+              this.props.activeCapacity.desired_impact
+              ? <div>
+                <p>
+                  <b>What are the desired outcomes of building this capacity? </b>
+                  {this.props.activeCapacity.desired_impact}
+                </p>
+              </div>
+              : ''
+            }
+            {
+              this.props.activeCapacity.as_measured_by
+              ? <div>
+                <p>
+                  <b>Additional notes: </b>
+                  {this.props.activeCapacity.notes}
+                </p>
+              </div>
+              : ''
+            }
           </div>
-          {
-            this.props.activeCapacity.as_measured_by
-            ? <div>
-              <p>
-                <b>How is this capacity measured? </b>
-                {this.props.activeCapacity.as_measured_by}
-              </p>
-            </div>
-            : ''
-          }
-          {
-            this.props.activeCapacity.desired_impact
-            ? <div>
-              <p>
-                <b>What are the desired outcomes of building this capacity? </b>
-                {this.props.activeCapacity.desired_impact}
-              </p>
-            </div>
-            : ''
-          }
-          {
-            this.props.activeCapacity.as_measured_by
-            ? <div>
-              <p>
-                <b>Additional notes: </b>
-                {this.props.activeCapacity.notes}
-              </p>
-            </div>
-            : ''
-          }
         </Peeper>
       </div>
     )

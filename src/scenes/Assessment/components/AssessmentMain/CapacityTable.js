@@ -60,11 +60,14 @@ export class CapacityTable extends Component {
                   <div className={styles.capacityCell}><p>{capacityRow.name}</p></div>
                   {
                     capacityRow.values.map((c, cIndex) =>
-                      <div className={styles.capacityCellWithRadio} key={cIndex}>
+                      <div
+                        className={styles.capacityCellWithRadio}
+                        key={cIndex}
+                        onClick={(e) => this.props.setActiveCapacityLevel(this.props.activeCapacity.indicators[cIndex].jee_id, index)}
+                      >
                         <Checkbox
                           className={styles.capacityCellRadio}
                           checked={this.props.activeCapacity.indicators[cIndex].selectedLevel === index}
-                          onCheck={(e) => this.props.setActiveCapacityLevel(this.props.activeCapacity.indicators[cIndex].jee_id, index)}
                         />
                         <p>{c}</p>
                       </div>

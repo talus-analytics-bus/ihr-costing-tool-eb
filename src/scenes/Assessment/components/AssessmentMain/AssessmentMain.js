@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import styles from './AssessmentMain.css';
-import {AssessmentDescription} from "./AssessmentDescription";
-import {CapacityTable} from "./CapacityTable";
+import { AssessmentDescription } from './AssessmentDescription';
+import { CapacityTable } from './CapacityTable';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Costing } from './Costing';
 
@@ -30,13 +30,13 @@ export class AssessmentMain extends Component {
             <RaisedButton
               className={styles.backButton}
               primary={true}
-              label="Back"
+              label="Previous Capacity"
               onClick={() => this.props.prevStep(this.props.assessmentFirst)}
             />
              <RaisedButton
               className={styles.submitButton}
               primary={true}
-              label="Submit"
+              label="Next Capacity"
               onClick={() => this.props.nextStep(this.props.assessmentFirst)}
             />
           </div>

@@ -3,11 +3,13 @@
 }
 
 .assessmentDescription {
-  font-size: 0.95em;
-
-  .peeperLabel strong {
+  .peeper strong {
     font-weight: 600;
   }
+}
+
+.assessmentDescriptionContent {
+  font-size: 0.95em;
 }
 
 .assessmentAction {
@@ -54,6 +56,7 @@
 
 .capacityRow:first-child {
   font-weight: 600;
+  text-align: center;
 }
 
 .capacityCell {
@@ -70,22 +73,17 @@
   }
 }
 
-.capacityRow:nth-child(n+2) .capacityCell:nth-child(n+2)
-  cursor: pointer;
-  &:hover {
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-  }
-}
-
 .capacityCellWithRadio {
   composes: capacityCell;
   display: flex;
   flex-direction: row;
   align-items: center;
-}
+  cursor: pointer;
 
-.capacityCellWithRadio > p {
-  flex-grow: 1;
+  &:hover {
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  }
+  p { flex-grow: 1; }
 }
 
 .capacityCellRadio {
