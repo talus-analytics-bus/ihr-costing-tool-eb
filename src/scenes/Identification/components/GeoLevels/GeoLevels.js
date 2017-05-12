@@ -22,11 +22,24 @@ export class GeoLevels extends Component {
     })
   }
 
+  getGeoLevelKeyName = (key) => {
+    switch(key) {
+      case 'Level 1':
+        return 'Country Level';
+      case 'Level 2':
+        return 'Intermediate Level 1';
+      case 'Level 3':
+        return 'Intermediate Level 2';
+      case 'Level 4':
+        return 'Local Level';
+    }
+  }
+
   geoLevel = (key, index) => {
     return (
       <div className={styles.geoLevel} key={index}>
         <div className={styles.geoLevelRow}>
-          <p>{key}</p>
+          <p>{this.getGeoLevelKeyName(key)}</p>
         </div>
         <div className={styles.geoLevelName}>
           <p>{ this.props.geoLevels[key].name }</p>

@@ -63,19 +63,25 @@ export class CountryDetails extends Component {
               <tr>
                 <td>Approximately, how many epidemiologists work in your country?</td>
                 <td>{this.props.staff.epi_count.value}</td>
-                <td>Modify</td>
+                <td>
+                  <RaisedButton label="Modify" />
+                </td>
               </tr>
               <tr>
                 <td>Approximately, how many community health workers work in your country?</td>
                 <td>{this.props.staff.chw_count.value}</td>
-                <td>Modify</td>
+                <td>
+                  <RaisedButton label="Modify" />
+                </td>
               </tr>
               {
                 this.props.geoLevels['Level 1'].name ?
                   <tr>
                     <td>Approximately, how many hospitals serve at the national level?</td>
                     <td>{this.props.hospitals.level1.value}</td>
-                    <td>Modify</td>
+                    <td>
+                      <RaisedButton label="Modify" />
+                    </td>
                   </tr>
                   : null
               }
@@ -84,8 +90,9 @@ export class CountryDetails extends Component {
                   <tr>
                     <td>Approximately, how many hospitals serve at the {this.props.geoLevels['Level 2'].name.toLowerCase()} level?</td>
                     <td>{this.props.hospitals.level1.value}</td>
-                    <td>Modify</td>
-                  </tr>
+                    <td>
+                      <RaisedButton label="Modify" />
+                    </td>                  </tr>
                   : null
               }
               {
@@ -93,8 +100,9 @@ export class CountryDetails extends Component {
                   <tr>
                     <td>Approximately, how many hospitals serve at the {this.props.geoLevels['Level 3'].name.toLowerCase()} level?</td>
                     <td>{this.props.hospitals.level1.value}</td>
-                    <td>Modify</td>
-                  </tr>
+                    <td>
+                      <RaisedButton label="Modify" />
+                    </td>                  </tr>
                   : null
               }
               {
@@ -102,14 +110,17 @@ export class CountryDetails extends Component {
                   <tr>
                     <td>Approximately, how many hospitals serve at the {this.props.geoLevels['Level 4'].name.toLowerCase()} level?</td>
                     <td>{this.props.hospitals.level1.value}</td>
-                    <td>Modify</td>
-                  </tr>
+                    <td>
+                      <RaisedButton label="Modify" />
+                    </td>                  </tr>
                   : null
               }
               <tr>
                 <td>Approximately, how many community health centers are in your country?</td>
                 <td>{this.props.hospitals.chc.value}</td>
-                <td>Modify</td>
+                <td>
+                  <RaisedButton label="Modify" />
+                </td>
               </tr>
               </tbody>
             </table>

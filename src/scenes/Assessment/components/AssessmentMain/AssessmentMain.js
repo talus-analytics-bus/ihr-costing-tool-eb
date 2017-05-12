@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import styles from './AssessmentMain.css';
+import { Link } from 'react-router-dom';
 import { AssessmentDescription } from './AssessmentDescription';
 import { CapacityTable } from './CapacityTable';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -36,8 +37,16 @@ export class AssessmentMain extends Component {
              <RaisedButton
               className={styles.submitButton}
               primary={true}
-              label="Next Capacity"
+              label="Proceed to Costing"
               onClick={() => this.props.nextStep(this.props.assessmentFirst)}
+            />
+          </div>
+          <div className={styles.resultsButtonContainer}>
+            <RaisedButton
+              className={styles.resultsButton}
+              primary={true}
+              label="Go to Results Page"
+              containerElement={<Link to="/results/" />}
             />
           </div>
         </div>
