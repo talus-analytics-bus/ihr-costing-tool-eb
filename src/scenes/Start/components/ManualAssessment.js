@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import styles from './ManualAssessment.css';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 export class ManualAssessment extends Component {

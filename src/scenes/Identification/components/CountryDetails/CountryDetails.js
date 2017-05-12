@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import styles from './CountryDetails.css'
 import { GeoLevels } from '../GeoLevels/GeoLevels';
-import { Peeper } from '../../../../components/Peeper/Peeper';
 
 export class CountryDetails extends Component {
   constructor(props) {

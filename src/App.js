@@ -21,6 +21,7 @@ import { Start } from './scenes/Start/Start';
 import { AssessmentActive } from './scenes/Assessment/AssessmentActive';
 import { Costing } from './scenes/Costing/Costing';
 import { Results } from './scenes/Results/Results';
+import { Directory } from './scenes/Directory/Directory';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -44,6 +45,9 @@ class App extends Component {
               <div className={styles.toolbarTitle}>
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
+              <div className={styles.directoryLink}>
+                {<Link to="/directory">Directory</Link>}
+              </div>
             </Toolbar>
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
@@ -53,6 +57,7 @@ class App extends Component {
               <Route path="/assessment" component={AssessmentActive}></Route>
               <Route path="/Costing" component={Costing}></Route>
               <Route path="/Results" component={Results}></Route>
+              <Route path="/directory" component={Directory}></Route>
             </div>
             <div className={styles.footer}>
               <span>Built by </span>
