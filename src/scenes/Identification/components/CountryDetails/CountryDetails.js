@@ -77,6 +77,7 @@ export class CountryDetails extends Component {
         <GeoLevels
           geoLevels={this.props.geoLevels}
           toggleEdit={this.props.toggleEdit}
+          setGeoLevel={this.props.setGeoLevel}
         />
         <div className={styles.otherDetailsContainer}>
           <div className={styles.otherDetailsTitle}>Other</div>

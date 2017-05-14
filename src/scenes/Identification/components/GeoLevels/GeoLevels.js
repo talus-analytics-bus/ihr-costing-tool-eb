@@ -15,10 +15,18 @@ export class GeoLevels extends Component {
     }, {});
   }
 
-  handleChange = (event, key) => {
+  handleChange = (event, key, type = 'value') => {
     this.setState({
       [key]: event.target.value,
-    })
+    });
+    this.props.setGeoLevel(key, event.target.value, type);
+  }
+
+  handleKeyPress = (event, target) => {
+    console.log(event.key);
+    if (event.key === 'Enter') {
+      this.props.toggleEdit(target);
+    }
   }
 
   geoLevel = (key, index) => {
@@ -35,7 +43,11 @@ export class GeoLevels extends Component {
           }
           {
             this.props.geoLevels[key].editing && (
-              <TextField defaultValue={this.props.geoLevels[key].name} onChange={(e) => this.handleChange(e, key)}/>
+              <TextField
+                defaultValue={this.props.geoLevels[key].name}
+                onChange={(e) => this.handleChange(e, key, 'name')}
+                onKeyPress={(e) => this.handleKeyPress(e, key)}
+              />
             )
           }
         </div>
@@ -51,16 +63,25 @@ export class GeoLevels extends Component {
         }
         {
           this.props.geoLevels[key].editing && (
-            <TextField defaultValue={this.props.geoLevels[key].value || 0} onChange={(e) => this.handleChange(e, key)}/>
+            <TextField
+              type="number"
+              defaultValue={this.props.geoLevels[key].value || 0}
+              onChange={(e) => this.handleChange(e, key)}
+              onKeyPress={(e) => this.handleKeyPress(e, key)}
+            />
           )
         }
         </div>
         <div className={styles.geoLevelAction}>
-          <RaisedButton
-            className={styles.geoLevelActionButton}
-            label={this.props.geoLevels[key].editing ? 'Save' : 'Modify'}
-            onClick={() => this.props.toggleEdit(`geo_${key}`, this.props.geoLevels[key].editing, this.state[key])}
-          />
+          {
+            !this.props.geoLevels[key].editing && (
+              <RaisedButton
+                className={styles.geoLevelActionButton}
+                label="Modify"
+                onClick={() => this.props.toggleEdit(key, this.props.geoLevels[key].editing, this.state[key])}
+              />
+            )
+          }
         </div>
       </div>
     )

@@ -64,10 +64,11 @@ export const toggleEdit = (target) => ({
   target,
 })
 
-export const setCountryInfoValue = (target, value) => ({
+export const setCountryInfoValue = (target, value, valueType = 'value') => ({
   type: SET_COUNTRY_INFO_VALUE,
   target,
   value,
+  valueType,
 })
 
 export const toggleShowAdvanced = () => ({
