@@ -28,7 +28,16 @@ export class GeoLevels extends Component {
           <p>{labels[key]}</p>
         </div>
         <div className={styles.geoLevelName}>
-          <p>{ this.props.geoLevels[key].name }</p>
+          {
+            !this.props.geoLevels[key].editing && (
+              <p>{ this.props.geoLevels[key].name }</p>
+            )
+          }
+          {
+            this.props.geoLevels[key].editing && (
+              <TextField defaultValue={this.props.geoLevels[key].name} onChange={(e) => this.handleChange(e, key)}/>
+            )
+          }
         </div>
         <div className={styles.geoLevelCount}>
           {

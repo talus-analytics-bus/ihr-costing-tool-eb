@@ -8,7 +8,6 @@ import { GeoLevels } from '../GeoLevels/GeoLevels';
 export class CountryDetails extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
 
     this.state = {
       population: null,
@@ -19,6 +18,19 @@ export class CountryDetails extends Component {
     this.setState({
       [key]: event.target.value,
     })
+  }
+
+  handlePopulationChange = (event) => {
+    this.setState({
+      population: event.target.value,
+    });
+    this.props.setPopulation(event.target.value);
+  }
+
+  handleKeyPress = (event, target) => {
+    if (event.key === 'Enter') {
+      this.props.toggleEdit(target);
+    }
   }
 
   render() {
@@ -43,18 +55,29 @@ export class CountryDetails extends Component {
             }
             {
               this.props.population.editing && (
-                <TextField defaultValue={this.props.population.value || 0} onChange={(e) => this.handleChange(e, 'population')}/>
+                <TextField
+                  defaultValue={this.props.population.value || 0}
+                  onChange={(e) => this.handlePopulationChange(e)}
+                  onKeyPress={(e) => this.handleKeyPress(e, 'population')}
+                />
               )
             }
             </div>
             <div className={styles.populationAction}>
-                <RaisedButton
-                  label={this.props.population.editing ? 'Save' : 'Modify'}
-                  onClick={() => this.props.toggleEdit('population', this.props.population.editing, this.state.population)}/>
+              {
+                !this.props.population.editing && (
+                  <RaisedButton
+                    label="Modify"
+                    onClick={() => this.props.toggleEdit('population', this.props.population.editing, this.state.population)}/>
+                )
+              }
             </div>
           </div>
         </div>
-        <GeoLevels geoLevels={this.props.geoLevels} toggleEdit={this.props.toggleEdit} />
+        <GeoLevels
+          geoLevels={this.props.geoLevels}
+          toggleEdit={this.props.toggleEdit}
+        />
         <div className={styles.otherDetailsContainer}>
           <div className={styles.otherDetailsTitle}>Other</div>
           <div className={styles.otherDetailsContent}>

@@ -105,7 +105,7 @@ const editTargets = (state, target) => {
   }
 }
 
-const saveTargets = (state, target, value) => {
+const saveTargets = (state, target, value, type = 'value') => {
   const geoLevel = (s, key, v) => {
     return {
       ...state,
@@ -113,11 +113,11 @@ const saveTargets = (state, target, value) => {
         ...state.geo_levels,
         [key]: {
           ...state.geo_levels[key],
-          value: v,
+          [type]: v,
         }
       }
     }
-  }
+  };
   switch (target) {
     case 'population':
       return {

@@ -16,9 +16,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleEdit: (target, editing, value) => {
       dispatch(toggleEdit(target))
-      if (editing) {
-        dispatch(setCountryInfoValue(target, value));
-      }
+      // if (editing) {
+      //   dispatch(setCountryInfoValue(target, value));
+      // }
+    },
+    setPopulation: (value) => {
+      dispatch(setCountryInfoValue('population', value));
     },
     toggleShowAdvanced: () => {
       dispatch(toggleShowAdvanced());
