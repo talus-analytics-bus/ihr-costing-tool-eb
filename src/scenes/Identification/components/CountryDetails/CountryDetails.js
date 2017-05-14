@@ -59,6 +59,7 @@ export class CountryDetails extends Component {
                   defaultValue={this.props.population.value || 0}
                   onChange={(e) => this.handlePopulationChange(e)}
                   onKeyPress={(e) => this.handleKeyPress(e, 'population')}
+                  errorText={this.props.population.error}
                 />
               )
             }

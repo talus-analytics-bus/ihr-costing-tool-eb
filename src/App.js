@@ -15,7 +15,7 @@ import georgetownLogo from './images/georgetown.png';
 import talusLogo from './images/talus.png';
 
 import { Home } from './scenes/Home/Home';
-import { Identification } from './scenes/Identification/Identification';
+import { IdentificationActive } from './scenes/Identification/IdentificationActive';
 import { Upload } from './scenes/Upload/Upload';
 import { Start } from './scenes/Start/Start';
 import { AssessmentActive } from './scenes/Assessment/AssessmentActive';
@@ -51,7 +51,7 @@ class App extends Component {
             </Toolbar>
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
-              <Route path="/identification" component={Identification}></Route>
+              <Route path="/identification" component={IdentificationActive}></Route>
               <Route path="/upload" component={Upload}></Route>
               <Route path="/start" component={Start}></Route>
               <Route path="/assessment" component={AssessmentActive}></Route>

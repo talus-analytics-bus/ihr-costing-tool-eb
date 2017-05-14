@@ -23,7 +23,6 @@ export class GeoLevels extends Component {
   }
 
   handleKeyPress = (event, target) => {
-    console.log(event.key);
     if (event.key === 'Enter') {
       this.props.toggleEdit(target);
     }
@@ -47,6 +46,7 @@ export class GeoLevels extends Component {
                 defaultValue={this.props.geoLevels[key].name}
                 onChange={(e) => this.handleChange(e, key, 'name')}
                 onKeyPress={(e) => this.handleKeyPress(e, key)}
+                errorText={this.props.geoLevels[key].error}
               />
             )
           }
@@ -68,6 +68,7 @@ export class GeoLevels extends Component {
               defaultValue={this.props.geoLevels[key].value || 0}
               onChange={(e) => this.handleChange(e, key)}
               onKeyPress={(e) => this.handleKeyPress(e, key)}
+              errorText={this.props.geoLevels[key].error}
             />
           )
         }

@@ -10,27 +10,32 @@ const initialState = {
   population: {
     editing: false,
     value: null,
+    error: '',
   },
   geo_levels: {
     'Level 1': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     },
     'Level 2': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     },
     'Level 3': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     },
     'Level 4': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     }
   },
   advanced: {
@@ -219,6 +224,20 @@ export const identificationReducer = (state = initialState, action) => {
         advanced: {
           ...state.advanced,
           show: !state.advanced.show,
+        }
+      }
+    case 'VALIDATE_COUNTRY_INFO':
+      const requiredErrorText = 'This field is required';
+
+      return {
+        ...state,
+        geo_levels: {
+          ...state.geo_levels,
+          [action.target]: {
+            ...state.geo_levels[action.target],
+            editing: true,
+            error: requiredErrorText,
+          }
         }
       }
     default:

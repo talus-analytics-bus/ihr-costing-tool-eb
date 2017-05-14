@@ -10,6 +10,7 @@ const SET_COUNTRY_DETAILS = 'SET_COUNTRY_DETAILS';
 const SET_COUNTRY_INFO_VALUE = 'SET_COUNTRY_INFO_VALUE';
 const TOGGLE_EDIT = 'TOGGLE_EDIT';
 const TOGGLE_SHOW_ADVANCED = 'TOGGLE_SHOW_ADVANCED';
+const VALIDATE_COUNTRY_INFO = 'VALIDATE_COUNTRY_INFO';
 
 const SET_ASSESSMENT_FIRST = 'SET_ASSESSMENT_FIRST';
 
@@ -74,6 +75,11 @@ export const setCountryInfoValue = (target, value, valueType = 'value') => ({
 export const toggleShowAdvanced = () => ({
   type: TOGGLE_SHOW_ADVANCED,
 })
+
+export const validateCountryInfo = (target) => ({
+  type: VALIDATE_COUNTRY_INFO,
+  target,
+});
 
 export const setAssessmentFirst = (assessmentFirst) => ({
   type: SET_ASSESSMENT_FIRST,
