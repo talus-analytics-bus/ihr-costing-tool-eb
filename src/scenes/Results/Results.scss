@@ -14,6 +14,7 @@
 /* --- Score Summary --- */
 .scoreSummaryContainer {
 	margin-top: 10px;
+	min-height: 300px;
 }
 
 .scoreSummaryTitle,
@@ -28,16 +29,36 @@
 }
 
 .scoreSummaryChartContainer {
-	display: flex;
-	flex-basis: 50%;
+	float: left;
+}
 
-	.bar:hover {
-		fill: black;
+.infoPanel {
+	margin-left: 800px;
+	margin-top: 40px;
+	border: 1px solid #999;
+	border-radius: 10px;
+	width: 400px;
+}
+
+.infoPanelTitle {
+	text-align: center;
+	font-weight: 600;
+	margin: 10px;
+}
+
+.infoPanelContent {
+	padding: 20px;
+	border-top: 1px solid #999;
+	margin-bottom: 20px;
+
+	ul {
+		margin-top: 5px;
+		margin-bottom: 5px;
 	}
 }
 
-.score-summary-chart .bar:hover {
-	fill: red;
+.infoPanelExpense {
+
 }
 
 

@@ -4,316 +4,281 @@ import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via a
 import styles from '../Results.css';
 
 const moneyFormat = d3.format('$,.0f');
+const scoreDecFormat = d3.format('.1f');
+console.log(jeeTree)
 
-const buildBarChart = (selector, param={}) => {
-	// make fake data
-	const chartData = [
-		{
-			name: 'Prevent',
-			oldScore: 24,
-			newScore: 54,
-			perfectScore: 70,
-			fixedCost: 3e6 * Math.random(),
-			recurringCost: 1e6 * Math.random(),
-		},
-		{
-			name: 'Detect',
-			oldScore: 45,
-			newScore: 51,
-			perfectScore: 60,
-			fixedCost: 3e6 * Math.random(),
-			recurringCost: 1e6 * Math.random(),
-		},
-		{
-			name: 'Respond',
-			oldScore: 34,
-			newScore: 42,
-			perfectScore: 60,
-			fixedCost: 3e6 * Math.random(),
-			recurringCost: 1e6 * Math.random(),
-		}
-	];
-	chartData.forEach((core, i) => {
-		core.costYear1 = core.fixedCost;
-		core.costYear2 = core.fixedCost + core.recurringCost;
-		core.costYear5 = core.fixedCost + 4 * core.recurringCost;
-
-		// add capacities
-		core.capacities = jeeTree[i].capacities.map((c) => {
-			const oldScore = 1 + Math.floor(4 * Math.random());
-			return {
-				name: c.name,
-				oldScore,
-				newScore: oldScore + 1,
-				perfectScore: 5,
-				fixedCost: core.fixedCost / jeeTree[i].capacities.length,
-				recurringCost: core.recurringCost / jeeTree[i].capacities.length,
-			};
-		});
-	});
-
-	// start drawing chart
-	const margin = { top: 80, right: 400, bottom: 80, left: 100 };
-	const width = 540;
-	const height = 120;
-	const chart = d3.select(selector)
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height + margin.top + margin.bottom)
-		.append('g')
-			.attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-	// define y scale and colors
-	const y = d3.scale.ordinal()
-		.domain(chartData.map(d => d.name))
-		.rangeRoundBands([0, height], 0.4);
-	const yAxis = d3.svg.axis()
-		.orient('left')
-		.scale(y)
-		.innerTickSize(0);
-	const bandwidth = y.rangeBand();
-	const barColors = ['#10167f', '#7c81b8'];
-
-
-	// define x scale and draw x-axis
-	const x = d3.scale.linear()
-		.domain([0, d3.max(chartData.map(d => d.perfectScore))])
-		.range([0, width]);
-	const xAxis = d3.svg.axis()
-		.orient('top')
-		.scale(x);
-	chart.append('g')
-		.attr('class', 'x-axis axis')
-		.call(xAxis);
-
-	// add y-axis after adding bars
-	chart.append('g')
-		.attr('class', 'y-axis axis')
-		.call(yAxis);
-
-	// draw chart title
-	chart.append('text')
-		.attr('x', width / 2)
-		.attr('y', -40)
-		.style('text-anchor', 'middle')
-		.style('font-weight', 600)
-		.text('Core Capacities');
-
-	// add costs
-	const costX = width + 60;
-	const yearX1 = 100;
-	const yearX2 = 220;
-	const yearX3 = 340;
-	const totalY = height + 30;
-	chart.append('text')
-		.attr('x', costX + yearX1)
-		.attr('y', -8)
-		.style('text-anchor', 'end')
-		.style('font-weight', 600)
-		.style('font-size', '0.9em')
-		.text('1-year Cost');
-	chart.append('text')
-		.attr('x', costX + yearX2)
-		.attr('y', -8)
-		.style('text-anchor', 'end')
-		.style('font-weight', 600)
-		.style('font-size', '0.9em')
-		.text('2-year Cost');
-	chart.append('text')
-		.attr('x', costX + yearX3)
-		.attr('y', -8)
-		.style('text-anchor', 'end')
-		.style('font-weight', 600)
-		.style('font-size', '0.9em')
-		.text('5-year Cost');
-
-	chart.append('line')
-		.attr('x1', costX)
-		.attr('x2', costX + yearX3 + 30)
-		.attr('y1', height + 5)
-		.attr('y2', height + 5)
-		.style('stroke', '#333')
-		.style('stroke-width', 1);
-	chart.append('text')
-		.attr('class', 'total-cost-1')
-		.attr('x', costX + yearX1)
-		.attr('y', totalY)
-		.style('font-size', '0.9em')
-		.style('text-anchor', 'end');
-	chart.append('text')
-		.attr('class', 'total-cost-2')
-		.attr('x', costX + yearX2)
-		.attr('y', totalY)
-		.style('font-size', '0.9em')
-		.style('text-anchor', 'end');
-	chart.append('text')
-		.attr('class', 'total-cost-5')
-		.attr('x', costX + yearX3)
-		.attr('y', totalY)
-		.style('font-size', '0.9em')
-		.style('text-anchor', 'end');
-
-
-	// add legend
-	const legend = chart.append('g')
-		.attr('transform', `translate(70, ${height + 40})`);
-	legend.append('rect')
-		.attr('x', -15)
-		.attr('y', -12)
-		.attr('width', 370)
-		.attr('height', 34)
-		.style('fill', 'white')
-		.style('stroke', 'black');
-	const legendGroups = legend.selectAll('g')
-		.data(barColors)
-		.enter().append('g')
-			.attr('transform', (d, i) => `translate(${120 * i}, 0)`);
-	legendGroups.append('rect')
-		.attr('width', 10)
-		.attr('height', 10)
-		.style('fill', d => d);
-	legendGroups.append('text')
-		.attr('x', 20)
-		.attr('y', 10)
-		.style('font-size', '0.9em')
-		.text((d, i) => (i === 0) ? 'Old Score' : 'New Score');
-	legend.append('line')
-		.attr('x1', 240)
-		.attr('x2', 240)
-		.attr('y1', -2)
-		.attr('y2', 12)
-		.style('stroke', '#333')
-		.style('stroke-width', 2);
-	legend.append('text')
-		.attr('x', 255)
-		.attr('y', 10)
-		.style('font-size', '0.9em')
-		.text('Perfect Score');
-
-	chart.update = (data) => {
-		y.domain(data.map(d => d.name));
-
-		// draw bars
-		const barGroups = chart.selectAll('.bar-group')
-			.data(data);
-
-		barGroups.exit().remove();
-
-		const newBarGroups = barGroups.enter().append('g')
-			.attr('transform', d => `translate(0, ${y(d.name)})`);
-		newBarGroups.append('rect')
-			.attr('class', 'bar new-score-bar');
-		newBarGroups.append('rect')
-			.attr('class', 'bar old-score-bar');
-
-		barGroups.select('.new-score-bar')
-			.attr('width', d => x(d.newScore))
-			.attr('height', bandwidth)
-			.style('fill', barColors[1]);
-		barGroups.select('.old-score-bar')
-			.attr('width', d => x(d.oldScore))
-			.attr('height', bandwidth)
-			.style('fill', barColors[0]);
-		barGroups.selectAll('rect')
-			.on('mouseover', (d) => {
-				const parent = d3.select(d3.event.currentTarget.parentNode);
-				parent.select('.old-score-bar').transition()
-					.attr('x', -5)
-					.attr('width', x(d.oldScore) + 5)
-					.attr('y', -5)
-					.attr('height', bandwidth + 10);
-				parent.select('.new-score-bar').transition()
-					.attr('width', x(d.newScore) + 5)
-					.attr('y', -5)
-					.attr('height', bandwidth + 10);
-			})
-			.on('mouseout', (d) => {
-				const parent = d3.select(d3.event.currentTarget.parentNode);
-				parent.select('.old-score-bar').transition()
-					.attr('x', 0)
-					.attr('width', x(d.oldScore))
-					.attr('y', 0)
-					.attr('height', bandwidth);
-				parent.select('.new-score-bar').transition()
-					.attr('width', x(d.newScore))
-					.attr('y', 0)
-					.attr('height', bandwidth);
-			})
-			.on('click', (d) => {
-				chart.update(d.capacities);
-			});
-
-		newBarGroups.append('line')
-			.attr('class', 'perfect-score-line');
-		barGroups.select('.perfect-score-line')
-			.attr('x1', d => x(d.perfectScore))
-			.attr('x2', d => x(d.perfectScore))
-			.attr('y2', bandwidth)
-			.style('stroke', '#333')
-			.style('stroke-width', 2);
-
-		const newCostGroups = newBarGroups.append('g')
-			.attr('transform', `translate(${costX}, 10)`);
-		newCostGroups.append('text')
-			.attr('class', 'cost-1');
-		newCostGroups.append('text')
-			.attr('class', 'cost-2');
-		newCostGroups.append('text')
-			.attr('class', 'cost-5');
-
-		barGroups.select('.cost-1')
-			.attr('x', yearX1)
-			.attr('dy', '.35em')
-			.style('font-size', '0.9em')
-			.style('text-anchor', 'end')
-			.text(d => moneyFormat(d.costYear1));
-		barGroups.select('.cost-2')
-			.attr('x', yearX2)
-			.attr('dy', '.35em')
-			.style('font-size', '0.9em')
-			.style('text-anchor', 'end')
-			.text(d => moneyFormat(d.costYear2));
-		barGroups.select('.cost-5')
-			.attr('x', yearX3)
-			.attr('dy', '.35em')
-			.style('font-size', '0.9em')
-			.style('text-anchor', 'end')
-			.text(d => moneyFormat(d.costYear5));
-
-		chart.select('.total-cost-1').text(moneyFormat(d3.sum(data, d => d.costYear1)));
-		chart.select('.total-cost-2').text(moneyFormat(d3.sum(data, d => d.costYear2)));
-		chart.select('.total-cost-5').text(moneyFormat(d3.sum(data, d => d.costYear5)));
-
-		// chart styling
-		d3.selectAll(`${selector} .y-axis .tick text`)
-			.style('font-size', '1.1em')
-			.attr('x', -12);
-		d3.selectAll(`${selector} .tick text`)
-			.style('font-size', '0.9em');
-		d3.selectAll(`${selector} .tick line`)
-			.style('fill', 'none')
-			.style('stroke', 'rgba(0,0,0,0.3)');
-		d3.selectAll(`${selector} .axis path, ${selector} .axis line`)
-			.style('fill', 'none')
-			.style('stroke', '#333')
-			.style('shape-rendering', 'crispEdges');
-	}
-
-	chart.update(chartData);
-
-	return chart;
+const getScoreColor = (score) => {
+	if (score < 2) return '#c82127';
+	else if (score < 4) return '#f7ec13';
+	return '#156c37';
 }
+
 
 export class ScoreSummary extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
-
+			activeData: jeeTree,
+			focusData: jeeTree,
 		};
 	}
 
 	componentDidMount() {
-		buildBarChart('.score-summary-chart');
+		this.buildScoreChart('.score-summary-chart');
+	}
+
+	buildScoreChart(selector, param={}) {
+		const capacities = [];
+		const indicators = [];
+
+		jeeTree.forEach((core) => {
+			core.score = 0;
+			core.oldScore = 0;
+			core.capacities.forEach((capacity) => {
+				capacity.score = 0;
+				capacity.oldScore = 0;
+				capacity.indicators.forEach((indicator) => {
+					// make up a fake score
+					indicator.score = 1 + Math.floor(5 * Math.random());
+					indicator.oldScore = (indicator.score === 1) ? 1 : indicator.score - 1;
+					indicator.capacityName = capacity.name;
+
+					capacity.score += indicator.score;
+					capacity.oldScore += indicator.oldScore;
+					core.score += indicator.score;
+					core.oldScore += indicator.score;
+
+					indicators.push(indicator);
+				});
+
+				capacity.averageScore = capacity.score / capacity.indicators.length;
+				capacity.oldAverageScore = capacity.oldScore / capacity.indicators.length;
+				capacities.push(capacity);
+			});
+
+			core.averageScore = core.score / d3.sum(core.capacities, d => d.indicators.length);
+			core.averageOldScore = core.oldScore / d3.sum(core.capacities, d => d.indicators.length);
+		});
+
+		// start drawing chart
+		const margin = { top: 40, right: 20, bottom: 40, left: 1 };
+		const width = 700;
+		const height = 120;
+		const chart = d3.select(selector)
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom)
+			.append('g')
+				.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+		// define chart variables
+		const sectionHeight = 30;
+		const indicatorWidth = 30;
+
+		// draw each indicator first
+		const indicatorSection = chart.append('g')
+			.attr('transform', `translate(0, ${3 * sectionHeight})`);
+		
+		const indicatorGroups = indicatorSection.selectAll('.indicator')
+			.data(indicators)
+			.enter().append('g')
+				.attr('class', 'indicator')
+				.attr('transform', (d, i) => {
+					return `translate(${i * indicatorWidth}, 0)`;
+				});
+		indicatorGroups.append('rect')
+			.attr('width', indicatorWidth)
+			.attr('height', sectionHeight)
+			.style('stroke', '#111')
+			.style('fill', d => getScoreColor(d.score));
+		indicatorGroups.append('rect')
+			.attr('class', 'overlay-rect')
+			.attr('width', d => indicatorWidth)
+			.attr('height', sectionHeight)
+			.style('fill', 'transparent')
+			.on('mouseover', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'rgba(255,255,255,0.5)');
+				//this.updateInfoPanelFocus(d);
+			})
+			.on('mouseout', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'transparent');
+				//this.updateInfoPanelFocus();
+			})
+			.on('click', (d) => {
+				d3.select(d3.event.currentTarget)
+					.classed('active', true)
+					.style('fill', 'rgba(255,255,255,0.5)');
+				this.updateInfoPanelActive(d);
+			});
+
+		// draw the capacities now
+		const capacitySection = chart.append('g')
+			.attr('transform', `translate(0, ${2 * sectionHeight})`);
+		let capX = 0;
+		const capacityGroups = capacitySection.selectAll('.capacity')
+			.data(capacities)
+			.enter().append('g')
+				.attr('class', 'capacity')
+				.attr('transform', (d) => {
+					const oldX = capX;
+					d.width = indicatorWidth * d.indicators.length;
+					capX += d.width
+					return `translate(${oldX}, 0)`;
+				});
+		capacityGroups.append('rect')
+			.attr('width', d => d.width)
+			.attr('height', sectionHeight)
+			.style('stroke', '#111')
+			.style('fill', d => getScoreColor(d.averageScore));
+		capacityGroups.append('text')
+			.attr('x', d => d.width / 2)
+			.attr('y', sectionHeight / 2)
+			.attr('dy', '0.35em')
+			.style('font-size', '0.9em')
+			.style('text-anchor', 'middle')
+			.style('fill', (d) => {
+				return (d.averageScore >= 4 || d.averageScore < 2) ? 'white' : 'black';
+			})
+			.text(d => scoreDecFormat(d.averageScore));
+		capacityGroups.append('rect')
+			.attr('class', 'overlay-rect')
+			.attr('width', d => d.width)
+			.attr('height', sectionHeight)
+			.style('fill', 'transparent')
+			.on('mouseover', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'rgba(255,255,255,0.5)');
+				//this.updateInfoPanelFocus(d);
+			})
+			.on('mouseout', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'transparent');
+				//this.updateInfoPanelFocus();
+			})
+			.on('click', (d) => {
+				d3.select(d3.event.currentTarget)
+					.classed('active', true)
+					.style('fill', 'rgba(255,255,255,0.5)');
+				this.updateInfoPanelActive(d);
+			});
+
+		// draw the core section now
+		const coreSection = chart.append('g')
+			.attr('transform', `translate(0, ${sectionHeight})`);
+		let coreX = 0;
+		const coreGroups = coreSection.selectAll('.core')
+			.data(jeeTree)
+			.enter().append('g')
+				.attr('class', 'core')
+				.attr('transform', (d) => {
+					const oldX = coreX;
+					d.width = indicatorWidth * d3.sum(d.capacities, dd => dd.indicators.length);
+					coreX += d.width;
+					return `translate(${oldX}, 0)`;
+				});
+		coreGroups.append('rect')
+			.attr('class', 'core')
+			.attr('width', d => d.width)
+			.attr('height', sectionHeight)
+			.style('stroke', '#111')
+			.style('fill', 'white');
+		coreGroups.append('text')
+			.attr('x', d => d.width / 2)
+			.attr('y', sectionHeight / 2)
+			.attr('dy', '0.35em')
+			.style('font-size', '0.9em')
+			.style('text-anchor', 'middle')
+			.text(d => d.name);
+		coreGroups.append('rect')
+			.attr('width', d => d.width)
+			.attr('height', sectionHeight)
+			.style('fill', 'transparent')
+			.on('mouseover', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'rgba(0,0,0,0.3)');
+				//this.updateInfoPanelFocus(d);
+			})
+			.on('mouseout', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'transparent');
+				//this.updateInfoPanelFocus();
+			})
+			.on('click', (d) => {
+				d3.select(d3.event.currentTarget)
+					.classed('active', true)
+					.style('fill', 'rgba(0,0,0,0.3)');
+				this.updateInfoPanelActive(d);
+			});
+
+		chart.append('rect')
+			.attr('width', indicatorWidth * indicators.length)
+			.attr('height', sectionHeight)
+			.style('fill', 'white')
+			.style('stroke', '#111')
+		chart.append('text')
+			.attr('x', indicatorWidth * indicators.length / 2)
+			.attr('y', sectionHeight / 2)
+			.attr('dy', '0.35em')
+			.style('font-size', '0.9em')
+			.style('text-anchor', 'middle')
+			.text('All');
+		chart.append('rect')
+			.attr('width', indicatorWidth * indicators.length)
+			.attr('height', sectionHeight)
+			.style('fill', 'transparent')
+			.on('mouseover', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'rgba(0,0,0,0.3)');
+				//this.updateInfoPanelFocus(d);
+			})
+			.on('mouseout', (d) => {
+				const target = d3.select(d3.event.currentTarget);
+				if (!target.classed('active')) target.style('fill', 'transparent');
+				//this.updateInfoPanelFocus();
+			})
+			.on('click', (d) => {
+				d3.select(d3.event.currentTarget)
+					.classed('active', true)
+					.style('fill', 'rgba(0,0,0,0.3)');
+				this.updateInfoPanelActive(d);
+			});
+
+
+		return chart;
+	}
+
+	updateInfoPanelActive(data) {
+		//this.setState({ activeData: data || jeeTree });
+		this.setState({ focusData: data || jeeTree });
+	}
+
+	updateInfoPanelFocus(data) {
+		if (data) this.setState({ focusData: data });
+		else this.setState({ focusData: this.state.activeData });
+	}
+
+	getInfoPanelTitle() {
+		if (!this.state.focusData.name) return 'Overall';
+		if (this.state.focusData.type === 'core_element') {
+			return this.state.focusData.name;
+		}
+
+		let title = '';
+		if (this.state.focusData.type === 'indicator') title = this.state.focusData.capacityName;
+		else title = this.state.focusData.name;
+		return `${title} (${this.state.focusData.jee_id || 'P.1'})`;
+	}
+
+	getInfoPanelName() {
+		return this.state.focusData.name || 'Overall';
+	}
+
+	getInfoPanelCost() {
+		if (this.state.focusData.type === 'indicator') return moneyFormat(1e5 * Math.random());
+		else if (this.state.focusData.type === 'capacity') return moneyFormat(1e6 * Math.random());
+		return moneyFormat(1e7 * Math.random());
 	}
 
 	render() {
@@ -325,6 +290,74 @@ export class ScoreSummary extends Component {
 				</div>
 				<div className={styles.scoreSummaryChartContainer}>
 					<svg className="score-summary-chart"></svg>
+				</div>
+				<div className={styles.infoPanel}>
+					<div className={styles.infoPanelTitle}>{this.getInfoPanelTitle()}</div>
+					<div className={styles.infoPanelContent}>
+						{
+							(this.state.focusData.type)
+							? <div>
+									{
+										(this.state.focusData.type === 'indicator')
+										? <div><b>Capacity:</b> {this.state.focusData.capacityName}</div>
+										: ''
+									}
+									<div><b>Name:</b> {this.getInfoPanelName()}</div>
+								</div>
+							: <div>
+									<b>Total Score:</b> <b>124</b> out of <b>190</b>
+								</div>
+						}
+						<div>
+							<b>Total Cost:</b> {this.getInfoPanelCost()}
+						</div>
+						{
+							(this.state.focusData.type)
+							? <div>
+									<b>Score Improvement:</b> <b>{this.state.focusData.oldScore}</b> to <b>{this.state.focusData.score}</b>
+								</div>
+							: ''
+						}
+						{
+							(this.state.focusData.type === 'capacity')
+							? <div>
+									<b>Average Score Improvement:</b> <b>{scoreDecFormat(this.state.focusData.oldAverageScore)}</b> to <b>{scoreDecFormat(this.state.focusData.averageScore)}</b>
+								</div>
+							: ''
+						}
+						{
+							(this.state.focusData.type === 'indicator')
+							? <div>
+								<b>Expenses:</b>
+								<ul>
+									{
+										this.state.focusData.expenses.map((expense) =>
+											<li className={styles.infoPanelExpense}>
+												{expense.name} <b>({moneyFormat(expense.cost)})</b>
+											</li>
+										)
+									}
+								</ul>
+							</div>
+							: ''
+						}
+						{
+							(this.state.focusData.type === 'capacity')
+							? <div>
+									<b>Indicators:</b>
+									<ul>
+										{
+											this.state.focusData.indicators.map((indicator) =>
+												<li className={styles.infoPanelExpense}>
+													{indicator.name} <b>({moneyFormat(1e5 * Math.random())})</b>
+												</li>
+											)
+										}
+									</ul>
+								</div>
+							: ''
+						}
+					</div>
 				</div>
 			</div>
 		);
