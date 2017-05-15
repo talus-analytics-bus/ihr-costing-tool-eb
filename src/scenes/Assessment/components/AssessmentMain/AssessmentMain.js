@@ -8,9 +8,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Costing } from './Costing';
 
 export class AssessmentMain extends Component {
-
-
   render() {
+    console.log(this.props.activeCapacity, this.props.activeStage);
     if (this.props.activeCapacity) {
       return (
         <div className={styles.assessmentMain}>
@@ -29,15 +28,21 @@ export class AssessmentMain extends Component {
           }
           <div className={styles.assessmentAction}>
             <RaisedButton
-              className={styles.backButton}
+              className={styles.actionButton}
               primary={true}
               label="Previous Capacity"
-              onClick={() => this.props.prevStep(this.props.assessmentFirst)}
+              onClick={() => this.props.prevCapacity()}
             />
              <RaisedButton
-              className={styles.submitButton}
+              className={styles.actionButton}
               primary={true}
               label="Proceed to Costing"
+              onClick={() => this.props.proceedToCosting()}
+            />
+            <RaisedButton
+              className={styles.actionButton}
+              primary={true}
+              label="Next Step"
               onClick={() => this.props.nextStep(this.props.assessmentFirst)}
             />
           </div>

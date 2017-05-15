@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setActiveCapacity, setActiveCapacityLevel, prevStep, nextStep } from '../../../../actions';
+import { setActiveCapacity, setActiveCapacityLevel, prevCapacity, nextStep, proceedToCosting } from '../../../../actions';
 import { AssessmentMain } from './AssessmentMain';
 
 export const mapStateToProps = (state) => {
@@ -22,12 +22,15 @@ export const mapDispatchToProps = (dispatch) => {
     setActiveCapacityLevel: (indicator, level) => {
       dispatch(setActiveCapacityLevel(indicator, level));
     },
-    prevStep: (assessmentFirst) => {
-      dispatch(prevStep(assessmentFirst));
+    prevCapacity: () => {
+      dispatch(prevCapacity());
     },
     nextStep: (assessmentFirst) => {
       dispatch(nextStep(assessmentFirst));
     },
+    proceedToCosting: () => {
+      dispatch(proceedToCosting());
+    }
   }
 }
 
