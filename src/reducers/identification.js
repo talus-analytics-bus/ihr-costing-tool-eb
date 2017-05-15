@@ -102,6 +102,21 @@ const editTargets = (state, target) => {
     case 'Level 3':
     case 'Level 4':
       return geoLevel(state, target);
+    case 'epi_count':
+    case 'chw_count':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          staff: {
+            ...state.advanced.staff,
+            [target]: {
+              ...state.advanced.staff[target],
+              editing: !state.advanced.staff[target].editing
+            }
+          }
+        }
+      }
     default:
       return state;
   }
@@ -134,6 +149,21 @@ const saveTargets = (state, target, value, type) => {
     case 'Level 3':
     case 'Level 4':
       return geoLevel(state, target, value);
+    case 'epi_count':
+    case 'chw_count':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          staff: {
+            ...state.advanced.staff,
+            [target]: {
+              ...state.advanced.staff[target],
+              value,
+            }
+          }
+        }
+      }
     default:
       return state;
   }

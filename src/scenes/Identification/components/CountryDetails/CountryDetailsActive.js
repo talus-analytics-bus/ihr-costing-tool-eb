@@ -20,6 +20,9 @@ const mapDispatchToProps = (dispatch) => {
     setPopulation: (value) => {
       dispatch(setCountryInfoValue('population', value));
     },
+    setStaff: (key, value) => {
+      dispatch(setCountryInfoValue(key, value));
+    },
     setGeoLevel: (target, value, type) => {
       dispatch(setCountryInfoValue(target, value, type))
     },
