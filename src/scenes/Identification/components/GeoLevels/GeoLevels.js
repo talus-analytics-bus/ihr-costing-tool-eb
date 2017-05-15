@@ -3,35 +3,28 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import styles from './GeoLevels.css';
+import { geoLevels, labels } from './GeoLevels.constants';
 
 export class GeoLevels extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      'Level 1': null,
-      'Level 2': null,
-      'Level 3': null,
-      'Level 4': null,
-    }
+    this.state = geoLevels.reduce((prev, level) => {
+      prev[level] = null;
+      return prev;
+    }, {});
   }
 
-  handleChange = (event, key) => {
+  handleChange = (event, key, type = 'value') => {
     this.setState({
       [key]: event.target.value,
-    })
+    });
+    this.props.setGeoLevel(key, event.target.value, type);
   }
 
-  getGeoLevelKeyName = (key) => {
-    switch(key) {
-      case 'Level 1':
-        return 'Country Level';
-      case 'Level 2':
-        return 'Intermediate Level 1';
-      case 'Level 3':
-        return 'Intermediate Level 2';
-      case 'Level 4':
-        return 'Local Level';
+  handleKeyPress = (event, target) => {
+    if (event.key === 'Enter') {
+      this.props.toggleEdit(target);
     }
   }
 
@@ -39,10 +32,24 @@ export class GeoLevels extends Component {
     return (
       <div className={styles.geoLevel} key={index}>
         <div className={styles.geoLevelRow}>
-          <p>{this.getGeoLevelKeyName(key)}</p>
+          <p>{labels[key]}</p>
         </div>
         <div className={styles.geoLevelName}>
-          <p>{ this.props.geoLevels[key].name }</p>
+          {
+            !this.props.geoLevels[key].editing && (
+              <p>{ this.props.geoLevels[key].name }</p>
+            )
+          }
+          {
+            this.props.geoLevels[key].editing && (
+              <TextField
+                defaultValue={this.props.geoLevels[key].name}
+                onChange={(e) => this.handleChange(e, key, 'name')}
+                onKeyPress={(e) => this.handleKeyPress(e, key)}
+                errorText={this.props.geoLevels[key].error}
+              />
+            )
+          }
         </div>
         <div className={styles.geoLevelCount}>
           {
@@ -56,16 +63,26 @@ export class GeoLevels extends Component {
         }
         {
           this.props.geoLevels[key].editing && (
-            <TextField defaultValue={this.props.geoLevels[key].value || 0} onChange={(e) => this.handleChange(e, key)}/>
+            <TextField
+              type="number"
+              defaultValue={this.props.geoLevels[key].value || 0}
+              onChange={(e) => this.handleChange(e, key)}
+              onKeyPress={(e) => this.handleKeyPress(e, key)}
+              errorText={this.props.geoLevels[key].error}
+            />
           )
         }
         </div>
         <div className={styles.geoLevelAction}>
-          <RaisedButton
-            className={styles.geoLevelActionButton}
-            label={this.props.geoLevels[key].editing ? 'Save' : 'Modify'}
-            onClick={() => this.props.toggleEdit(`geo_${key}`, this.props.geoLevels[key].editing, this.state[key])}
-          />
+          {
+            !this.props.geoLevels[key].editing && (
+              <RaisedButton
+                className={styles.geoLevelActionButton}
+                label="Modify"
+                onClick={() => this.props.toggleEdit(key, this.props.geoLevels[key].editing, this.state[key])}
+              />
+            )
+          }
         </div>
       </div>
     )

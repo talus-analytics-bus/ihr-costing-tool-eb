@@ -4,7 +4,7 @@ build-image:
 	docker build -f Dockerfile.webapp -t ihr-webapp .
 
 docker-start:
-	docker-compose up -d
+	docker-compose -f docker-compose.unix.yml up -d
 
 docker-end:
-	docker-compose down -v
+	docker-compose -f docker-compose.unix.yml down -v

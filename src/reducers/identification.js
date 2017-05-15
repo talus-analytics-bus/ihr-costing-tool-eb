@@ -10,27 +10,32 @@ const initialState = {
   population: {
     editing: false,
     value: null,
+    error: '',
   },
   geo_levels: {
     'Level 1': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     },
     'Level 2': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     },
     'Level 3': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     },
     'Level 4': {
       editing: false,
       name: '',
-      value: null
+      value: null,
+      error: '',
     }
   },
   advanced: {
@@ -92,20 +97,32 @@ const editTargets = (state, target) => {
           editing: !state.population.editing
         }
       }
-    case 'geo_Level 1':
-    case 'geo_Level 2':
-    case 'geo_Level 3':
-    case 'geo_Level 4':
-      const prefix = 'geo_'
-      const key = target.slice(target.indexOf(prefix) + prefix.length);
-
-      return geoLevel(state, key);
+    case 'Level 1':
+    case 'Level 2':
+    case 'Level 3':
+    case 'Level 4':
+      return geoLevel(state, target);
+    case 'epi_count':
+    case 'chw_count':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          staff: {
+            ...state.advanced.staff,
+            [target]: {
+              ...state.advanced.staff[target],
+              editing: !state.advanced.staff[target].editing
+            }
+          }
+        }
+      }
     default:
       return state;
   }
 }
 
-const saveTargets = (state, target, value) => {
+const saveTargets = (state, target, value, type) => {
   const geoLevel = (s, key, v) => {
     return {
       ...state,
@@ -113,11 +130,11 @@ const saveTargets = (state, target, value) => {
         ...state.geo_levels,
         [key]: {
           ...state.geo_levels[key],
-          value: v,
+          [type]: v,
         }
       }
     }
-  }
+  };
   switch (target) {
     case 'population':
       return {
@@ -127,14 +144,26 @@ const saveTargets = (state, target, value) => {
           value,
         }
       }
-    case 'geo_Level 1':
-    case 'geo_Level 2':
-    case 'geo_Level 3':
-    case 'geo_Level 4':
-      const prefix = 'geo_'
-      const key = target.slice(target.indexOf(prefix) + prefix.length);
-
-      return geoLevel(state, key, value);
+    case 'Level 1':
+    case 'Level 2':
+    case 'Level 3':
+    case 'Level 4':
+      return geoLevel(state, target, value);
+    case 'epi_count':
+    case 'chw_count':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          staff: {
+            ...state.advanced.staff,
+            [target]: {
+              ...state.advanced.staff[target],
+              value,
+            }
+          }
+        }
+      }
     default:
       return state;
   }
@@ -218,13 +247,27 @@ export const identificationReducer = (state = initialState, action) => {
     case 'TOGGLE_EDIT':
       return editTargets(state, action.target);
     case 'SET_COUNTRY_INFO_VALUE':
-      return saveTargets(state, action.target, action.value);
+      return saveTargets(state, action.target, action.value, action.valueType);
     case 'TOGGLE_SHOW_ADVANCED':
       return {
         ...state,
         advanced: {
           ...state.advanced,
           show: !state.advanced.show,
+        }
+      }
+    case 'VALIDATE_COUNTRY_INFO':
+      const requiredErrorText = 'This field is required';
+
+      return {
+        ...state,
+        geo_levels: {
+          ...state.geo_levels,
+          [action.target]: {
+            ...state.geo_levels[action.target],
+            editing: true,
+            error: requiredErrorText,
+          }
         }
       }
     default:

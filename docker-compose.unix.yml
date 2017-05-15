@@ -1,0 +1,27 @@
+version: '2'
+services:
+  webapp:
+    container_name: 'ihr-webapp'
+    image: 'ihr-webapp'
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: yarn start
+  server:
+    container_name: 'ihr-server'
+    image: 'ihr-webapp'
+    ports:
+      - "9500:9500"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: yarn serve
+  mongo:
+    container_name: 'ihr-mongo'
+    image: mongo:3.0.14
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./dbdata:/data/db

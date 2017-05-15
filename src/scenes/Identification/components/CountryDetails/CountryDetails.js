@@ -8,17 +8,32 @@ import { GeoLevels } from '../GeoLevels/GeoLevels';
 export class CountryDetails extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
 
     this.state = {
       population: null,
+      epi_count: null,
+      chw_count: null,
     }
   }
 
   handleChange = (event, key) => {
     this.setState({
       [key]: event.target.value,
-    })
+    });
+    this.props.setStaff(key, event.target.value);
+  }
+
+  handlePopulationChange = (event) => {
+    this.setState({
+      population: event.target.value,
+    });
+    this.props.setPopulation(event.target.value);
+  }
+
+  handleKeyPress = (event, target) => {
+    if (event.key === 'Enter') {
+      this.props.toggleEdit(target);
+    }
   }
 
   render() {
@@ -43,87 +58,111 @@ export class CountryDetails extends Component {
             }
             {
               this.props.population.editing && (
-                <TextField defaultValue={this.props.population.value || 0} onChange={(e) => this.handleChange(e, 'population')}/>
+                <TextField
+                  defaultValue={this.props.population.value || 0}
+                  onChange={(e) => this.handlePopulationChange(e)}
+                  onKeyPress={(e) => this.handleKeyPress(e, 'population')}
+                  errorText={this.props.population.error}
+                />
               )
             }
             </div>
             <div className={styles.populationAction}>
-                <RaisedButton
-                  label={this.props.population.editing ? 'Save' : 'Modify'}
-                  onClick={() => this.props.toggleEdit('population', this.props.population.editing, this.state.population)}/>
+              {
+                !this.props.population.editing && (
+                  <RaisedButton
+                    label="Modify"
+                    onClick={() => this.props.toggleEdit('population', this.props.population.editing, this.state.population)}/>
+                )
+              }
             </div>
           </div>
         </div>
-        <GeoLevels geoLevels={this.props.geoLevels} toggleEdit={this.props.toggleEdit} />
+        <GeoLevels
+          geoLevels={this.props.geoLevels}
+          toggleEdit={this.props.toggleEdit}
+          setGeoLevel={this.props.setGeoLevel}
+        />
         <div className={styles.otherDetailsContainer}>
           <div className={styles.otherDetailsTitle}>Other</div>
           <div className={styles.otherDetailsContent}>
-            <table>
-              <tbody>
-              <tr>
-                <td>Approximately, how many epidemiologists work in your country?</td>
-                <td>{this.props.staff.epi_count.value}</td>
-                <td>
-                  <RaisedButton label="Modify" />
-                </td>
-              </tr>
-              <tr>
-                <td>Approximately, how many community health workers work in your country?</td>
-                <td>{this.props.staff.chw_count.value}</td>
-                <td>
-                  <RaisedButton label="Modify" />
-                </td>
-              </tr>
-              {
-                this.props.geoLevels['Level 1'].name ?
-                  <tr>
-                    <td>Approximately, how many hospitals serve at the national level?</td>
-                    <td>{this.props.hospitals.level1.value}</td>
-                    <td>
-                      <RaisedButton label="Modify" />
-                    </td>
-                  </tr>
-                  : null
-              }
-              {
-                this.props.geoLevels['Level 2'].name ?
-                  <tr>
-                    <td>Approximately, how many hospitals serve at the {this.props.geoLevels['Level 2'].name.toLowerCase()} level?</td>
-                    <td>{this.props.hospitals.level1.value}</td>
-                    <td>
-                      <RaisedButton label="Modify" />
-                    </td>                  </tr>
-                  : null
-              }
-              {
-                this.props.geoLevels['Level 3'].name ?
-                  <tr>
-                    <td>Approximately, how many hospitals serve at the {this.props.geoLevels['Level 3'].name.toLowerCase()} level?</td>
-                    <td>{this.props.hospitals.level1.value}</td>
-                    <td>
-                      <RaisedButton label="Modify" />
-                    </td>                  </tr>
-                  : null
-              }
-              {
-                this.props.geoLevels['Level 4'].name ?
-                  <tr>
-                    <td>Approximately, how many hospitals serve at the {this.props.geoLevels['Level 4'].name.toLowerCase()} level?</td>
-                    <td>{this.props.hospitals.level1.value}</td>
-                    <td>
-                      <RaisedButton label="Modify" />
-                    </td>                  </tr>
-                  : null
-              }
-              <tr>
-                <td>Approximately, how many community health centers are in your country?</td>
-                <td>{this.props.hospitals.chc.value}</td>
-                <td>
-                  <RaisedButton label="Modify" />
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            <div className={styles.otherDetails}>
+              <div className={styles.otherDetailsText}>
+                <p>Approximately, how many epidemiologists work in your country?</p>
+              </div>
+              <div className={styles.otherDetailsCount}>
+                {
+                  !this.props.staff.epi_count.editing && (
+                    <p>
+                      {this.props.staff.epi_count.value && Number(this.props.staff.epi_count.value).toLocaleString()}
+                    </p>
+                  )
+                }
+                {
+                  this.props.staff.epi_count.editing && (
+                    <TextField
+                      defaultValue={this.props.staff.epi_count.value || 0}
+                      onChange={(e) => this.handleChange(e, 'epi_count')}
+                      onKeyPress={(e) => this.handleKeyPress(e, 'epi_count')}
+                    />
+                  )
+                }
+              </div>
+              <div className={styles.otherDetailsAction}>
+                {
+                  !this.props.staff.epi_count.editing && (
+                    <RaisedButton
+                      label="Modify"
+                      onClick={() => this.props.toggleEdit('epi_count')}/>
+                  )
+                }
+              </div>
+            </div>
+            <div className={styles.otherDetails}>
+              <div className={styles.otherDetailsText}>
+                <p>Approximately, how many community health workers work in your country?</p>
+              </div>
+              <div className={styles.otherDetailsCount}>
+                {
+                  !this.props.staff.chw_count.editing && (
+                    <p>
+                      {this.props.staff.chw_count.value && Number(this.props.staff.chw_count.value).toLocaleString()}
+                    </p>
+                  )
+                }
+                {
+                  this.props.staff.chw_count.editing && (
+                    <TextField
+                      defaultValue={this.props.staff.epi_count.value || 0}
+                      onChange={(e) => this.handleChange(e, 'chw_count')}
+                      onKeyPress={(e) => this.handleKeyPress(e, 'chw_count')}
+                    />
+                  )
+                }
+              </div>
+              <div className={styles.otherDetailsAction}>
+                {
+                  !this.props.staff.chw_count.editing && (
+                    <RaisedButton
+                      label="Modify"
+                      onClick={() => this.props.toggleEdit('chw_count')}/>
+                  )
+                }
+              </div>
+            </div>
+            <div>
+              <div>
+                <p>Approximately, how many health care facilities are in your country?</p>
+              </div>
+              <div>
+                <p>
+                  n/a
+                </p>
+              </div>
+              <div>
+                Modify
+              </div>
+            </div>
           </div>
         </div>
       </div>

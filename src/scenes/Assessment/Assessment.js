@@ -18,7 +18,7 @@ export const capacityLevels = [
 export class Assessment extends Component {
   setDefaults = (expense) => {
     const geoLevelMapping = (name) => {
-      const key = expense.multiplier_area.split('_').join(' ');
+      const key = name.split('_').join(' ');
 
       return `${key.slice(0, 1).toUpperCase()}${key.slice(1)}`;
     }
