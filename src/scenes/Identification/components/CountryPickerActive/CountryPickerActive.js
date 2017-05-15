@@ -15,7 +15,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onCountrySelect: (country, currency, details) => {
-      console.log(details);
       dispatch(chooseCountry(country));
       dispatch(chooseCurrency(currency));
       dispatch(setCountryDetails(details))

@@ -22,17 +22,20 @@
   flex-direction: row;
 }
 
-.populationCount {
+.populationCount,
+.otherDetailsCount {
   display: flex;
   flex-direction: column;
   flex-basis: 20%;
 }
 
-.populationCount p {
+.populationCount p,
+.otherDetailsCount p {
   align-self: flex-end;
 }
 
-.populationAction {
+.populationAction,
+.otherDetailsAction {
   display: flex;
   flex-basis: 10%;
   flex-direction: row;
@@ -40,7 +43,8 @@
   margin-left: 12px;
 }
 
-.populationAction > button {
+.populationAction > button,
+.otherDetailsAction > button {
   flex: auto;
 }
 
