@@ -9,7 +9,7 @@ import { CoreCapacity } from './data/models/CoreCapacity';
 const port = 9500;
 let app = express();
 
-mongoose.connect('mongodb://mongo:27017/ihr');
+mongoose.connect('mongodb://ihr:ihr14a1bc@mongo:27017/ihr');
 
 
 const db = mongoose.connection;

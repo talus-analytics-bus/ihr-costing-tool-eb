@@ -12,6 +12,7 @@ export class AssessmentMain extends Component {
     if (this.props.activeCapacity) {
       return (
         <div className={styles.assessmentMain}>
+          <h2 className={styles.assessmentTitle}>{this.props.activeStage}</h2>
           <AssessmentDescription activeCapacity={this.props.activeCapacity} />
           {
             this.props.activeStage === 'assessment' ?
