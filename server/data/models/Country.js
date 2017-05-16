@@ -29,6 +29,7 @@ export const countrySchema = mongoose.Schema({
       national_epi_count: Number,
       national_chw_count: Number,
     },
+    national_health_care_facilities_count: Number,
     hospitals: {
       level_1_count: Number,
       level_2_count: Number,
