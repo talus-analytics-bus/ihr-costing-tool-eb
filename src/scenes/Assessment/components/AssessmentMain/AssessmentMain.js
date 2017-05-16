@@ -9,7 +9,6 @@ import { Costing } from './Costing';
 
 export class AssessmentMain extends Component {
   render() {
-    console.log(this.props.activeCapacity, this.props.activeStage);
     if (this.props.activeCapacity) {
       return (
         <div className={styles.assessmentMain}>
@@ -27,24 +26,36 @@ export class AssessmentMain extends Component {
               />
           }
           <div className={styles.assessmentAction}>
-            <RaisedButton
-              className={styles.actionButton}
-              primary={true}
-              label="Previous Capacity"
-              onClick={() => this.props.prevCapacity()}
-            />
-             <RaisedButton
-              className={styles.actionButton}
-              primary={true}
-              label="Proceed to Costing"
-              onClick={() => this.props.proceedToCosting()}
-            />
-            <RaisedButton
-              className={styles.actionButton}
-              primary={true}
-              label="Next Step"
-              onClick={() => this.props.nextStep(this.props.assessmentFirst)}
-            />
+            {
+              // show only when there is previous capacity to go to
+              this.props.hasPreviousCapacity &&
+              <RaisedButton
+                className={styles.actionButton}
+                primary={true}
+                label="Previous Capacity"
+                onClick={() => this.props.prevCapacity()}
+              />
+            }
+            {
+              // show this button only when we are not in a costing stage
+              this.props.activeStage !== 'costing' &&
+              <RaisedButton
+                className={styles.actionButton}
+                primary={true}
+                label="Proceed to Costing"
+                onClick={() => this.props.proceedToCosting()}
+              />
+            }
+            {
+              // show only when there is next step to go to
+              this.props.hasNextStep &&
+              <RaisedButton
+                className={styles.actionButton}
+                primary={true}
+                label="Next Step"
+                onClick={() => this.props.nextStep(this.props.assessmentFirst)}
+              />
+            }
           </div>
           <div className={styles.resultsButtonContainer}>
             <RaisedButton
