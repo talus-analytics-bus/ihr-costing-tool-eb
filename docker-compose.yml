@@ -21,5 +21,8 @@ services:
   mongo:
     container_name: 'ihr-mongo'
     image: mongo:3.0.14
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=talus
+      - MONGO_INITDB_ROOT_PASSWORD=ihr1234
     ports:
       - "27017:27017"
