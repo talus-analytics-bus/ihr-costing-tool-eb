@@ -19,7 +19,7 @@ export class Directory extends Component {
 		        <RaisedButton
 		          primary={true}
 		          label="Go to Home Page"
-		          containerElement={<Link to="/identification" />}
+		          containerElement={<Link to="/" />}
 		        />
 		      </div>
 	      	<div className={styles.linkButtonContainer}>
