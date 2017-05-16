@@ -14,5 +14,5 @@ export async function up () {
  * Make any changes that UNDO the up function side effects here (if possible)
  */
 export async function down () {
-  this('CoreCapacity').remove();
+  this('CoreCapacity').find().remove().exec();
 }

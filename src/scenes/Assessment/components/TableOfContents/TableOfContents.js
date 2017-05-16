@@ -11,7 +11,6 @@ import styles from './TableOfContents.css';
 
 class Capacity extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className={`${styles.capacity} ${this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex ? styles.activeCapacity : null}`}>
         {

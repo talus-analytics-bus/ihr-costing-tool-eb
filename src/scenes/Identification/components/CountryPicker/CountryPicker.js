@@ -9,23 +9,27 @@ import {MapPicker} from "../MapPicker/MapPicker";
 
 export class CountryPicker extends Component {
   componentDidMount() {
-    Promise.all([
-      Api.fetchCountries()
-      .then((countries) => {
-        this.props.populateCountries(countries);
-      }),
-      Api.fetchCurrencies()
-        .then((currencies) => {
-          this.props.populateCurrencies(currencies);
-        }),
-      Api.fetchMap()
-        .then((countryMap) => {
-          this.props.populateCountryMap(countryMap);
-        }),
+    // check if country selection has already been made
+    if (!this.props.hasSelected) {
+      // fetch data from backend and populate state
+      Promise.all([
+        Api.fetchCountries()
+          .then((countries) => {
+            this.props.populateCountries(countries);
+          }),
+        Api.fetchCurrencies()
+          .then((currencies) => {
+            this.props.populateCurrencies(currencies);
+          }),
+        Api.fetchMap()
+          .then((countryMap) => {
+            this.props.populateCountryMap(countryMap);
+          }),
       ])
-      .then(() => {
-        this.selectCountry('US');
-      })
+        .then(() => {
+          this.selectCountry('US');
+        })
+    }
   }
 
   getCurrencyOfCountry = (countryCode) => {

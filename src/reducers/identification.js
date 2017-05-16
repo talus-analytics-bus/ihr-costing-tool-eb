@@ -1,4 +1,5 @@
 const initialState = {
+  hasSelected: false,
   country: {
     key: '',
     details: {}
@@ -174,6 +175,7 @@ export const identificationReducer = (state = initialState, action) => {
     case 'CHOOSE_COUNTRY':
       return {
         ...state,
+        hasSelected: true,
         country: {
           key: action.country,
           details: action.details,
