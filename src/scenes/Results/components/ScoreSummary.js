@@ -21,6 +21,8 @@ export class ScoreSummary extends Component {
 		this.state = {
 			activeData: jeeTree,
 			focusData: jeeTree,
+			percOldScore: 99/190,
+			percNewScore: 124/190,
 		};
 	}
 
@@ -91,6 +93,16 @@ export class ScoreSummary extends Component {
 			.attr('height', sectionHeight)
 			.style('stroke', '#111')
 			.style('fill', d => getScoreColor(d.score));
+		indicatorGroups.append('text')
+			.attr('x', indicatorWidth / 2)
+			.attr('y', sectionHeight / 2)
+			.attr('dy', '0.35em')
+			.style('font-size', '0.9em')
+			.style('text-anchor', 'middle')
+			.style('fill', (d) => {
+				return (d.score >= 4 || d.score < 2) ? 'white' : 'black';
+			})
+			.text(d => d3.format('.0f')(d.score));
 		indicatorGroups.append('rect')
 			.attr('class', 'overlay-rect')
 			.attr('width', d => indicatorWidth)
@@ -288,7 +300,26 @@ export class ScoreSummary extends Component {
 				<div className={styles.scoreSummaryTextContainer}>
 					<i>Click on a bar to view further detail.</i>
 				</div>
+				<div className={styles.scoreProgressBarContainer}>
+					<svg className={styles.scoreProgressBar} width="400" height="20">
+						<defs>
+							<clipPath id="rectClip">
+								<rect width={400 * this.state.percNewScore} height="20"></rect>
+							</clipPath>
+							<clipPath id="rectClip2">
+								<rect width={400 * this.state.percOldScore} height="20"></rect>
+							</clipPath>
+						</defs>
+						<rect width="400" height="20" rx="15" ry="15" fill="white" stroke="#999" strokeWidth="2" />
+						<rect y="1" width="400" height="18" rx="15" ry="15" fill="steelblue" clipPath="url(#rectClip)" />
+						<rect y="1" width="400" height="18" rx="15" ry="15" fill="lightsteelblue" clipPath="url(#rectClip2)" />
+					</svg>
+				</div>
 				<div className={styles.scoreSummaryChartContainer}>
+					<div className={styles.buttonGroup}>
+						<div className={styles.button}>Show Before</div>
+						<div className={styles.button}>Show After</div>
+					</div>
 					<svg className="score-summary-chart"></svg>
 				</div>
 				<div className={styles.infoPanel}>
@@ -354,6 +385,13 @@ export class ScoreSummary extends Component {
 											)
 										}
 									</ul>
+								</div>
+							: ''
+						}
+						{
+							(this.state.focusData.type)
+							? <div>
+									<b>% of Total Expenses:</b> 29.2%
 								</div>
 							: ''
 						}

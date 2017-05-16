@@ -14,7 +14,7 @@
 /* --- Score Summary --- */
 .scoreSummaryContainer {
 	margin-top: 10px;
-	min-height: 300px;
+	min-height: 400px;
 }
 
 .scoreSummaryTitle,
@@ -26,6 +26,10 @@
 .scoreSummaryTextContainer {
 	display: flex;
 	flex-basis: 50%;
+}
+
+.scoreProgressBarContainer {
+	margin-top: 30px;
 }
 
 .scoreSummaryChartContainer {
@@ -57,8 +61,21 @@
 	}
 }
 
-.infoPanelExpense {
+.buttonGroup {
+	margin-top: 20px;
+	text-align: center;
+}
 
+.button {
+	display: inline-block;
+	padding: 6px 18px;
+	border: 1px solid #999;
+	font-size: 0.9em;
+	border-radius: 5px;
+	cursor: pointer;
+	&:hover {
+		background-color: #f0f0f0;
+	}
 }
 
 
@@ -72,7 +89,12 @@
 
 .leftColumn {
 	float: left;
-	width: 50%;
+	width: 380px;
+}
+
+.rightColumn {
+	margin-left: 380px;
+	text-align: center;
 }
 
 .costTableContainer {
@@ -83,7 +105,18 @@
 	margin-top: 20px;
 	padding: 20px 30px;
 	border: 1px solid #ccc;
-	width: 50%;
+}
+
+.filterBox {
+	position: relative;
+	border: 1px solid #999;
+	border-style: dashed;
+	padding: 15px 20px 20px;
+
+	select {
+		min-width: 100px;
+		max-width: 220px;
+	}
 }
 
 .filterTitle {
@@ -92,9 +125,12 @@
 	margin-bottom: 5px;
 }
 
-.rightColumn {
-	width: 50%;
-	margin-left: 50%;
-	padding-left: 25px;
-	text-align: center;
+.filterBoxCloseIcon {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	top: 10px;
+	right: 10px;
+	opacity: 0.7;
+	cursor: pointer;
 }
