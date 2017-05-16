@@ -122,6 +122,17 @@ const editTargets = (state, target) => {
           }
         }
       }
+    case 'facilities':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          facilities: {
+            ...state.advanced.facilities,
+            editing: !state.advanced.facilities.editing
+          }
+        }
+      }
     default:
       return state;
   }
@@ -166,6 +177,17 @@ const saveTargets = (state, target, value, type) => {
               ...state.advanced.staff[target],
               value,
             }
+          }
+        }
+      }
+    case 'facilities':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          facilities: {
+            ...state.advanced.facilities,
+            value,
           }
         }
       }

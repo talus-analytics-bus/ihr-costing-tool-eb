@@ -17,7 +17,12 @@
   font-size: 1.1em;
 }
 
-.countryDetailsPop {
+.otherDetailsText {
+  flex-basis: 70%;
+}
+
+.countryDetailsPop,
+.otherDetails {
   display: flex;
   flex-direction: row;
 }
