@@ -32,7 +32,7 @@ export class CapacityTable extends Component {
     return rows.map((row, index) => ({
       ...row,
       values: this.props.activeCapacity.indicators.map((indicator) => {
-        return indicator.score_descriptions[index + 1] || ''
+        return (indicator.score_descriptions || [])[index + 1] || ''
       }),
     }))
   }
