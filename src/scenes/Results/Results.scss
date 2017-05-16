@@ -70,11 +70,17 @@
 	display: inline-block;
 	padding: 6px 18px;
 	border: 1px solid #999;
+	margin-right: 10px;
 	font-size: 0.9em;
 	border-radius: 5px;
 	cursor: pointer;
 	&:hover {
-		background-color: #f0f0f0;
+		background-color: #d9d9d9;
+
+	}
+	&.active {
+		background-color: #e0e0e0;
+		box-shadow: 1px 1px 3px rgba(0,0,0,0.2) inset;
 	}
 }
 
@@ -93,18 +99,24 @@
 }
 
 .rightColumn {
-	margin-left: 380px;
+	margin-left: 420px;
 	text-align: center;
 }
 
 .costTableContainer {
 	margin-top: 20px;
+	&.hidden { display: none; }
 }
 
 .tableFilterContainer {
 	margin-top: 20px;
 	padding: 20px 30px;
 	border: 1px solid #ccc;
+
+	.tableFilterContainerTitle {
+		margin-left: -10px;
+		margin-bottom: 20px;
+	}
 }
 
 .filterBox {
@@ -113,6 +125,9 @@
 	border-style: dashed;
 	padding: 15px 20px 20px;
 
+	&:nth-child(n+3) {
+		border-top: none;
+	}
 	select {
 		min-width: 100px;
 		max-width: 220px;

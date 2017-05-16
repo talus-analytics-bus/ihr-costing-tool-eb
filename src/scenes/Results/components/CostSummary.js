@@ -4,17 +4,19 @@ import DataTables from 'material-ui-datatables';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import styles from '../Results.css';
 
+import {CostChartLegend} from './CostChartLegend.js';
+
 import xMarkImage from '../../../images/x.png';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
 
 const formatMoney = d3.format('$,.0f');
 const categories = [
-	{ name: 'Consumable Materials', color: '#006837' },
-	{ name: 'Durable Equipment', color: '#31a354' },
-	{ name: 'Human Capabilities', color: '#78c679' },
-	{ name: 'Physical Infrastructure', color: '#addd8e' },
-	{ name: 'Technology', color: '#d9f0a3' },
-	{ name: 'Tools and Processes', color: '#ffffcc' }
+	{ name: 'Consumable Materials', color: '#1b9e77' },
+	{ name: 'Durable Equipment', color: '#d95f02' },
+	{ name: 'Human Capabilities', color: '#7570b3' },
+	{ name: 'Physical Infrastructure', color: '#e7298a' },
+	{ name: 'Technology', color: '#66a61e' },
+	{ name: 'Tools and Processes', color: '#e6ab02' }
 ];
 
 const columns = [
@@ -91,12 +93,13 @@ export class CostSummary extends Component {
 			activeCapacity: '',
 			activeIndicator: '',
 			page: 1,
+			showTable: true,
 		};
 	}
 
 	buildCostChart(selector, param={}) {
 		// start drawing chart
-		const margin = { top: 10, right: 40, bottom: 100, left: 80 };
+		const margin = { top: 10, right: 40, bottom: 110, left: 95 };
 		const width = 800;
 		const height = 300;
 		const chart = d3.select(selector)
@@ -105,61 +108,60 @@ export class CostSummary extends Component {
 			.append('g')
 				.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-		// define scales
+		// define scales and add axes
 		const x = d3.scale.ordinal()
 			.rangeRoundBands([0, width], 0.4);
 		const xAxis = d3.svg.axis()
-			.orient('bottom')
+			.orient('bottom');
 		const xAxisG = chart.append('g')
 			.attr('class', 'x-axis axis')
-			.attr('transform', `translate(0, ${height})`)
+			.attr('transform', `translate(0, ${height})`);
 
 		const y = d3.scale.linear()
 			.range([height, 0]);
 		const yAxis = d3.svg.axis()
 			.orient('left')
 			.innerTickSize(-width)
-			.tickFormat(d3.format('$.2s'))
+			.tickFormat(d3.format('$.2s'));
 		const yAxisG = chart.append('g')
-			.attr('class', 'y-axis axis')
+			.attr('class', 'y-axis axis');
 
-		// add legend
-		const legend = d3.select('.costChartLegend')
-			.attr('width', 400)
-			.attr('height', 100);
-		const legendGroups = legend.selectAll('g')
-			.data(categories)
-			.enter().append('g')
-				.attr('transform', (d, i) => {
-					if (i < 3) return `translate(0, ${25 * i})`;
-					return `translate(200, ${25 * (i - 3)})`;
-				});
-		legendGroups.append('rect')
-			.attr('width', 10)
-			.attr('height', 10)
-			.style('fill', d => d.color);
-		legendGroups.append('text')
-			.attr('x', 20)
-			.attr('y', 10)
+		// add axes labels
+		const xAxisLabel = chart.append('text')
+			.attr('x', width / 2)
+			.attr('y', height + 70)
+			.style('text-anchor', 'middle')
 			.style('font-size', '0.9em')
-			.text(d => d.name);
+			.text('Core Capacity');
+		const yAxisLabel = chart.append('text')
+			.attr('x', -height / 2)
+			.attr('y', -70)
+			.attr('transform', 'rotate(-90)')
+			.style('text-anchor', 'middle')
+			.style('font-size', '0.9em')
+			.text('Fixed Cost');
+
 
 		chart.update = () => {
 			// get data
 			let chartData;
 			let dataType = 'core';
 			if (!this.state.activeCore) {
+				xAxisLabel.text('Core Capacity');
 				chartData = jeeTree;
 			} else if (!this.state.activeCapacity) {
 				dataType = 'capacity';
+				xAxisLabel.text('Capacity');
 				chartData = jeeTree.find(d => d.name === this.state.activeCore).capacities;
 			} else if (!this.state.activeIndicator) {
 				dataType = 'indicator';
+				xAxisLabel.text('Indicator');
 				chartData = jeeTree
 					.find(d => d.name === this.state.activeCore).capacities
 					.find(dd => dd.name === this.state.activeCapacity).indicators;
 			} else {
 				dataType = 'expense';
+				xAxisLabel.text('Expense');
 				chartData = jeeTree
 					.find(d => d.name === this.state.activeCore).capacities
 					.find(dd => dd.name === this.state.activeCapacity).indicators
@@ -199,19 +201,19 @@ export class CostSummary extends Component {
 			});
 
 			// update bar values
-			barGroups
+			barGroups.transition()
 				.attr('transform', (d) => {
 					if (dataType === 'indicator') return `translate(${x(d.jee_id)}, 0)`;
 					return `translate(${x(d.name)}, 0)`;
 				})
 				.each(function(d) {
 					let runningCost = (dataType === 'expense') ? d.cost : d.fixedCost;
-					d3.select(this).selectAll('.bar')
+					d3.select(this).selectAll('.bar').transition()
 						.attr('width', bandwidth)
 						.each(function() {
-							d3.select(this)
+							d3.select(this).transition()
 								.attr('y', y(runningCost))
-								.attr('height', height - y(runningCost) - 1);
+								.attr('height', height - y(runningCost));
 							runningCost -= (1.5 * d.fixedCost / 6) * Math.random();
 						});
 				});
@@ -242,17 +244,8 @@ export class CostSummary extends Component {
 	}
 
 	componentDidMount() {
-		d3.selectAll('td').style('white-space', 'normal');
-		d3.selectAll('th:nth-child(2), td:nth-child(2)').style('width', '200px');
-		d3.selectAll('th:nth-child(n+4), td:nth-child(n+4)').style('text-align', 'right');
-		d3.selectAll('tbody tr:nth-child(-n+3)')
-			.style('background-color', '#f2f0f7');
-		d3.selectAll('tbody tr:nth-child(n+4):nth-child(-n+13)')
-			.style('background-color', '#dadaeb');
-		d3.selectAll('tbody tr:nth-child(n+14)')
-			.style('background-color', '#bcbddc');
-
 		this.costChart = this.buildCostChart('.costChart');
+		this.styleTable();
 	}
 
 	changeCore(event) {
@@ -275,16 +268,35 @@ export class CostSummary extends Component {
 		this.setState({activeCapacity: '', activeIndicator: ''}, this.costChart.update);
 	}
 
+	styleTable() {
+		d3.selectAll('td').style('white-space', 'normal');
+		d3.selectAll('th:nth-child(2), td:nth-child(2)').style('width', '200px');
+		d3.selectAll('th:nth-child(n+4), td:nth-child(n+4)').style('text-align', 'right');
+		d3.selectAll('tbody tr:nth-child(-n+3)')
+			.style('background-color', '#f2f0f7');
+		d3.selectAll('tbody tr:nth-child(n+4):nth-child(-n+13)')
+			.style('background-color', '#dadaeb');
+		d3.selectAll('tbody tr:nth-child(n+14)')
+			.style('background-color', '#bcbddc');
+	}
+
+	toggleTable() {
+		this.setState({showTable: !this.state.showTable}, this.styleTable);
+	}
+
 	render() {
 		return (
 			<div className={styles.costSummaryContainer}>
 				<h2 className={styles.costSummaryTitle}>Cost Summary</h2>
 				<div>	
-					<i>Explore the final costs for the country chosen.</i>
+					<i>Explore the final costs.</i>
 				</div>
 				<div>
 					<div className={styles.leftColumn}>
 						<div className={styles.tableFilterContainer}>
+							<div className={styles.tableFilterContainerTitle}>
+								Select from the dropdowns below to view costs:
+							</div>
 							<div className={styles.filterBox}>
 								<div className={styles.filterTitle}>Core Capacity:</div>
 								<select className={styles.filterSelect} value={this.state.activeCore} onChange={(e) => this.changeCore(e)}>
@@ -336,55 +348,38 @@ export class CostSummary extends Component {
 								</div>
 								: ''
 							}
-							{/*<div className={styles.filterBox}>
-								<div className={styles.filterTitle}>Category:</div>
-								<select className={styles.categoryFilter}>
-									<option value="All">All</option>
-									<option value="Consumable">Consumable Materials</option>
-									<option value="Durable">Durable Equipment</option>
-									<option value="Human">Human Capabilities</option>
-									<option value="Physical">Physical Infrastructure</option>
-									<option value="Technology">Technology</option>
-									<option value="Tools">Tools and Processes</option>
-								</select>
-							</div>*/}
 						</div>
 					</div>
 					<div className={styles.rightColumn}>
 						<div className={styles.costChartContainer}>
 							<svg className="costChart"></svg>
-							<svg className="costChartLegend"></svg>
+							<CostChartLegend categories={categories} />
 						</div>
-						<div className={styles.costChartOptions}>
-		          {/*<RadioButtonGroup
-		            name="costChartViewOptions"
-		            valueSelected={this.props.manual.assessmentFirst}
-		            onChange={(e) => this.props.setAssessmentFirst(e.target.value)}
-		          >
-		            <RadioButton
-		              className={styles.radioButton}
-		              value={true}
-		              label="Enter all indicator scores first"
-		            />
-		            <RadioButton
-		              className={styles.radioButton}
-		              value={false}
-		              label="Enter scores as I cost each indicator"
-		            />
-		          </RadioButtonGroup>*/}
-		        </div>
 					</div>
 				</div>
-				<div className={styles.costTableContainer}>
-					<DataTables
-						height={'auto'}
-						selectable={false}
-						columns={columns}
-						data={resultsData}
-						page={1}
-						count={resultsData.length}
-					/>
+				<div className={styles.costTableToggle}>
+					<div
+						className={`${styles.button} ${this.state.showTable ? 'active' : ''}`}
+						onClick={() => this.toggleTable()}
+					>
+						{this.state.showTable ? 'Hide Table' : 'Show Table'}
+					</div>
+					<div className={styles.button} onClick={() => this.exportTable()}>Export Table</div>
 				</div>
+				{
+					this.state.showTable ?
+					<div className={styles.costTableContainer}>
+						<DataTables
+							height={'auto'}
+							selectable={false}
+							columns={columns}
+							data={resultsData}
+							page={1}
+							count={resultsData.length}
+						/>
+					</div>
+					: ''
+				}
 			</div>
 		);
 	}

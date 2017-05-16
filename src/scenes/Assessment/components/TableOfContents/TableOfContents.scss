@@ -79,8 +79,11 @@
 }
 
 .activeCapacity {
-  & > p { font-weight: 900; }
-  .ccActive { font-weight: 900; }
+  & > p,
+  .ccActive {
+    font-weight: 900;
+    color: steelblue;
+  }
 }
 
 .arrowImage {
