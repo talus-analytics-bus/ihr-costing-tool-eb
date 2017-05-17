@@ -1,5 +1,5 @@
 .results {
-  composes: fixedWidth from '../../App.css';
+  composes: fixedWidth from '../../App.scss';
 	padding: 20px 40px;
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #ccc;
@@ -80,7 +80,7 @@
 	}
 }
 
-.progressBar {	
+.progressBar {
 	.valueLabel {
 		fill: white;
 		font-size: 0.95em;

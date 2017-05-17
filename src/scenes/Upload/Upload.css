@@ -1,5 +1,5 @@
 .upload {
-  composes: fixedWidth from '../../App.css';
+  composes: fixedWidth from '../../App.scss';
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   padding: 20px 50px 50px;
