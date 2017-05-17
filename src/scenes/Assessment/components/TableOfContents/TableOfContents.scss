@@ -48,16 +48,17 @@
   &:nth-child(n+2) {
     margin-top: 10px;
   }
-  &:hover {
-    background-color: rgba(0,0,0,0.05);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-  }
   p {
     margin: 0;
   }
   ul { margin-top: 5px; }
   li { margin-top: 5px; }
   li:first-child { margin-top: 10px; }
+}
+.capacity:hover,
+.activeCapacity {
+  background-color: rgba(0,0,0,0.05);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
 .capacityChildContainer {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import styles from '../Results.css';
+import styles from '../Results.scss';
 
 
 export class CostChartOptions extends Component {
@@ -17,7 +17,7 @@ export class CostChartOptions extends Component {
 				<div className={styles.costChartOptionsSubtitle}>View expenses for:</div>
         <RadioButtonGroup
           name="assessFirst"
-          valueSelected={1}
+          valueSelected={this.props.costCategory}
           onChange={() => true}
         >
           <RadioButton

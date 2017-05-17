@@ -1,5 +1,5 @@
 .costing {
-  composes: main from '../../App.css';
+  composes: main from '../../App.scss';
 }
 
 .content {

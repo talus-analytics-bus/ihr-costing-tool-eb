@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ScoreSummary } from './components/ScoreSummary';
 import { CostSummary } from './components/CostSummary';
 
-import styles from './Results.css';
+import styles from './Results.scss';
 
 export class Results extends Component {
   render() {
