@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import styles from './AssessmentMain.css';
 import { Link } from 'react-router-dom';
-import { Breadcrumbs } from '../../../../components/Breadcrumbs';
+import { Breadcrumbs } from '../../../../components/Breadcrumbs/Breadcrumbs';
 import { AssessmentDescription } from './AssessmentDescription';
 import { CapacityTable } from './CapacityTable';
 import RaisedButton from 'material-ui/RaisedButton';
