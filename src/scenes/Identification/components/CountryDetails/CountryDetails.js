@@ -133,7 +133,7 @@ export class CountryDetails extends Component {
                 {
                   this.props.staff.chw_count.editing && (
                     <TextField
-                      defaultValue={this.props.staff.epi_count.value || 0}
+                      defaultValue={this.props.staff.chw_count.value || 0}
                       onChange={(e) => this.handleChange(e, 'chw_count')}
                       onKeyPress={(e) => this.handleKeyPress(e, 'chw_count')}
                     />
@@ -150,17 +150,36 @@ export class CountryDetails extends Component {
                 }
               </div>
             </div>
-            <div>
-              <div>
+            <div className={styles.otherDetails}>
+              <div className={styles.otherDetailsText}>
                 <p>Approximately, how many health care facilities are in your country?</p>
               </div>
-              <div>
-                <p>
-                  n/a
-                </p>
+              <div className={styles.otherDetailsCount}>
+                {
+                  !this.props.facilities.editing && (
+                    <p>
+                      {this.props.facilities.value && Number(this.props.facilities.value).toLocaleString()}
+                    </p>
+                  )
+                }
+                {
+                  this.props.facilities.editing && (
+                    <TextField
+                      defaultValue={this.props.facilities.value || 0}
+                      onChange={(e) => this.handleChange(e, 'facilities')}
+                      onKeyPress={(e) => this.handleKeyPress(e, 'facilities')}
+                    />
+                  )
+                }
               </div>
-              <div>
-                Modify
+              <div className={styles.otherDetailsAction}>
+                {
+                  !this.props.facilities.editing && (
+                    <RaisedButton
+                      label="Modify"
+                      onClick={() => this.props.toggleEdit('facilities')}/>
+                  )
+                }
               </div>
             </div>
           </div>

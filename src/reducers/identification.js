@@ -51,6 +51,10 @@ const initialState = {
         editing: false,
       },
     },
+    facilities: {
+      value: 0,
+      editing: false,
+    },
     hospitals: {
       level1: {
         value: 0,
@@ -118,6 +122,17 @@ const editTargets = (state, target) => {
           }
         }
       }
+    case 'facilities':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          facilities: {
+            ...state.advanced.facilities,
+            editing: !state.advanced.facilities.editing
+          }
+        }
+      }
     default:
       return state;
   }
@@ -162,6 +177,17 @@ const saveTargets = (state, target, value, type) => {
               ...state.advanced.staff[target],
               value,
             }
+          }
+        }
+      }
+    case 'facilities':
+      return {
+        ...state,
+        advanced: {
+          ...state.advanced,
+          facilities: {
+            ...state.advanced.facilities,
+            value,
           }
         }
       }
@@ -210,27 +236,9 @@ export const identificationReducer = (state = initialState, action) => {
               value: action.details.advanced_info.staff.national_chw_count
             },
           },
-          hospitals: {
-            level1: {
-              editing: false,
-              value: action.details.advanced_info.hospitals.level_1_count
-            },
-            level2: {
-              editing: false,
-              value: action.details.advanced_info.hospitals.level_2_count
-            },
-            level3: {
-              editing: false,
-              value: action.details.advanced_info.hospitals.level_3_count
-            },
-            level4: {
-              editing: false,
-              value: action.details.advanced_info.hospitals.level_4_count
-            },
-            chc: {
-              editing: false,
-              value: action.details.advanced_info.hospitals.chc_count
-            },
+          facilities: {
+            editing: false,
+            value: action.details.advanced_info.national_health_care_facilities_count,
           },
         },
         population: {

@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
     showAdvanced: state.identification.advanced.show,
     staff: state.identification.advanced.staff,
     hospitals: state.identification.advanced.hospitals,
+    facilities: state.identification.advanced.facilities,
   }
 }
 
