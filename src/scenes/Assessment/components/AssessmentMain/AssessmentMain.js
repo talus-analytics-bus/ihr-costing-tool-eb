@@ -13,11 +13,11 @@ export class AssessmentMain extends Component {
     if (this.props.activeCapacity) {
       return (
         <div className={styles.assessmentMain}>
-          <Breadcrumbs
+          {/*<Breadcrumbs
             activeCore={this.props.activeCore}
             activeCapacity={this.props.activeCapacity}
             activeStage={this.props.activeStage}
-          />
+          />*/}
           <AssessmentDescription activeCapacity={this.props.activeCapacity} />
           {
             this.props.activeStage === 'assessment' ?
