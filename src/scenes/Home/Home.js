@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import styles from './Home.css';
+import styles from './Home.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom'
 
@@ -17,9 +17,9 @@ export class Home extends Component {
 
         <div className={styles.homeContent}>
           <p>
-            The International Health Regulations (IHR) Costing Tool supports countries in estimating the  
+            The International Health Regulations (IHR) Costing Tool supports countries in estimating the
             costs of fully implement IHR core capacities to prevent, detect, and respond to public health threats.
-            The IHR Costing Tool aligns costs with indicators specified by the 
+            The IHR Costing Tool aligns costs with indicators specified by the
             International Health Regulations Joint External Evaluation tool (JEE).
           </p>
         </div>

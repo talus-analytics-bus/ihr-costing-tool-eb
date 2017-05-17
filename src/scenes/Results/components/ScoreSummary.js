@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import d3 from 'd3';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
 import {ScoreProgress} from './ScoreProgress.js';
-import styles from '../Results.css';
+import styles from '../Results.scss';
 
 const moneyFormat = d3.format('$,.0f');
 const scoreDecFormat = d3.format('.1f');
@@ -18,7 +18,7 @@ const getScoreColor = (score) => {
 export class ScoreSummary extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			activeData: jeeTree,
 			focusData: jeeTree,
@@ -81,7 +81,7 @@ export class ScoreSummary extends Component {
 		// draw each indicator first
 		const indicatorSection = chart.append('g')
 			.attr('transform', `translate(0, ${3 * sectionHeight})`);
-		
+
 		const indicatorGroups = indicatorSection.selectAll('.indicator')
 			.data(indicators)
 			.enter().append('g')

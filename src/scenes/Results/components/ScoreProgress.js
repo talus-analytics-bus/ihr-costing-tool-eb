@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from '../Results.css';
+import styles from '../Results.scss';
 
 
 const barHeight = 20;
@@ -7,7 +7,7 @@ const barHeight = 20;
 export class ScoreProgress extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			oldScore: 124,
 			newScore: 155,

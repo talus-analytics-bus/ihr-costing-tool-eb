@@ -1,9 +1,9 @@
 .directory {
-  composes: fixedWidth from '../../App.css';
+  composes: fixedWidth from '../../App.scss';
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   padding: 20px 50px 50px;
-  max-width: 900px;	
+  max-width: 900px;
 }
 
 .directoryTitle {
@@ -24,7 +24,7 @@
 	}
 	.linkTitle {
 		margin-bottom: 10px;
-	}	
+	}
 	.linkDescription {
 		margin-bottom: 10px;
 	}

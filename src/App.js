@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import styles from './App.css';
+import styles from './App.scss';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Toolbar from 'material-ui/Toolbar';
