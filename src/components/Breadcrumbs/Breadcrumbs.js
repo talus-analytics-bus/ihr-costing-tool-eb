@@ -16,11 +16,17 @@ export class Breadcrumbs extends Component {
 	render() {
 		return (
 			<div className={styles.breadcrumbs}>
-				<div className={styles.breadLink}>{this.props.activeCore}</div>
+				<div className={styles.breadLink}>
+					Prevent
+				</div>
 				<span> &raquo; </span>
-				<div className={styles.breadLink}>{this.props.activeCapacity}</div>
+				<div className={styles.breadLink}>
+					P.1.1
+				</div>
 				<span> &raquo; </span>
-				<div className={capitalize(this.props.activeStage)}></div>
+				<div className={styles.breadLink}>
+					Assessment
+				</div>
 			</div>
 		);
 	}
