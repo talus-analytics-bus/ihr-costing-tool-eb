@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Peeper} from "../../../../components/Peeper/Peeper";
 import { ExpenseTable } from './ExpenseTable';
 import { capacityLevels } from '../../Assessment';
-import styles from './AssessmentMain.css';
+import styles from './AssessmentMain.scss';
 
 export class Costing extends Component {
   constructor(props) {

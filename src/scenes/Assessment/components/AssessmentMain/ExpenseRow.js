@@ -4,7 +4,7 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Popover from 'material-ui/Popover';
-import styles from './AssessmentMain.css';
+import styles from './AssessmentMain.scss';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 export class ExpenseRow extends Component {

@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import styles from './CountryDetails.css'
+import styles from './CountryDetails.scss'
 import { GeoLevels } from '../GeoLevels/GeoLevels';
 
 export class CountryDetails extends Component {

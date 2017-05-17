@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import styles from './AssessmentMain.css';
+import styles from './AssessmentMain.scss';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '../../../../components/Breadcrumbs/Breadcrumbs';
 import { AssessmentDescription } from './AssessmentDescription';

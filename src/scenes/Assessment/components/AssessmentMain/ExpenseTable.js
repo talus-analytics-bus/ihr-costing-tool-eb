@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import styles from './AssessmentMain.css';
+import styles from './AssessmentMain.scss';
 import { ExpenseRowActive } from './ExpenseRowActive';
 
 export class ExpenseTable extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Peeper } from '../../../../components/Peeper/Peeper'
 
-import styles from './AssessmentMain.css';
+import styles from './AssessmentMain.scss';
 
 export class AssessmentDescription extends Component {
   constructor(props) {
