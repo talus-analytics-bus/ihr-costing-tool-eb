@@ -26,6 +26,7 @@ const hasNextStep = (state) => {
 
 export const mapStateToProps = (state) => {
   return {
+    activeCore: state.assessment.jeeTree[state.assessment.active.core],
     activeCapacity: state.assessment.jeeTree.length > 0 ?
       state.assessment.jeeTree[state.assessment.active.core]
       .capacities[state.assessment.active.capacity] : null,

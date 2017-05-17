@@ -10,7 +10,7 @@ export class Upload extends Component {
     return (
       <div className={styles.upload}>
         <div>
-          <h2>Upload JEE Report</h2>
+          <h2>Enter JEE Assessment</h2>
           <p>Upload a JEE report, if available. Or if you have downloaded report scores from this application before, upload them here.</p>
           <p>Click <a href="#">here</a> to see details on the format of the JEE report file.</p>
           <div>
@@ -20,7 +20,7 @@ export class Upload extends Component {
         </div>
         <RaisedButton
           className={styles.noUploadButton}
-          label="I don't have a report to upload"
+          label="I don't have an assessment to upload"
           primary={true}
           containerElement={<Link to="/start/" />}
         />

@@ -1,5 +1,5 @@
 .mapPicker {
   flex-grow: 1;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   min-height: 400px;
 }

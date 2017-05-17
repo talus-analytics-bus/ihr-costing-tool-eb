@@ -1,0 +1,13 @@
+.breadcrumbs {
+	padding: 20px;
+	border-bottom: 1px solid #ccc;
+	font-size: 0.95em;
+}
+.breadLink {
+	cursor: pointer;
+	color: #333;
+	font-weight: 600;
+}
+.breadLink:hover {
+	text-decoration: underline;
+}
