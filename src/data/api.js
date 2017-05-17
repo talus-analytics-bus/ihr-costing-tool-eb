@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { jeeTree } from './jeeTree';
 
-const baseUrl = 'http://localhost:9500';
+const baseUrl = 'http://54.244.158.40:9500';
 
 const tableOfContents = [
   {
