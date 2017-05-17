@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
-import styles from '../Results.css';
+import styles from '../Results.scss';
 
 
 export class CostChartLegend extends Component {

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
 
-import styles from './Directory.css';
+import styles from './Directory.scss';
 
 export class Directory extends Component {
   render() {

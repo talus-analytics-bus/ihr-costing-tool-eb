@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
 import DataTables from 'material-ui-datatables';
-import styles from '../Results.css';
+import styles from '../Results.scss';
 
 import {CostChartLegend} from './CostChartLegend.js';
 import {CostChartOptions} from './CostChartOptions.js';
@@ -86,7 +86,7 @@ function wrap(text, width) {
 export class CostSummary extends Component {
 	constructor(props) {
 		super(props);
-	
+
 		this.state = {
 			activeData: jeeTree,
 			activeCore: '',
@@ -293,7 +293,7 @@ export class CostSummary extends Component {
 		return (
 			<div className={styles.costSummaryContainer}>
 				<h2 className={styles.costSummaryTitle}>Cost Summary</h2>
-				<div>	
+				<div>
 					<i>Explore the final costs.</i>
 				</div>
 				<div>
