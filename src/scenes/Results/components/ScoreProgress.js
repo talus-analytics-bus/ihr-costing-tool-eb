@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from '../Results.css';
 
 
-const barHeight = 20;
+const barHeight = 25;
 
 export class ScoreProgress extends Component {
 	constructor(props) {
@@ -22,12 +22,12 @@ export class ScoreProgress extends Component {
 				<svg width={this.state.width + 100} height="110">
 					<defs>
 						<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="#b0c4de" />
-							<stop offset="100%" stopColor="#4682b4" />
+							<stop offset="0%" stopColor="#9FDC9F" />
+							<stop offset="100%" stopColor="#248724" />
 						</linearGradient>
 						<linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="#4682b4" />
-							<stop offset="100%" stopColor="#082b84" />
+							<stop offset="0%" stopColor="#0c6b0c" />
+							<stop offset="100%" stopColor="#004C00" />
 						</linearGradient>
 					</defs>
 					<g transform="translate(1, 20)">

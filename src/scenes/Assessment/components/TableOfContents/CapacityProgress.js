@@ -6,7 +6,7 @@ import styles from './TableOfContents.css';
 export class CapacityProgress extends Component {
   getNumCompleted = () => {
     let numCompleted = 0;
-    this.props.entries.map((indicator) => {
+    this.props.entries.forEach((indicator) => {
       numCompleted += indicator.capacities.filter(c => c.completed).length;
     });
     return numCompleted;
@@ -14,7 +14,7 @@ export class CapacityProgress extends Component {
 
   getNumCapacities = () => {
     let numCapacities = 0;
-    this.props.entries.map((indicator) => {
+    this.props.entries.forEach((indicator) => {
       numCapacities += indicator.capacities.length;
     });
     return numCapacities;

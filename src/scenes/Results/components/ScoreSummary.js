@@ -5,8 +5,6 @@ import {ScoreProgress} from './ScoreProgress.js';
 import styles from '../Results.css';
 
 const moneyFormat = d3.format('$,.0f');
-const scoreDecFormat = d3.format('.1f');
-console.log(jeeTree)
 
 const getScoreColor = (score) => {
 	if (score < 2) return '#c82127';
@@ -291,7 +289,7 @@ export class ScoreSummary extends Component {
 				<ScoreProgress />
 				<div className={styles.costContent}>
 					<div className={styles.bigNumberContainer}>
-						<div className={styles.bigNumber}>{'$2,385,402'}</div>
+						<div className={styles.bigNumber}>{'$2,380,832'}</div>
 						<div className={styles.bigNumberText}>
 							total costs<br/>
 							for Kenya

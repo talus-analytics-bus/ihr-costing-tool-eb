@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
 import DataTables from 'material-ui-datatables';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import styles from '../Results.css';
 
 import {CostChartLegend} from './CostChartLegend.js';
@@ -12,12 +11,12 @@ import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via a
 
 const formatMoney = d3.format('$,.0f');
 const categories = [
-	{ name: 'Consumable Materials', color: '#1b9e77' },
-	{ name: 'Durable Equipment', color: '#d95f02' },
-	{ name: 'Human Capabilities', color: '#7570b3' },
-	{ name: 'Physical Infrastructure', color: '#e7298a' },
-	{ name: 'Technology', color: '#66a61e' },
-	{ name: 'Tools and Processes', color: '#e6ab02' }
+	{ name: 'Consumable Materials', color: '#0868ac' },
+	{ name: 'Durable Equipment', color: '#43a2ca' },
+	{ name: 'Human Capabilities', color: '#7bccc4' },
+	{ name: 'Physical Infrastructure', color: '#a8ddb5' },
+	{ name: 'Technology', color: '#ccebc5' },
+	{ name: 'Tools and Processes', color: '#f0f9e8' }
 ];
 
 const columns = [
