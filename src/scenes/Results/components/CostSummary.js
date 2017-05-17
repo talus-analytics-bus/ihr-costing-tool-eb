@@ -20,12 +20,12 @@ const categories = [
 ];
 
 const columns = [
-	{ key: 'core', label: 'Core Capacity' },
-	{ key: 'capacity', label: 'Capacity' },
-	{ key: 'indicator_id', label: 'Indicator' },
-	{ key: 'year_1_cost', label: '1-year Cost' },
-	{ key: 'year_2_cost', label: '2-year Cost' },
-	{ key: 'year_5_cost', label: '5-year Cost' },
+	{ key: 'core', label: 'Core Capacity', sortable: true },
+	{ key: 'capacity', label: 'Capacity', sortable: true },
+	{ key: 'indicator_id', label: 'Indicator', sortable: true },
+	{ key: 'year_1_cost', label: '1-year Cost', sortable: true },
+	{ key: 'year_2_cost', label: '2-year Cost', sortable: true },
+	{ key: 'year_5_cost', label: '5-year Cost', sortable: true },
 ];
 
 const resultsData = [];
