@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
-import Checkbox from 'material-ui/Checkbox';
 import styles from '../Results.css';
 
 
@@ -8,10 +7,10 @@ export class CostChartLegend extends Component {
 	buildLegend() {
 		// add legend
 		const legend = d3.select(this.refs.legend)
-			.attr('width', 600)
-			.attr('height', 100)
+			.attr('width', 370)
+			.attr('height', 80)
 			.append('g')
-				.attr('transform', 'translate(200, 10)');
+				.attr('transform', 'translate(0, 10)');
 		const legendGroups = legend.selectAll('g')
 			.data(this.props.categories)
 			.enter().append('g')
@@ -36,11 +35,8 @@ export class CostChartLegend extends Component {
 
 	render() {
 		return (
-			<div>
-				{/*<div className={styles.chartOptionsContainer}>
-          <Checkbox />
-          <span>View by category?</span>
-        </div>*/}
+			<div className={styles.costChartLegend}>
+				<div className={styles.costChartLegendTitle}>Legend</div>
 				<svg ref="legend"></svg>
 			</div>
 		);

@@ -45,9 +45,6 @@ class App extends Component {
               <div className={styles.toolbarTitle}>
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
-              <div className={styles.directoryLink}>
-                {<Link to="/directory">Directory</Link>}
-              </div>
             </Toolbar>
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
@@ -60,14 +57,6 @@ class App extends Component {
               <Route path="/directory" component={Directory}></Route>
             </div>
             <div className={styles.footer}>
-              <span>Built by </span>
-              <span className={styles.georgetownLink}>
-                <a href="https://www.georgetown.edu/" target="_blank">Georgetown University</a>
-              </span>
-              <span> &amp; </span>
-              <span className={styles.talusLink}>
-                <a href="http://www.talusanalytics.com" target="_blank">Talus Analytics</a>
-              </span>
               <a href="https://www.georgetown.edu/" target="_blank">
                 <img
                   alt={'Georgetown University'}
@@ -75,6 +64,14 @@ class App extends Component {
                   src={georgetownLogo}
                 />
               </a>
+              <span>Built by </span>
+              <span className={styles.georgetownLink}>
+                <a href="https://www.georgetown.edu/" target="_blank">Georgetown University</a>
+              </span>
+              <span>, </span>
+              <span className={styles.talusLink}>
+                <a href="http://www.talusanalytics.com" target="_blank">Talus Analytics</a>
+              </span>
               <a href="http://www.talusanalytics.com" target="_blank">
                 <img
                   alt={'Talus Analytics'}

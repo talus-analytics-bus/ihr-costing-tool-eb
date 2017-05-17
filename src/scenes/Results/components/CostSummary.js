@@ -5,6 +5,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import styles from '../Results.css';
 
 import {CostChartLegend} from './CostChartLegend.js';
+import {CostChartOptions} from './CostChartOptions.js';
 
 import xMarkImage from '../../../images/x.png';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
@@ -93,7 +94,8 @@ export class CostSummary extends Component {
 			activeCapacity: '',
 			activeIndicator: '',
 			page: 1,
-			showTable: true,
+			showByCategory: true,
+			showTable: false,
 		};
 	}
 
@@ -179,9 +181,9 @@ export class CostSummary extends Component {
 			const bandwidth = x.rangeBand();
 
 			if (dataType === 'expense') {
-				y.domain([0, 1.1 * d3.max(chartData, d => d.cost)]);
+				y.domain([0, 1.2 * d3.max(chartData, d => d.cost)]);
 			} else {
-				y.domain([0, 1.1 * d3.max(chartData, d => d.fixedCost)]);
+				y.domain([0, 1.2 * d3.max(chartData, d => d.fixedCost)]);
 			}
 			yAxis.scale(y);
 			yAxisG.call(yAxis);
@@ -266,6 +268,10 @@ export class CostSummary extends Component {
 
 	removeIndicator() {
 		this.setState({activeCapacity: '', activeIndicator: ''}, this.costChart.update);
+	}
+
+	toggleByCategory() {
+		this.setState({showByCategory: !this.state.showByCategory});
 	}
 
 	styleTable() {
@@ -353,7 +359,13 @@ export class CostSummary extends Component {
 					<div className={styles.rightColumn}>
 						<div className={styles.costChartContainer}>
 							<svg className="costChart"></svg>
-							<CostChartLegend categories={categories} />
+							<div className={styles.costChartUnderneath}>
+								<CostChartOptions
+									showByCategoryValue={this.state.showByCategory}
+									toggleByCategory={() => this.toggleByCategory()}
+								/>
+								<CostChartLegend categories={categories} />
+							</div>
 						</div>
 					</div>
 				</div>

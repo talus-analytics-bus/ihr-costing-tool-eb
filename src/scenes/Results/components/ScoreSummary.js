@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
+import {ScoreProgress} from './ScoreProgress.js';
 import styles from '../Results.css';
 
 const moneyFormat = d3.format('$,.0f');
@@ -286,90 +287,74 @@ export class ScoreSummary extends Component {
 	render() {
 		return (
 			<div className={styles.scoreSummaryContainer}>
-				<h2 className={styles.scoreSummaryTitle}>JEE Score Summary</h2>
-				<div className={styles.scoreSummaryTextContainer}>
-					<i>Click on a bar to view further detail.</i>
-				</div>
-				<div className={styles.scoreSummaryChartContainer}>
-					<div className={styles.buttonGroup}>
-						<div className={styles.button}>Show Before</div>
-						<div className={styles.button}>Show After</div>
-					</div>
-					<svg className="score-summary-chart"></svg>
-				</div>
-				<div className={styles.infoPanel}>
-					<div className={styles.infoPanelTitle}>{this.getInfoPanelTitle()}</div>
-					<div className={styles.infoPanelContent}>
-						{
-							(this.state.focusData.type)
-							? <div>
-									{
-										(this.state.focusData.type === 'indicator')
-										? <div><b>Capacity:</b> {this.state.focusData.capacityName}</div>
-										: ''
-									}
-									<div><b>Name:</b> {this.getInfoPanelName()}</div>
-								</div>
-							: <div>
-									<b>Total Score:</b> <b>124</b> out of <b>190</b>
-								</div>
-						}
-						<div>
-							<b>Total Cost:</b> {this.getInfoPanelCost()}
+				<h2 className={styles.scoreSummaryTitle}></h2>
+				<ScoreProgress />
+				<div className={styles.costContent}>
+					<div className={styles.bigNumberContainer}>
+						<div className={styles.bigNumber}>{'$2,385,402'}</div>
+						<div className={styles.bigNumberText}>
+							total costs<br/>
+							for Kenya
 						</div>
-						{
-							(this.state.focusData.type)
-							? <div>
-									<b>Score Improvement:</b> <b>{this.state.focusData.oldScore}</b> to <b>{this.state.focusData.score}</b>
-								</div>
-							: ''
-						}
-						{
-							(this.state.focusData.type === 'capacity')
-							? <div>
-									<b>Average Score Improvement:</b> <b>{scoreDecFormat(this.state.focusData.oldAverageScore)}</b> to <b>{scoreDecFormat(this.state.focusData.averageScore)}</b>
-								</div>
-							: ''
-						}
-						{
-							(this.state.focusData.type === 'indicator')
-							? <div>
-								<b>Expenses:</b>
-								<ul>
-									{
-										this.state.focusData.expenses.map((expense) =>
-											<li className={styles.infoPanelExpense}>
-												{expense.name} <b>({moneyFormat(expense.cost)})</b>
-											</li>
-										)
-									}
-								</ul>
+					</div>
+					<div className={styles.subCostContainer}>
+						<div className={styles.mediumNumberContainer}>
+							<div className={styles.mediumNumber}>{'$504,304'}</div>
+							<div className={styles.mediumNumberText}>
+								costs for the "Prevent"<br/>
+								core capacity
 							</div>
-							: ''
-						}
-						{
-							(this.state.focusData.type === 'capacity')
-							? <div>
-									<b>Indicators:</b>
-									<ul>
-										{
-											this.state.focusData.indicators.map((indicator) =>
-												<li className={styles.infoPanelExpense}>
-													{indicator.name} <b>({moneyFormat(1e5 * Math.random())})</b>
-												</li>
-											)
-										}
-									</ul>
-								</div>
-							: ''
-						}
-						{
-							(this.state.focusData.type)
-							? <div>
-									<b>% of Total Expenses:</b> 29.2%
-								</div>
-							: ''
-						}
+						</div>
+						<div className={styles.mediumNumberContainer}>
+							<div className={styles.mediumNumber}>{'$1,354,570'}</div>
+							<div className={styles.mediumNumberText}>
+								costs for the "Detect"<br/>
+								core capacity
+							</div>
+						</div>
+						<div className={styles.mediumNumberContainer}>
+							<div className={styles.mediumNumber}>{'$521,958'}</div>
+							<div className={styles.mediumNumberText}>
+								costs for the "Respond"<br/>
+								core capacity
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className={styles.categoryContent}>
+					<div className={styles.categoryTextContainer}>
+						<div className={styles.categoryTextLabel}>
+							Most Spending (<span className={styles.green}>{'$934,291'})</span>:
+						</div>
+						<div className={styles.categoryText}>
+							Physical Infrastructure
+						</div>
+					</div>
+					<div className={styles.categoryTextContainer}>
+						<div className={styles.categoryTextLabel}>
+							Least Spending (<span className={styles.green}>{'$144,309'})</span>:
+						</div>
+						<div className={styles.categoryText}>
+							Consumable Materials
+						</div>
+					</div>
+				</div>
+				<div className={styles.changeContent}>
+					<div className={styles.categoryTextContainer}>
+						<div className={styles.categoryTextLabel}>
+							Largest Score Improvement (<span className={styles.green}>{'+18'})</span>:
+						</div>
+						<div className={styles.categoryText}>
+							Prevent
+						</div>
+					</div>
+					<div className={styles.categoryTextContainer}>
+						<div className={styles.categoryTextLabel}>
+							Smallest Score Improvement (<span className={styles.green}>{'+6'})</span>:
+						</div>
+						<div className={styles.categoryText}>
+							Detect
+						</div>
 					</div>
 				</div>
 			</div>

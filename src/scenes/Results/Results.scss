@@ -13,6 +13,7 @@
 
 /* --- Score Summary --- */
 .scoreSummaryContainer {
+	position: relative;
 	margin-top: 10px;
 	min-height: 400px;
 }
@@ -23,41 +24,36 @@
 	font-weight: 600;
 }
 
-.scoreSummaryTextContainer {
-	display: flex;
-	flex-basis: 50%;
-}
-
-.scoreProgressBarContainer {
-	margin-top: 30px;
-}
-
-.scoreSummaryChartContainer {
+.costContent {
 	float: left;
+	width: 530px;
 }
 
-.infoPanel {
-	margin-left: 800px;
-	margin-top: 40px;
-	border: 1px solid #999;
-	border-radius: 10px;
-	width: 400px;
+.categoryContent {
+	margin-left: 550px;
+	min-height: 250px;
+	padding-top: 50px;
 }
 
-.infoPanelTitle {
-	text-align: center;
-	font-weight: 600;
-	margin: 10px;
+.changeContent {
+	position: absolute;
+	top: 163px;
+	left: 930px;
 }
 
-.infoPanelContent {
-	padding: 20px;
-	border-top: 1px solid #999;
-	margin-bottom: 20px;
+.categoryTextContainer {
+	margin-bottom: 25px;
 
-	ul {
-		margin-top: 5px;
-		margin-bottom: 5px;
+	.categoryTextLabel {
+		font-size: 1.2em;
+		font-variant: small-caps;
+		span { font-size: 0.9em; }
+	}
+	.categoryText {
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.35em;
+		font-weight: 600;
+		margin-top: 4px;
 	}
 }
 
@@ -84,6 +80,29 @@
 	}
 }
 
+.progressBar {	
+	.valueLabel {
+		fill: white;
+		font-size: 0.9em;
+		text-anchor: end;
+	}
+	.barLabel {
+		fill: black;
+		font-size: 0.9em;
+		text-anchor: middle;
+	}
+	line {
+		stroke: black;
+		stroke-width: 1px;
+		stroke-dasharray: 2,2;
+	}
+}
+
+.progressBarText {
+	float: left;
+	margin-left: 640px;
+}
+
 
 /* --- Cost Summary --- */
 .costSummaryContainer {
@@ -101,6 +120,46 @@
 .rightColumn {
 	margin-left: 420px;
 	text-align: center;
+}
+
+.costChartOptions {
+	float: left;
+	width: 280px;
+	margin-left: 80px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	text-align: left;
+
+	.costChartOptionsTitle {
+		text-align: left;
+		margin-bottom: 15px;
+	}
+	.costChartOptionsSubtitle {
+		margin-top: 20px;
+	}
+	.radioButton {
+		margin-left: 25px;
+		margin-top: 5px;
+	}
+}
+
+.costChartUnderneath {
+	min-height: 250px;
+}
+
+.costChartLegend {
+	margin-left: 420px;
+	padding: 20px 20px 15px;
+	border: 1px solid #ccc;
+
+	.costChartLegendTitle {
+		text-align: left;
+		margin-bottom: 10px;
+	}
+}
+
+.costTableToggle {
+	margin-top: 20px;
 }
 
 .costTableContainer {
@@ -149,3 +208,62 @@
 	opacity: 0.7;
 	cursor: pointer;
 }
+
+
+/* --- Big Number --- */
+.bigNumberContainer {
+	position: relative;
+
+	.bigNumber {
+		display: inline-block;
+		font-family: 'Raleway', sans-serif;
+		font-size: 2.1em;
+		font-weight: 600;
+		color: #006400;
+	}
+	.bigNumberText {
+		display: inline-block;
+		position: relative;
+		top: 4px;
+		left: 12px;
+		font-size: 0.95em;
+	}
+}
+
+.subCostContainer {
+	margin-top: 10px;
+	padding-top: 2px;
+	padding-bottom: 5px;
+	margin-left: 60px;
+	border-left: 1px solid #555;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+	border-style: dashed;
+	padding-left: 20px;
+}
+
+.mediumNumberContainer {
+	position: relative;
+	margin-top: 5px;
+	margin-bottom: 10px;
+
+	.mediumNumber {
+		display: inline-block;
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.7em;
+		font-weight: 600;
+		width: 140px;
+		text-align: right;
+	}
+	.mediumNumberText {
+		display: inline-block;
+		position: relative;
+		top: 6px;
+		left: 12px;
+		font-size: 0.9em;
+	}
+}
+
+.green { color: #006400; }
+.red { color: red; }
