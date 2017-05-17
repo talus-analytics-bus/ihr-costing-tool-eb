@@ -17,7 +17,7 @@ export class CostChartOptions extends Component {
 				<div className={styles.costChartOptionsSubtitle}>View expenses for:</div>
         <RadioButtonGroup
           name="assessFirst"
-          valueSelected={1}
+          valueSelected={this.props.costCategory}
           onChange={() => true}
         >
           <RadioButton

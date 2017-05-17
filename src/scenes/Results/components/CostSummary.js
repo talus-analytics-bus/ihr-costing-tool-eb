@@ -12,12 +12,12 @@ import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via a
 
 const formatMoney = d3.format('$,.0f');
 const categories = [
-	{ name: 'Consumable Materials', color: '#1b9e77' },
-	{ name: 'Durable Equipment', color: '#d95f02' },
-	{ name: 'Human Capabilities', color: '#7570b3' },
-	{ name: 'Physical Infrastructure', color: '#e7298a' },
-	{ name: 'Technology', color: '#66a61e' },
-	{ name: 'Tools and Processes', color: '#e6ab02' }
+	{ name: 'Consumable Materials', color: '#0868ac' },
+	{ name: 'Durable Equipment', color: '#43a2ca' },
+	{ name: 'Human Capabilities', color: '#7bccc4' },
+	{ name: 'Physical Infrastructure', color: '#a8ddb5' },
+	{ name: 'Technology', color: '#ccebc5' },
+	{ name: 'Tools and Processes', color: '#f0f9e8' }
 ];
 
 const columns = [
@@ -96,6 +96,7 @@ export class CostSummary extends Component {
 			page: 1,
 			showByCategory: true,
 			showTable: false,
+			costCategory: 1,
 		};
 	}
 
@@ -135,13 +136,13 @@ export class CostSummary extends Component {
 			.style('text-anchor', 'middle')
 			.style('font-size', '0.9em')
 			.text('Core Capacity');
-		const yAxisLabel = chart.append('text')
+		this.yAxisLabel = chart.append('text')
 			.attr('x', -height / 2)
 			.attr('y', -70)
 			.attr('transform', 'rotate(-90)')
 			.style('text-anchor', 'middle')
 			.style('font-size', '0.9em')
-			.text('Fixed Cost');
+			.text('1-Year Cost');
 
 
 		chart.update = () => {
@@ -274,6 +275,12 @@ export class CostSummary extends Component {
 		this.setState({showByCategory: !this.state.showByCategory});
 	}
 
+	changeCostCategory(event) {
+		this.setState({costCategory: event.target.value}, () => {
+			this.yAxisLabel.text(`${event.target.value}-Year Cost`);
+		});
+	}
+
 	styleTable() {
 		d3.selectAll('td').style('white-space', 'normal');
 		d3.selectAll('th:nth-child(2), td:nth-child(2)').style('width', '200px');
@@ -363,6 +370,8 @@ export class CostSummary extends Component {
 								<CostChartOptions
 									showByCategoryValue={this.state.showByCategory}
 									toggleByCategory={() => this.toggleByCategory()}
+									costCategory={this.state.costCategory}
+									changeCostCategory={(e) => this.changeCostCategory(e)}
 								/>
 								<CostChartLegend categories={categories} />
 							</div>
