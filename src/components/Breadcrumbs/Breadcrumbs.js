@@ -9,6 +9,7 @@ const capitalize = (str) => {
 export class Breadcrumbs extends Component {
 	constructor(props) {
 		super(props);
+		console.log(props);
 	
 		this.state = {};	
 	}
@@ -17,15 +18,15 @@ export class Breadcrumbs extends Component {
 		return (
 			<div className={styles.breadcrumbs}>
 				<div className={styles.breadLink}>
-					Prevent
+					{this.props.activeCore.name}
 				</div>
 				<span> &raquo; </span>
 				<div className={styles.breadLink}>
-					P.1.1
+					{this.props.activeCapacity.indicators[0].jee_id.slice(0, 3)}
 				</div>
 				<span> &raquo; </span>
 				<div className={styles.breadLink}>
-					Assessment
+					{capitalize(this.props.activeStage)}
 				</div>
 			</div>
 		);
