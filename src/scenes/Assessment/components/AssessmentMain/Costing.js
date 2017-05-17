@@ -36,6 +36,8 @@ export class Costing extends Component {
           const selectedLevelIndex = indicator.selectedLevel || 0;
           // target level is 1 more than selected level
           const targetLevelIndex = Math.min(selectedLevelIndex + 1, 4);
+          const expensesInTargetLevel = indicator.expenses
+            .filter((expense) => expense.target_score === targetLevelIndex + 1);
 
           return (
             <Peeper
@@ -54,7 +56,7 @@ export class Costing extends Component {
                 <div className={styles.expenseRowCosts}>Recurring annual costs</div>
                 <div className={styles.expenseRowAction}>&nbsp;</div>
               </div>
-              <ExpenseTable expenses={indicator.expenses} activeCurrency={this.props.activeCurrency} targetLevel={targetLevelIndex + 1} />
+              <ExpenseTable expenses={expensesInTargetLevel} activeCurrency={this.props.activeCurrency} />
             </Peeper>
           )
         })
