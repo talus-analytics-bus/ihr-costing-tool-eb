@@ -72,20 +72,24 @@ export class ExpenseRow extends Component {
 
   formatCurrency = (value) => {
 	
-	/* If currency symbol is three capital letters, then use those with a space after*/
+	/*Format currency as USD by default*/
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
     });
-
+	
+	/*If currency code is a 3-character upper case letter code, add a space after.
+	Otherwise, do not add a space.*/
 	var currencyCode_tmp = this.props.activeCurrency.key;
 	
 	var regexp = /[A-Z][A-Z][A-Z]/gi;
 	var addSpace = regexp.test(currencyCode_tmp);
 	
-	
-	if (addSpace) {
+	if (currencyCode_tmp === "USD") {
+		var currencyCode = "$";
+	}
+	else if (addSpace) {
 		var currencyCode = currencyCode_tmp + " ";
 	} else {
 		var currencyCode = currencyCode_tmp;
