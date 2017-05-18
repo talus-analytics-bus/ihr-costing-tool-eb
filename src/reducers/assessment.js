@@ -95,6 +95,9 @@ export const assessmentReducer = (state = initialState, action) => {
       }
       return state;
     case 'SET_ACTIVE_CAPACITY_LEVEL':
+      const isSelectedIndicator = (indicator, action) => indicator.jee_id === action.indicator;
+      const isAlreadySelected = (indicator, action) => indicator.selectedLevel === action.level;
+
       return {
         ...state,
         jeeTree: state.jeeTree.map((core) => ({
@@ -103,7 +106,7 @@ export const assessmentReducer = (state = initialState, action) => {
             ...capacity,
             indicators: capacity.indicators.map((indicator) => ({
               ...indicator,
-              selectedLevel: indicator.jee_id === action.indicator ? action.level : indicator.selectedLevel,
+              selectedLevel: isSelectedIndicator(indicator, action) ? (isAlreadySelected(indicator, action) ? null : action.level) : indicator.selectedLevel,
             }))
           }))
         }))
