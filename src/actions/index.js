@@ -18,6 +18,7 @@ const SET_ACTIVE_CAPACITY = 'SET_ACTIVE_CAPACITY';
 const SET_ACTIVE_CAPACITY_LEVEL = 'SET_ACTIVE_CAPACITY_LEVEL';
 const PREV_CAPACITY = 'PREV_CAPACITY';
 const PROCEED_TO_COSTING = 'PROCEED_TO_COSTING';
+const PREV_STEP = 'PREV_STEP';
 const NEXT_STEP = 'NEXT_STEP';
 const GO_TO_CAPACITY = 'GO_TO_CAPACITY';
 
@@ -105,6 +106,11 @@ export const prevCapacity = () => ({
 
 export const proceedToCosting = () => ({
   type: PROCEED_TO_COSTING,
+});
+
+export const prevStep = (assessmentFirst) => ({
+  type: PREV_STEP,
+  assessmentFirst,
 });
 
 export const nextStep = (assessmentFirst) => ({
