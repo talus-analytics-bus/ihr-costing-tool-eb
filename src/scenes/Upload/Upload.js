@@ -10,20 +10,30 @@ export class Upload extends Component {
     return (
       <div className={styles.upload}>
         <div>
-          <h2>Enter JEE Assessment</h2>
-          <p>Upload a JEE report, if available. Or if you have downloaded report scores from this application before, upload them here.</p>
-          <p>Click <a href="#">here</a> to see details on the format of the JEE report file.</p>
+          <h2>Enter Current JEE Assessment Scores</h2>
+          <p>
+            Choose a method below to enter current JEE assessment scores.
+            <br/>Scores can be added by uploading a report file or by entering scores manually.
+          </p>
+        </div>
+        <div className={styles.buttonGroup}>
+          <p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below:</p>
           <div>
             <RaisedButton className={styles.uploadButton} label="Select a File" primary={true} />
             <RaisedButton className={styles.uploadButton} label="Upload"/>
           </div>
         </div>
-        <RaisedButton
-          className={styles.noUploadButton}
-          label="I don't have an assessment to upload"
-          primary={true}
-          containerElement={<Link to="/start/" />}
-        />
+        <div className={styles.buttonGroup}>
+          <p>Or, continue to options for manual score entry:</p>
+          <div>
+            <RaisedButton
+              className={styles.noUploadButton}
+              label="I don't have an assessment to upload"
+              primary={true}
+              containerElement={<Link to="/start/" />}
+            />
+          </div>
+        </div>
       </div>
     )
   }
