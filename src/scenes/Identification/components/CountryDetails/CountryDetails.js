@@ -39,13 +39,19 @@ export class CountryDetails extends Component {
   render() {
     return (
       <div className={styles.countryDetails}>
-        <h2>Modify country details</h2>
+        <h2>Enter country details</h2>
+        <h4>Costs associated with implementing the International Health Regulations depend on the
+        population size, geographic organization, and public health infrastructure in your country. 
+        Review and complete the information below for use by the costing calculations. 
+        Default values are provided, where available, and can be changed using the MODIFY button. 
+        Complete all blanks by selecting the corresponding MODIFY button and entering the correct value.
+        </h4>
         <div className={styles.countryDetailsContent}>
           <div className={styles.countryDetailsPopTitle}>Population</div>
           <div className={styles.countryDetailsPop}>
             <div className={styles.populationText}>
               <p>
-                What is the population of your country?
+                What is the current total population of your country?
               </p>
             </div>
             <div className={styles.populationCount}>
@@ -84,7 +90,7 @@ export class CountryDetails extends Component {
           setGeoLevel={this.props.setGeoLevel}
         />
         <div className={styles.otherDetailsContainer}>
-          <div className={styles.otherDetailsTitle}>Other</div>
+          <div className={styles.otherDetailsTitle}>Public Health Infrastructure</div>
           <div className={styles.otherDetailsContent}>
             <div className={styles.otherDetails}>
               <div className={styles.otherDetailsText}>
@@ -120,7 +126,7 @@ export class CountryDetails extends Component {
             </div>
             <div className={styles.otherDetails}>
               <div className={styles.otherDetailsText}>
-                <p>Approximately, how many community health workers work in your country?</p>
+                <p>Approximately, how many community health workers are there in your country?</p>
               </div>
               <div className={styles.otherDetailsCount}>
                 {

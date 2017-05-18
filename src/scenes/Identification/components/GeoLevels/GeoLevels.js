@@ -91,7 +91,7 @@ export class GeoLevels extends Component {
   render() {
     return (
       <div className={styles.geoLevels}>
-        <div className={styles.geoLevelsTitle}>Geographic Level</div>
+        <div className={styles.geoLevelsTitle}>Geographic Organization</div>
         <div className={`${styles.geoLevel} ${styles.geoLevelHeadings}`}>
           <div className={styles.geoLevelRow}>
             <p>Geographic Level</p>
@@ -100,7 +100,7 @@ export class GeoLevels extends Component {
             <p>Name</p>
           </div>
           <div className={styles.geoLevelCount}>
-            <p>Approximate Count</p>
+            <p>Number In Country</p>
           </div>
           <div className={styles.geoLevelAction}>
             &nbsp;
