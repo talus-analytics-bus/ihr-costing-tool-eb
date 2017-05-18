@@ -11,8 +11,6 @@ export class ExpenseRow extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props.expense);
-
     this.state = {
       ...props.expense.multipliers,
       sourceOpen: false

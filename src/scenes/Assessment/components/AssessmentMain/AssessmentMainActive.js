@@ -39,6 +39,8 @@ export const mapStateToProps = (state) => {
   }
 }
 
+const scrollToTop = () => window.scrollTo(0, 0);
+
 export const mapDispatchToProps = (dispatch) => {
   return {
     setActiveCapacity: (capacityName) => {
@@ -49,12 +51,15 @@ export const mapDispatchToProps = (dispatch) => {
     },
     prevCapacity: () => {
       dispatch(prevCapacity());
+      scrollToTop();
     },
     nextStep: (assessmentFirst) => {
       dispatch(nextStep(assessmentFirst));
+      scrollToTop();
     },
     proceedToCosting: () => {
       dispatch(proceedToCosting());
+      scrollToTop();
     }
   }
 }
