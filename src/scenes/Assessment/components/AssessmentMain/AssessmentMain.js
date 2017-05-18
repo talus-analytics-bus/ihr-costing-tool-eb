@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import styles from './AssessmentMain.scss';
 import { Link } from 'react-router-dom';
-import { Breadcrumbs } from '../../../../components/Breadcrumbs/Breadcrumbs';
+import { AssessmentBreadcrumbs } from '../AssessmentBreadcrumbs/AssessmentBreadcrumbs';
 import { AssessmentDescription } from './AssessmentDescription';
 import { CapacityTable } from './CapacityTable';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -13,7 +13,7 @@ export class AssessmentMain extends Component {
     if (this.props.activeCapacity) {
       return (
         <div className={styles.assessmentMain}>
-          <Breadcrumbs
+          <AssessmentBreadcrumbs
             activeCore={this.props.activeCore}
             activeCapacity={this.props.activeCapacity}
             activeStage={this.props.activeStage}

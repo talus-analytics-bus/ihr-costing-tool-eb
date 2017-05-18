@@ -8,11 +8,12 @@ import {
   BrowserRouter as Router,
   Route,
   Link,
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import whoLogo from './images/WHO.png';
 import georgetownLogo from './images/georgetown.png';
 import talusLogo from './images/talus.png';
+import { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 
 import { Home } from './scenes/Home/Home';
 import { IdentificationActive } from './scenes/Identification/IdentificationActive';
@@ -31,10 +32,18 @@ const muiTheme = getMuiTheme({
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      page: 'upload',
+    }
+  }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Router>
+        <Router onUpdate={() => window.scrollTo(0, 0)}>
           <div className={styles.container}>
             <Toolbar className={styles.header}>
               <img
@@ -46,6 +55,11 @@ class App extends Component {
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
             </Toolbar>
+            {
+              (this.state.page !== 'home' && this.state.page !== 'assessment')
+              ? <Breadcrumbs page={this.state.page} />
+              : ''
+            }
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
               <Route path="/identification" component={IdentificationActive}></Route>

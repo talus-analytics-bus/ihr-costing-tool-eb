@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
 import DataTables from 'material-ui-datatables';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import styles from '../Results.scss';
 
 import {CostChartLegend} from './CostChartLegend.js';

@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import styles from './Breadcrumbs.css';
+import { Link } from 'react-router-dom';
+import styles from './Breadcrumbs.scss';
 
-
-const capitalize = (str) => {
-	return str.charAt(0).toUpperCase() + str.slice(1);
-};
 
 export class Breadcrumbs extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 	
 		this.state = {};	
 	}
@@ -17,16 +13,23 @@ export class Breadcrumbs extends Component {
 	render() {
 		return (
 			<div className={styles.breadcrumbs}>
-				<div className={styles.breadLink}>
-					{this.props.activeCore.name}
+				<div className={`${styles.menuItem} ${this.props.page === 'home' ? styles.active : ''}`}>
+					<Link to="/">Home</Link>
 				</div>
-				<span> &raquo; </span>
-				<div className={styles.breadLink}>
-					{this.props.activeCapacity.indicators[0].jee_id.slice(0, 3)}
+				<div className={`${styles.menuItem} ${this.props.page === 'identification' ? styles.active : ''}`}>
+					<Link to="/identification">Identification</Link>
 				</div>
-				<span> &raquo; </span>
-				<div className={styles.breadLink}>
-					{capitalize(this.props.activeStage)}
+				<div className={`${styles.menuItem} ${this.props.page === 'upload' ? styles.active : ''}`}>
+					<Link to="/upload">Upload Assessment</Link>
+				</div>
+				<div className={`${styles.menuItem} ${this.props.page === 'start' ? styles.active : ''}`}>
+					<Link to="/start">Start</Link>
+				</div>
+				<div className={`${styles.menuItem} ${this.props.page === 'assessment' ? styles.active : ''}`}>
+					<Link to="/assessment">Assessment/Costing</Link>
+				</div>
+				<div className={`${styles.menuItem} ${this.props.page === 'results' ? styles.active : ''}`}>
+					<Link to="/results">Results</Link>
 				</div>
 			</div>
 		);
