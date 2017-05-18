@@ -11,8 +11,6 @@ export class ExpenseRow extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props.expense);
-
     this.state = {
       ...props.expense.multipliers,
       sourceOpen: false
@@ -139,50 +137,62 @@ export class ExpenseRow extends Component {
                         onChange={(e) => this.handleChange('duration', e.target.value)}
                       />
                     </div>
-                    <div>
-                      <TextField
-                        floatingLabelText="staff"
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                        value={this.state.staff}
-                        hintText={this.nullHintText(this.state.staff)}
-                        disabled={this.props.expense.multiplier_staff === null}
-                        onChange={(e) => this.handleChange('staff', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        floatingLabelText="area"
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                        value={this.state.area}
-                        hintText={this.nullHintText(this.state.area)}
-                        disabled={this.props.expense.multiplier_area === null}
-                        onChange={(e) => this.handleChange('area', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        floatingLabelText="population"
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                        value={this.state.population}
-                        hintText={this.nullHintText(this.state.population)}
-                        disabled={this.props.expense.multiplier_population === null}
-                        onChange={(e) => this.handleChange('population', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        floatingLabelText="facilities"
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                        value={this.state.facility}
-                        hintText={this.nullHintText(this.state.facility)}
-                        disabled={this.props.expense.multiplier_facility === null}
-                        onChange={(e) => this.handleChange('facility', e.target.value)}
-                      />
-                    </div>
+                    {
+                      this.props.expense.multiplier_staff !== null &&
+                      <div>
+                        <TextField
+                          floatingLabelText="staff"
+                          floatingLabelFixed={true}
+                          className={styles.expenseRowInput}
+                          value={this.state.staff}
+                          hintText={this.nullHintText(this.state.staff)}
+                          disabled={this.props.expense.multiplier_staff === null}
+                          onChange={(e) => this.handleChange('staff', e.target.value)}
+                        />
+                      </div>
+                    }
+                    {
+                      this.props.expense.multiplier_area !== null &&
+                      <div>
+                        <TextField
+                          floatingLabelText="area"
+                          floatingLabelFixed={true}
+                          className={styles.expenseRowInput}
+                          value={this.state.area}
+                          hintText={this.nullHintText(this.state.area)}
+                          disabled={this.props.expense.multiplier_area === null}
+                          onChange={(e) => this.handleChange('area', e.target.value)}
+                        />
+                      </div>
+                    }
+                    {
+                      this.props.expense.multiplier_population !== null &&
+                      <div>
+                        <TextField
+                          floatingLabelText="population"
+                          floatingLabelFixed={true}
+                          className={styles.expenseRowInput}
+                          value={this.state.population}
+                          hintText={this.nullHintText(this.state.population)}
+                          disabled={this.props.expense.multiplier_population === null}
+                          onChange={(e) => this.handleChange('population', e.target.value)}
+                        />
+                      </div>
+                    }
+                    {
+                      this.props.expense.multiplier_facility !== null &&
+                      <div>
+                        <TextField
+                          floatingLabelText="facilities"
+                          floatingLabelFixed={true}
+                          className={styles.expenseRowInput}
+                          value={this.state.facility}
+                          hintText={this.nullHintText(this.state.facility)}
+                          disabled={this.props.expense.multiplier_facility === null}
+                          onChange={(e) => this.handleChange('facility', e.target.value)}
+                        />
+                      </div>
+                    }
                   </div>
                   <div className={styles.expenseRowFormRecurring}>
                     <div>

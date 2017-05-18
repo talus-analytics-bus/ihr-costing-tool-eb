@@ -1,5 +1,7 @@
 .assessmentMain {
   padding: 0px 20px 20px 50px;
+  display: flex;
+  flex-direction: column;
 }
 
 .assessmentDescription {
@@ -129,9 +131,8 @@
 }
 
 .expenseRowCosts {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  overflow-x: scroll;
+  text-wrap: normal;
   padding: 5px;
   flex: 2 0 0px;
   max-width: 10%;
@@ -163,17 +164,8 @@
   min-height: 20px;
   padding: 10px 5px;
   display: flex;
-  justify-content: center;
-}
-
-.expenseRowFormStartup > div {
   flex-basis: 0;
   flex-grow: 1;
-}
-
-.expenseRowFormRecurring > div {
-  flex-basis: 16%;
-  flex-grow: 0;
 }
 
 .expenseRowFormStartup > div:before {

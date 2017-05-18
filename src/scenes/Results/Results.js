@@ -6,6 +6,10 @@ import { CostSummary } from './components/CostSummary';
 import styles from './Results.scss';
 
 export class Results extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  };
+
   render() {
     return (
       <div className={styles.results}>

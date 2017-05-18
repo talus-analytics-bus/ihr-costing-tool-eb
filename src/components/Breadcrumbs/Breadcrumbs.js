@@ -9,9 +9,8 @@ const capitalize = (str) => {
 export class Breadcrumbs extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
-	
-		this.state = {};	
+
+		this.state = {};
 	}
 
 	render() {

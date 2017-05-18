@@ -36,6 +36,23 @@ const nextCapacity = (state, coreIndex, capacityIndex) => {
   // we don't return anything (undefined) to signal that there is no next step
 }
 
+const prevCapacity = (state, coreIndex, capacityIndex) => {
+  // active capacity is not the first one for that core capacity
+  if (capacityIndex > 0) {
+    return {
+      core: coreIndex,
+      capacity: capacityIndex - 1,
+    }
+  }
+  // core capacity is not the first one
+  if (coreIndex > 1) {
+    return {
+      core: coreIndex - 1,
+      capacity: numberOfCoreCapacities(coreIndex - 1) - 1,
+    }
+  }
+}
+
 // this is the new state object given core and capacity
 const assembleState = (state, core, capacity, stage = 'assessment') => ({
   ...state,
@@ -48,6 +65,8 @@ const assembleState = (state, core, capacity, stage = 'assessment') => ({
 });
 
 export const assessmentReducer = (state = initialState, action) => {
+  let activeStage;
+
   switch(action.type) {
     case 'SET_JEE_TREE':
       return {
@@ -76,6 +95,9 @@ export const assessmentReducer = (state = initialState, action) => {
       }
       return state;
     case 'SET_ACTIVE_CAPACITY_LEVEL':
+      const isSelectedIndicator = (indicator, action) => indicator.jee_id === action.indicator;
+      const isAlreadySelected = (indicator, action) => indicator.selectedLevel === action.level;
+
       return {
         ...state,
         jeeTree: state.jeeTree.map((core) => ({
@@ -84,7 +106,7 @@ export const assessmentReducer = (state = initialState, action) => {
             ...capacity,
             indicators: capacity.indicators.map((indicator) => ({
               ...indicator,
-              selectedLevel: indicator.jee_id === action.indicator ? action.level : indicator.selectedLevel,
+              selectedLevel: isSelectedIndicator(indicator, action) ? (isAlreadySelected(indicator, action) ? null : action.level) : indicator.selectedLevel,
             }))
           }))
         }))
@@ -153,12 +175,35 @@ export const assessmentReducer = (state = initialState, action) => {
         }
       }
 
+    case 'PREV_STEP':
+      activeStage = state.active.stage;
+      const prevCap = prevCapacity(state, state.active.core, state.active.capacity);
+
+      if (action.assessmentFirst) {
+        if (activeStage === 'costing') {
+          if (prevCap) {
+            return assembleState(state, prevCap.core, prevCap.capacity, 'costing');
+          }
+          return assembleState(state, numberOfCoreCapacities(state) - 1, numberOfCapacities(state, numberOfCoreCapacities(state) - 1) - 1, 'assessment');
+        }
+        if (prevCap) {
+          return assembleState(state, prevCap.core, prevCap.capacity, 'assessment');
+        }
+        return state;
+      }
+      if (activeStage === 'costing') {
+        return assembleState(state, state.active.core, state.active.capacity, 'assessment');
+      }
+      if (prevCap) {
+        return assembleState(state, prevCap.core, prevCap.capacity, 'costing');
+      }
+      return state;
     case 'NEXT_STEP':
       // this is complicated
       // say A => assessment and C => costing
       // when assessmentFirst == true, then path is A1 -> A2 -> A3 -> C1 -> C2 -> C3
       // otherwise A1 -> C1 -> A2 -> C2 -> A3 -> C3
-      const activeStage = state.active.stage;
+      activeStage = state.active.stage;
       const nextCap = nextCapacity(state, state.active.core, state.active.capacity);
 
       // let's deal with the first workflow
@@ -169,7 +214,7 @@ export const assessmentReducer = (state = initialState, action) => {
             return assembleState(state, nextCap.core, nextCap.capacity, 'assessment');
           }
           // we've gone to the costing part now
-          return assembleState(state, nextCap.core, nextCap.capacity, 'costing');
+          return assembleState(state, 0, 0, 'costing');
         }
         // we're in the costing part now
         if (nextCap) {
@@ -245,7 +290,7 @@ export const assessmentReducer = (state = initialState, action) => {
     case 'SELECT_EXPENSE':
       const isSelected = ({expense_id, sophistication_level, selected}) => {
         if (expense_id === action.expense_id && sophistication_level.includes(action.sophistication_level)) {
-          return true;
+          return !selected;
         }
         if (expense_id === action.expense_id) {
           return false;
