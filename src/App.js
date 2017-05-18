@@ -10,8 +10,8 @@ import {
   Link,
 } from 'react-router-dom'
 
-import whoLogo from './images/WHO.png';
-import georgetownLogo from './images/georgetown.png';
+import globeIcon from './images/globe.png';
+import georgetownLogo from './images/georgetown_wide.png';
 import talusLogo from './images/talus.png';
 
 import { Home } from './scenes/Home/Home';
@@ -37,11 +37,11 @@ class App extends Component {
         <Router>
           <div className={styles.container}>
 			  <Toolbar className={styles.header}>
-				  {/*<img
-                alt={'World Health Organization'}
+				  <img
+                alt={'Globe'}
                 className={styles.logo}
-                src={whoLogo}
-				  />*/}
+                src={globeIcon}
+				  />
               <div className={styles.toolbarTitle}>
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
@@ -64,14 +64,15 @@ class App extends Component {
                   src={georgetownLogo}
                 />
               </a>
-              <span>Built by </span>
-              <span className={styles.georgetownLink}>
+			  <br></br>
+              {/*<span className={styles.georgetownLink}>
                 <a href="https://www.georgetown.edu/" target="_blank">Georgetown University</a>
-              </span>
-              <span>, </span>
-              <span className={styles.talusLink}>
+              </span>*/}
+              <span className={styles.builtBy}>Built by </span>
+              {/*<span>, </span>*/}
+				  {/*<span className={styles.talusLink}>
                 <a href="http://www.talusanalytics.com" target="_blank">Talus Analytics</a>
-              </span>
+				  </span>*/}
               <a href="http://www.talusanalytics.com" target="_blank">
                 <img
                   alt={'Talus Analytics'}
