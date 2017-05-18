@@ -30,7 +30,7 @@ class Capacity extends Component {
               src={this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex && this.props.capacity.stage === 'assessment' ? activeImage : (this.props.capacity.completed ? checkMarkImage : xMarkImage)}
               onClick={() => true}
             />
-            <span>Self-assessment</span>
+            <span>Assessment</span>
           </div>
           <div className={`${styles.capacityChild} ${this.props.capacity.stage === 'costing' ? styles.ccActive : null}`}>
             <img

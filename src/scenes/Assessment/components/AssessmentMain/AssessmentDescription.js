@@ -24,7 +24,7 @@ export class AssessmentDescription extends Component {
       <div className={styles.assessmentDescription}>
         <h2>{this.props.activeCapacity.name}</h2>
         <Peeper
-          label="Capacity Information"
+          label="Capacity Description"
           show={this.state.showingDetails}
           togglePeeper={() => this.handlePeeperToggle('showingDetails')}
         >
@@ -49,7 +49,7 @@ export class AssessmentDescription extends Component {
               this.props.activeCapacity.desired_impact
               ? <div>
                 <p>
-                  <b>What are the desired outcomes of building this capacity? </b>
+                  <b>Desired Impact: </b>
                   {this.props.activeCapacity.desired_impact}
                 </p>
               </div>
