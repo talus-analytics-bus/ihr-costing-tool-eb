@@ -10,14 +10,14 @@
 
   .logo {
     position: relative;
-    width: 50px;
-    height: 50px;
-    top: 2px;
+    width: 40px;
+    height: 40px;
+    top: 8px;
   }
   .toolbarTitle a {
     position: absolute;
     top: 14px;
-    left: 25px;
+    left: 80px;
     text-align: left;
     font-family: 'Raleway', sans-serif;
 	font-weight: bold;
@@ -95,16 +95,23 @@
   &:hover { text-decoration: underline; }
 }
 
-.georgetownLogo,
+.georgetownLogo {
+  position: relative;
+  top: 17px;
+  left: 7px;
+  height: 100px;
+}
 .talusLogo {
   position: relative;
   top: 17px;
   left: 7px;
   height: 42px;
 }
-.georgetownLogo {
-  margin-right: 23px;
-}
+
 .talusLogo {
-  margin-left: 7px;
+  margin-left: -7px;
+}
+
+.builtBy {
+	margin-left:80px;
 }
