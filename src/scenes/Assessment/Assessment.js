@@ -15,7 +15,48 @@ export const capacityLevels = [
   'Sustainable',
 ]
 
+const geoLevelMapping = (name) => {
+  const key = name.split('_').join(' ');
+
+  return `${key.slice(0, 1).toUpperCase()}${key.slice(1)}`;
+}
+
 export class Assessment extends Component {
+  getMultiplier = (key, expense) => {
+    switch(key) {
+      case 'area':
+        console.log(expense.multiplier_area);
+        if (typeof expense.multiplier_area === 'string') {
+          console.log(expense.multiplier_area, geoLevelMapping(expense.multiplier_area), this.props.geo_levels[geoLevelMapping(expense.multiplier_area)])
+          return (this.props.geo_levels[geoLevelMapping(expense.multiplier_area)] || {}).value;
+        }
+        return expense.multiplier_area;
+      case 'staff':
+        switch(expense.multiplier_staff) {
+          case 'national_epi_count':
+            return this.props.advanced.staff.epi_count.value;
+          case 'national_chw_count':
+            return this.props.advanced.staff.chw_count.value;
+          default:
+            return expense.multiplier_staff;
+        }
+      case 'facility':
+        if (expense.multiplier_facility === 'national_health_care_facilities_count') {
+          return this.props.advanced.facilities.value;
+        }
+        return expense.multiplier_facility;
+      case 'population':
+        if (expense.multiplier_population === 'population') {
+          return this.props.population.value;
+        }
+        return expense.multiplier_population;
+      case 'depreciation':
+        return expense.multiplier_depreciation;
+      default:
+        return 0;
+    }
+  }
+
   setDefaults = (expense) => {
     const geoLevelMapping = (name) => {
       const key = name.split('_').join(' ');
@@ -33,6 +74,16 @@ export class Assessment extends Component {
     }
   }
 
+  getValues = (expense) => ({
+    cost: expense.cost || 0,
+    duration: expense.cost_duration || 0,
+    area: this.getMultiplier('area', expense),
+    staff: this.getMultiplier('staff', expense),
+    facility: this.getMultiplier('facility', expense),
+    population: this.getMultiplier('population', expense),
+    depreciation: this.getMultiplier('depreciation', expense),
+  })
+
   componentDidMount() {
     if (this.props.jeeTree !== []) {
       Api.fetchJeeTree()
@@ -49,14 +100,23 @@ export class Assessment extends Component {
               indicators: capacity.indicators.map((indicator) => ({
                 ...indicator,
                 selectedLevel: null,
-                expenses: indicator.expenses.reduce((prev, expense) => {
-                  return prev.concat([{
-                    ...this.setDefaults(expense),
-                    editing: false,
-                    selected: false,//prev.length === 0 || prev.slice(-1)[0].expense_id !== expense.expense_id,
-                    defaults: this.setDefaults(expense),
-                  }])
-                }, [])
+                // expenses: indicator.expenses.reduce((prev, expense) => {
+                //   return prev.concat([{
+                //     // ...this.setDefaults(expense),
+                //     ...expense,
+                //     editing: false,
+                //     selected: false,
+                //     multipliers: this.getValues(expense),
+                //     defaults: this.getValues(expense),
+                //   }])
+                // }, [])
+                expenses: indicator.expenses.map((expense) => ({
+                  ...expense,
+                  editing: false,
+                  selected: false,
+                  multipliers: this.getValues(expense),
+                  defaults: this.getValues(expense),
+                }))
               }))
             }))
           })));

@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import styles from './Identification.css';
+import { Redirect } from 'react-router';
 
 import { CountryPickerActive } from './components/CountryPicker/CountryPickerActive';
 import { CountryDetailsActive } from './components/CountryDetails/CountryDetailsActive';
 
 import RaisedButton from 'material-ui/RaisedButton';
-import { Link } from 'react-router-dom';
-
 
 export class Identification extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      complete: false,
+    }
+  }
   // checks that all required fields are filled
   checkComplete() {
     // list of required geolevels
@@ -35,27 +41,31 @@ export class Identification extends Component {
 
     if (!hasErrors) {
       // no error? go to next step
-      window.location.href = '/upload/'
+      this.setState({
+        complete: true,
+      });
     }
   }
 
   render() {
     return (
-      <div className={styles.identification}>
-        <div className={styles.countryPickerContainer}>
-          <CountryPickerActive />
+      this.state.complete ?
+        <Redirect to="/upload/" /> :
+        <div className={styles.identification}>
+          <div className={styles.countryPickerContainer}>
+            <CountryPickerActive />
+          </div>
+          <div className={styles.countryDetailsContainer}>
+            <CountryDetailsActive />
+          </div>
+          <div className={styles.continueAction}>
+            <RaisedButton
+              primary={true}
+              label="Continue"
+              onClick={() => this.checkComplete()}
+            />
+          </div>
         </div>
-        <div className={styles.countryDetailsContainer}>
-          <CountryDetailsActive />
-        </div>
-        <div className={styles.continueAction}>
-          <RaisedButton
-            primary={true}
-            label="Continue"
-            onClick={() => this.checkComplete()}
-          />
-        </div>
-      </div>
     )
   }
 }

@@ -11,18 +11,10 @@ export class ExpenseRow extends Component {
   constructor(props) {
     super(props);
 
-    const { cost, cost_unit, cost_duration, multiplier_staff, multiplier_health_capacity, multiplier_population, multiplier_depreciation, multiplier_area_name, multiplier_area_value } = this.props.expense;
+    console.log(props.expense);
 
     this.state = {
-      cost,
-      cost_unit,
-      cost_duration,
-      multiplier_staff,
-      multiplier_health_capacity,
-      multiplier_population,
-      multiplier_depreciation,
-      multiplier_area_name,
-      multiplier_area_value,
+      ...props.expense.multipliers,
       sourceOpen: false
     };
 
@@ -58,17 +50,9 @@ export class ExpenseRow extends Component {
   }
 
   reset = () => {
-    const { cost, cost_unit, cost_duration, multiplier_staff, multiplier_health_capacity, multiplier_population, multiplier_depreciation } = this.props.expense.defaults;
-
     this.setState({
-      cost,
-      cost_unit,
-      cost_duration,
-      multiplier_staff,
-      multiplier_health_capacity,
-      multiplier_population,
-      multiplier_depreciation
-    })
+      ...this.props.expense.defaults,
+    });
   }
 
   cancel = () => {
@@ -94,10 +78,11 @@ export class ExpenseRow extends Component {
           <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
             {this.formatCurrency([
               this.state.cost || 0,
-              this.state.cost_duration || 1,
-              this.state.multiplier_staff || 1,
-              this.state.multiplier_health_capacity || 1,
-              this.state.multiplier_population || 1,
+              this.state.duration || 1,
+              this.state.staff || 1,
+              this.state.area || 1,
+              this.state.population || 1,
+              this.state.facility || 1,
             ].reduce((acc, el) => acc * el, 1))}
           </div>
           <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
@@ -106,11 +91,12 @@ export class ExpenseRow extends Component {
                 this.state.multiplier_depreciation ?
                   [
                     this.state.cost || 0,
-                    this.state.cost_duration || 1,
-                    this.state.multiplier_staff || 1,
-                    this.state.multiplier_health_capacity || 1,
-                    this.state.multiplier_population || 1,
-                    this.state.multiplier_depreciation,
+                    this.state.duration || 1,
+                    this.state.staff || 1,
+                    this.state.area || 1,
+                    this.state.population || 1,
+                    this.state.facility || 1,
+                    this.state.depreciation || 0,
                   ].reduce((acc, el) => acc * el, 1)
                   : 0
               )
@@ -148,9 +134,9 @@ export class ExpenseRow extends Component {
                         floatingLabelText={this.props.expense.cost_duration_unit}
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                        value={this.state.cost_duration}
-                        hintText={this.nullHintText(this.state.cost_duration)}
-                        onChange={(e) => this.handleChange('cost_duration', e.target.value)}
+                        value={this.state.duration}
+                        hintText={this.nullHintText(this.state.duration)}
+                        onChange={(e) => this.handleChange('duration', e.target.value)}
                       />
                     </div>
                     <div>
@@ -158,19 +144,21 @@ export class ExpenseRow extends Component {
                         floatingLabelText="staff"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                        value={this.state.multiplier_staff}
-                        hintText={this.nullHintText(this.state.multiplier_staff)}
-                        onChange={(e) => this.handleChange('multiplier_staff', e.target.value)}
+                        value={this.state.staff}
+                        hintText={this.nullHintText(this.state.staff)}
+                        disabled={this.props.expense.multiplier_staff === null}
+                        onChange={(e) => this.handleChange('staff', e.target.value)}
                       />
                     </div>
                     <div>
                       <TextField
-                        floatingLabelText={this.props.expense.multiplier_area_name}
+                        floatingLabelText="area"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                        value={this.state.multiplier_area_value}
-                        hintText={this.nullHintText(this.state.multiplier_area_value)}
-                        onChange={(e) => this.handleChange('multiplier_area_value', e.target.value)}
+                        value={this.state.area}
+                        hintText={this.nullHintText(this.state.area)}
+                        disabled={this.props.expense.multiplier_area === null}
+                        onChange={(e) => this.handleChange('area', e.target.value)}
                       />
                     </div>
                     <div>
@@ -178,19 +166,21 @@ export class ExpenseRow extends Component {
                         floatingLabelText="population"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                        value={this.state.multiplier_population}
-                        hintText={this.nullHintText(this.state.multiplier_population)}
-                        onChange={(e) => this.handleChange('multiplier_population', e.target.value)}
+                        value={this.state.population}
+                        hintText={this.nullHintText(this.state.population)}
+                        disabled={this.props.expense.multiplier_population === null}
+                        onChange={(e) => this.handleChange('population', e.target.value)}
                       />
                     </div>
                     <div>
                       <TextField
-                        floatingLabelText="staff"
+                        floatingLabelText="facilities"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                        value={this.state.multiplier_health_capacity}
-                        hintText={this.nullHintText(this.state.multiplier_health_capacity)}
-                        onChange={(e) => this.handleChange('multiplier_health_capacity', e.target.value)}
+                        value={this.state.facility}
+                        hintText={this.nullHintText(this.state.facility)}
+                        disabled={this.props.expense.multiplier_facility === null}
+                        onChange={(e) => this.handleChange('facility', e.target.value)}
                       />
                     </div>
                   </div>
@@ -200,9 +190,10 @@ export class ExpenseRow extends Component {
                         floatingLabelText="depreciation factor"
                         floatingLabelFixed={true}
                         className={styles.expenseRowInput}
-                        value={this.state.multiplier_depreciation}
-                        hintText={this.nullHintText(this.state.multiplier_depreciation)}
-                        onChange={(e) => this.handleChange('multiplier_depreciation', e.target.value)}
+                        value={this.state.depreciation}
+                        hintText={this.nullHintText(this.state.depreciation)}
+                        disabled={this.props.expense.multiplier_depreciation === null}
+                        onChange={(e) => this.handleChange('depreciation', e.target.value)}
                       />
                     </div>
                   </div>
