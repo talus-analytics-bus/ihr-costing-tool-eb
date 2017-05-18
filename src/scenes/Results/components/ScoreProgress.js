@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from '../Results.scss';
 
 
-const barHeight = 25;
+const barHeight = 40;
 
 export class ScoreProgress extends Component {
 	constructor(props) {
@@ -12,82 +12,68 @@ export class ScoreProgress extends Component {
 			oldScore: 124,
 			newScore: 155,
 			perfectScore: 210,
-			width: 900,
+			width: 1000,
 		};
 	}
 
 	render() {
 		return (
 			<div className={styles.progressBar}>
+				<div className={styles.progressBarTitle}>
+					Progress towards Demonstrated/Sustainable Capacity:
+				</div>
 				<svg width={this.state.width + 100} height="110">
 					<defs>
 						<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="#9FDC9F" />
-							<stop offset="100%" stopColor="#248724" />
-						</linearGradient>
-						<linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="#0c6b0c" />
-							<stop offset="100%" stopColor="#004C00" />
+							<stop offset="0%" stopColor="#c82127" />
+							<stop offset="50%" stopColor="#f7ec13" />
+							<stop offset="100%" stopColor="#156c37" />
 						</linearGradient>
 					</defs>
 					<g transform="translate(1, 20)">
 						<rect
 							width={this.state.width}
 							height={barHeight}
-							fill="white"
+							fill="url(#grad1)"
 							stroke="#111"
 						/>
-						<rect
-							width={this.state.width * this.state.newScore / this.state.perfectScore}
-							height={barHeight}
-							fill="url(#grad2)"
-						/>
-						<rect
-							width={this.state.width * this.state.oldScore / this.state.perfectScore}
-							height={barHeight}
-							fill="url(#grad1)"
-						/>
-						<text
+						<circle
 							className={styles.valueLabel}
-							x={this.state.width * this.state.oldScore / this.state.perfectScore - 8}
-							y={barHeight / 2}
-							dy="0.35em"
-						>
-							{this.state.oldScore}
-						</text>
-						<text
+							r="10"
+							cx={this.state.width * this.state.oldScore / this.state.perfectScore}
+							cy={barHeight / 2}
+						/>
+						<circle
 							className={styles.valueLabel}
-							x={this.state.width * this.state.newScore / this.state.perfectScore - 8}
-							y={barHeight / 2}
-							dy="0.35em"
-						>
-							{this.state.newScore}
-						</text>
+							r="10"
+							cx={this.state.width * this.state.newScore / this.state.perfectScore}
+							cy={barHeight / 2}
+						/>
 						<line
-							x1={this.state.width * this.state.oldScore / this.state.perfectScore - 20}
-							x2={this.state.width * this.state.oldScore / this.state.perfectScore - 20}
-							y1={barHeight + 5}
+							x1={this.state.width * this.state.oldScore / this.state.perfectScore}
+							x2={this.state.width * this.state.oldScore / this.state.perfectScore}
+							y1={barHeight - 5}
 							y2={barHeight + 15}
 						/>
 						<line
-							x1={this.state.width * this.state.newScore / this.state.perfectScore - 20}
-							x2={this.state.width * this.state.newScore / this.state.perfectScore - 20}
-							y1={barHeight + 5}
+							x1={this.state.width * this.state.newScore / this.state.perfectScore}
+							x2={this.state.width * this.state.newScore / this.state.perfectScore}
+							y1={barHeight - 5}
 							y2={barHeight + 15}
 						/>
 						<text
 							className={styles.barLabel}
-							x={this.state.width * this.state.oldScore / this.state.perfectScore - 20}
+							x={this.state.width * this.state.oldScore / this.state.perfectScore}
 							y={barHeight + 35}
 						>
-							Old Score
+							Current Level
 						</text>
 						<text
 							className={styles.barLabel}
-							x={this.state.width * this.state.newScore / this.state.perfectScore - 20}
+							x={this.state.width * this.state.newScore / this.state.perfectScore}
 							y={barHeight + 35}
 						>
-							New Score
+							Target Level
 						</text>
 					</g>
 				</svg>

@@ -355,6 +355,7 @@ export class ScoreSummary extends Component {
 						</div>
 					</div>
 				</div>
+				<div className={styles.notionalDataWarning}>Note: The data presented above are notional.</div>
 			</div>
 		);
 	}

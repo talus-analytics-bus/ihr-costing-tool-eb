@@ -5,6 +5,12 @@ import styles from '../Results.scss';
 
 
 export class CostChartOptions extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {};
+  }
+
 	render() {
 		return (
 			<div className={styles.costChartOptions}>
@@ -16,23 +22,23 @@ export class CostChartOptions extends Component {
 				/>
 				<div className={styles.costChartOptionsSubtitle}>View expenses for:</div>
         <RadioButtonGroup
-          name="assessFirst"
+          name="costYear"
           valueSelected={this.props.costCategory}
-          onChange={() => true}
+          onChange={this.props.changeCostCategory}
         >
           <RadioButton
             className={styles.radioButton}
-            value={1}
+            value={"1"}
             label="1-year Cost"
           />
           <RadioButton
             className={styles.radioButton}
-            value={2}
+            value={"2"}
             label="2-year Cost"
           />
           <RadioButton
             className={styles.radioButton}
-            value={5}
+            value={"5"}
             label="5-year Cost"
           />
         </RadioButtonGroup>

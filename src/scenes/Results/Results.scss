@@ -31,13 +31,13 @@
 
 .categoryContent {
 	margin-left: 550px;
-	min-height: 250px;
+	min-height: 200px;
 	padding-top: 50px;
 }
 
 .changeContent {
 	position: absolute;
-	top: 163px;
+	top: 183px;
 	left: 930px;
 }
 
@@ -81,10 +81,11 @@
 }
 
 .progressBar {
-	.valueLabel {
-		fill: white;
-		font-size: 0.95em;
-		text-anchor: end;
+	.progressBarTitle {
+		margin-top: 20px;
+	}
+	circle {
+		fill: rgba(0,0,0,0.7);
 	}
 	.barLabel {
 		fill: black;
@@ -267,3 +268,7 @@
 
 .green { color: #006400; }
 .red { color: red; }
+.notionalDataWarning {
+	font-size: 0.9em;
+	color: #c91414;
+}

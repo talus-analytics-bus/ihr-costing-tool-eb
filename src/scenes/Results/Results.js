@@ -9,7 +9,7 @@ export class Results extends Component {
   render() {
     return (
       <div className={styles.results}>
-      	<h1 className={styles.resultsTitle}>Results</h1>
+      	<h1 className={styles.resultsTitle}>Results: Total Cost of Implementation Completed</h1>
         <ScoreSummary></ScoreSummary>
         <CostSummary></CostSummary>
       </div>

@@ -42,16 +42,16 @@
   border-bottom: 1px solid gray;
 
   &:nth-child(2) .capacityCell:first-child {
-    background-color: #d9534f;
+    background-color: #c82127;
     color: white;
   }
   &:nth-child(3) .capacityCell:first-child,
   &:nth-child(4) .capacityCell:first-child {
-    background-color: #f0ad4e;
+    background-color: #f7ec13;
   }
   &:nth-child(5) .capacityCell:first-child,
   &:nth-child(6) .capacityCell:first-child {
-    background-color: #5cb85c;
+    background-color: #156c37;
     color: white;
   }
 }

@@ -96,8 +96,15 @@ export class CostSummary extends Component {
 			page: 1,
 			showByCategory: true,
 			showTable: false,
-			costCategory: 1,
+			costCategory: '1',
 		};
+	}
+
+	getDataType = () => {
+		if (!this.state.activeCore) return 'core';
+		if (!this.state.activeCapacity) return 'capacity';
+		else if (!this.state.activeIndicator) return 'indicator';
+		return 'expense';
 	}
 
 	buildCostChart(selector, param={}) {
@@ -144,26 +151,22 @@ export class CostSummary extends Component {
 			.style('font-size', '0.9em')
 			.text('1-Year Cost');
 
-
 		chart.update = () => {
 			// get data
 			let chartData;
-			let dataType = 'core';
+			const dataType = this.getDataType();
 			if (!this.state.activeCore) {
 				xAxisLabel.text('Core Capacity');
 				chartData = jeeTree;
 			} else if (!this.state.activeCapacity) {
-				dataType = 'capacity';
 				xAxisLabel.text('Capacity');
 				chartData = jeeTree.find(d => d.name === this.state.activeCore).capacities;
 			} else if (!this.state.activeIndicator) {
-				dataType = 'indicator';
 				xAxisLabel.text('Indicator');
 				chartData = jeeTree
 					.find(d => d.name === this.state.activeCore).capacities
 					.find(dd => dd.name === this.state.activeCapacity).indicators;
 			} else {
-				dataType = 'expense';
 				xAxisLabel.text('Expense');
 				chartData = jeeTree
 					.find(d => d.name === this.state.activeCore).capacities
@@ -181,19 +184,11 @@ export class CostSummary extends Component {
 			xAxisG.call(xAxis);
 			const bandwidth = x.rangeBand();
 
-			if (dataType === 'expense') {
-				y.domain([0, 1.2 * d3.max(chartData, d => d.cost)]);
-			} else {
-				y.domain([0, 1.2 * d3.max(chartData, d => d.fixedCost)]);
-			}
-			yAxis.scale(y);
-			yAxisG.call(yAxis);
-
 			// add or remove bars based on new data
 			const barGroups = chart.selectAll('.bar-group')
 				.data(chartData);
 			const newBarGroups = barGroups.enter().append('g')
-				.attr('class', 'bar-group')
+				.attr('class', 'bar-group');
 			categories.forEach((category) => {
 				newBarGroups.selectAll('.bar')
 					.data(categories)
@@ -202,8 +197,30 @@ export class CostSummary extends Component {
 						.attr('category', category)
 						.style('fill', d => d.color);
 			});
+			newBarGroups.append('text')
+				.attr('class', 'value-label')
+				.style('text-anchor', 'middle')
+				.style('font-size', '0.9em');
+
+			chart.updateBarHeight(1);
+			barGroups.exit().remove();
+		}
+
+		chart.updateBarHeight = (multiplier) => {
+			const barGroups = chart.selectAll('.bar-group');
+
+			// adjust y axis
+			if (dataType === 'expense') {
+				y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.cost)]);
+			} else {
+				y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.fixedCost)]);
+			}
+			yAxis.scale(y);
+			yAxisG.call(yAxis);
 
 			// update bar values
+			const dataType = this.getDataType();
+			const bandwidth = x.rangeBand();
 			barGroups.transition()
 				.attr('transform', (d) => {
 					if (dataType === 'indicator') return `translate(${x(d.jee_id)}, 0)`;
@@ -211,18 +228,29 @@ export class CostSummary extends Component {
 				})
 				.each(function(d) {
 					let runningCost = (dataType === 'expense') ? d.cost : d.fixedCost;
+					runningCost *= (0.8 + 0.3 * Math.random()) * multiplier;
+					const originalCost = runningCost;
 					d3.select(this).selectAll('.bar').transition()
 						.attr('width', bandwidth)
 						.each(function() {
 							d3.select(this).transition()
 								.attr('y', y(runningCost))
 								.attr('height', height - y(runningCost));
-							runningCost -= (1.5 * d.fixedCost / 6) * Math.random();
+							runningCost -= (1.5 * originalCost / 6) * Math.random();
 						});
+					d3.select(this).select('.value-label')
+						.text(formatMoney(originalCost))
+						.transition()
+							.attr('x', bandwidth / 2)
+							.attr('y', y(originalCost) - 5);
 				});
-			barGroups.exit().remove();
 
+			chart.styleChart();
+		}
+
+		chart.styleChart = () => {
 			// chart styling
+			const bandwidth = x.rangeBand();
 			chart.selectAll('.tick text')
 				.style('font-size', '0.9em');
 			chart.selectAll('.tick line')
@@ -276,9 +304,14 @@ export class CostSummary extends Component {
 	}
 
 	changeCostCategory(event) {
+		event.persist();
 		this.setState({costCategory: event.target.value}, () => {
 			this.yAxisLabel.text(`${event.target.value}-Year Cost`);
 		});
+
+		if (event.target.value === "1") this.costChart.updateBarHeight(1);
+		else if (event.target.value === "2") this.costChart.updateBarHeight(1.5);
+		else if (event.target.value === "5") this.costChart.updateBarHeight(2.5);
 	}
 
 	styleTable() {
