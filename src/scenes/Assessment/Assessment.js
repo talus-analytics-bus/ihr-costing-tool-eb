@@ -26,7 +26,14 @@ export class Assessment extends Component {
     switch(key) {
       case 'area':
         if (typeof expense.multiplier_area === 'string') {
-          return (this.props.geo_levels[geoLevelMapping(expense.multiplier_area)] || {}).value;
+			var result = (this.props.geo_levels[geoLevelMapping(expense.multiplier_area)] || {}).value;
+			var checkingLevel3 = expense.multiplier_area === "level_3";
+			var hasNoLevel3 = result === null;
+			if (checkingLevel3 && hasNoLevel3) {
+				return 0.0;
+			} else {
+				return (this.props.geo_levels[geoLevelMapping(expense.multiplier_area)] || {}).value;
+			}
         }
         return expense.multiplier_area;
       case 'staff':
@@ -39,7 +46,7 @@ export class Assessment extends Component {
             return expense.multiplier_staff;
         }
       case 'facility':
-        if (expense.multiplier_facility === 'national_health_care_facilities_count') {
+        if (expense.multiplier_facility === 'national_count') {
           return this.props.advanced.facilities.value;
         }
         return expense.multiplier_facility;
@@ -62,14 +69,14 @@ export class Assessment extends Component {
       return `${key.slice(0, 1).toUpperCase()}${key.slice(1)}`;
     }
 
-    return {
+    /*return {
       ...expense,
       multiplier_staff: this.props.advanced.staff.epi_count.value || this.props.advanced.staff.chw_count,
       multiplier_health_capacity: this.props.advanced.hospitals[expense.multiplier_area ? expense.multiplier_area.split('_').join('') : 'chc'].value,
       multiplier_population: this.props.population.value,
       multiplier_area_name: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].name.toLowerCase(),
       multiplier_area_value: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].value,
-    }
+    }*/
   }
 
   getValues = (expense) => ({
@@ -80,6 +87,7 @@ export class Assessment extends Component {
     facility: this.getMultiplier('facility', expense),
     population: this.getMultiplier('population', expense),
     depreciation: this.getMultiplier('depreciation', expense),
+	cost_type: expense.cost_type
   })
 
   componentDidMount() {
