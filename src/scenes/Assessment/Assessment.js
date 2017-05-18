@@ -25,9 +25,7 @@ export class Assessment extends Component {
   getMultiplier = (key, expense) => {
     switch(key) {
       case 'area':
-        console.log(expense.multiplier_area);
         if (typeof expense.multiplier_area === 'string') {
-          console.log(expense.multiplier_area, geoLevelMapping(expense.multiplier_area), this.props.geo_levels[geoLevelMapping(expense.multiplier_area)])
           return (this.props.geo_levels[geoLevelMapping(expense.multiplier_area)] || {}).value;
         }
         return expense.multiplier_area;
@@ -100,16 +98,6 @@ export class Assessment extends Component {
               indicators: capacity.indicators.map((indicator) => ({
                 ...indicator,
                 selectedLevel: null,
-                // expenses: indicator.expenses.reduce((prev, expense) => {
-                //   return prev.concat([{
-                //     // ...this.setDefaults(expense),
-                //     ...expense,
-                //     editing: false,
-                //     selected: false,
-                //     multipliers: this.getValues(expense),
-                //     defaults: this.getValues(expense),
-                //   }])
-                // }, [])
                 expenses: indicator.expenses.map((expense) => ({
                   ...expense,
                   editing: false,
