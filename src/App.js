@@ -36,12 +36,12 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Router>
           <div className={styles.container}>
-            <Toolbar className={styles.header}>
-              <img
+			  <Toolbar className={styles.header}>
+				  {/*<img
                 alt={'World Health Organization'}
                 className={styles.logo}
                 src={whoLogo}
-              />
+				  />*/}
               <div className={styles.toolbarTitle}>
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
