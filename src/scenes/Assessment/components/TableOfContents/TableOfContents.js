@@ -12,7 +12,10 @@ import styles from './TableOfContents.css';
 class Capacity extends Component {
   render() {
     return (
-      <div className={`${styles.capacity} ${this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex ? styles.activeCapacity : null}`}>
+      <div
+        className={`${styles.capacity} ${this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex ? styles.activeCapacity : null}`}
+        onClick={() => this.props.goToCapacity(this.props.coreIndex, this.props.capacityIndex)}
+      >
         {
           (this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex)
             ? <img alt='Active capacity' className={styles.arrowImage} src={arrowImage} />
@@ -54,7 +57,14 @@ class IndicatorGroup extends Component {
         <div className={`${styles.capacities} ${this.props.indicator.capacities.length === 0 ? styles.capacitiesEmpty: null}`}>
           {
             this.props.indicator.capacities.map((capacity, index) =>
-              <Capacity capacity={capacity} key={index} active={this.props.active} coreIndex={this.props.coreIndex} capacityIndex={index}/>
+              <Capacity
+                capacity={capacity}
+                key={index}
+                active={this.props.active}
+                coreIndex={this.props.coreIndex}
+                capacityIndex={index}
+                goToCapacity={this.props.goToCapacity}
+              />
             )
           }
         </div>
@@ -71,7 +81,13 @@ export class TableOfContents extends Component {
         <div>
           {
             this.props.entries.map((indicator, index) =>
-              <IndicatorGroup indicator={indicator} key={index} active={this.props.active} coreIndex={index}/>
+              <IndicatorGroup
+                indicator={indicator}
+                key={index}
+                active={this.props.active}
+                coreIndex={index}
+                goToCapacity={this.props.goToCapacity}
+              />
             )
           }
         </div>
