@@ -289,7 +289,7 @@ export class ScoreSummary extends Component {
 				<ScoreProgress />
 				<div className={styles.costContent}>
 					<div className={styles.bigNumberContainer}>
-						<div className={styles.bigNumber}>{'$2,380,832'}</div>
+						<div className={styles.bigNumber}>{'$8,380,832'}</div>
 						<div className={styles.bigNumberText}>
 							total costs<br/>
 							for Kenya
@@ -297,21 +297,21 @@ export class ScoreSummary extends Component {
 					</div>
 					<div className={styles.subCostContainer}>
 						<div className={styles.mediumNumberContainer}>
-							<div className={styles.mediumNumber}>{'$504,304'}</div>
+							<div className={styles.mediumNumber}>{'$1,775,214'}</div>
 							<div className={styles.mediumNumberText}>
 								costs for the "Prevent"<br/>
 								core capacity
 							</div>
 						</div>
 						<div className={styles.mediumNumberContainer}>
-							<div className={styles.mediumNumber}>{'$1,354,570'}</div>
+							<div className={styles.mediumNumber}>{'$4,768,259'}</div>
 							<div className={styles.mediumNumberText}>
 								costs for the "Detect"<br/>
 								core capacity
 							</div>
 						</div>
 						<div className={styles.mediumNumberContainer}>
-							<div className={styles.mediumNumber}>{'$521,958'}</div>
+							<div className={styles.mediumNumber}>{'$1,837,359'}</div>
 							<div className={styles.mediumNumberText}>
 								costs for the "Respond"<br/>
 								core capacity
@@ -322,7 +322,7 @@ export class ScoreSummary extends Component {
 				<div className={styles.categoryContent}>
 					<div className={styles.categoryTextContainer}>
 						<div className={styles.categoryTextLabel}>
-							Most Spending (<span className={styles.green}>{'$934,291'})</span>:
+							Most Spending (<span className={styles.green}>{'$3,288,823'})</span>:
 						</div>
 						<div className={styles.categoryText}>
 							Physical Infrastructure
@@ -330,7 +330,7 @@ export class ScoreSummary extends Component {
 					</div>
 					<div className={styles.categoryTextContainer}>
 						<div className={styles.categoryTextLabel}>
-							Least Spending (<span className={styles.green}>{'$144,309'})</span>:
+							Least Spending (<span className={styles.green}>{'$507,634'})</span>:
 						</div>
 						<div className={styles.categoryText}>
 							Consumable Materials
