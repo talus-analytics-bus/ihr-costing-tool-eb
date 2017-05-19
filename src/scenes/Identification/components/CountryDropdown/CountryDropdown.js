@@ -17,7 +17,7 @@ export class CountryDropdown extends Component {
     return (
       <div className={styles.countryDropdown}>
         <p>
-          What country would you like to assess and cost for2?
+          What country would you like to assess and cost for?
         </p>
         <DropDownMenu
           maxHeight={300}
