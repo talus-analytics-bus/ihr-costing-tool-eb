@@ -287,7 +287,7 @@ export class ExpenseRow extends Component {
                     }
                   </div>
                   <div className={styles.expenseRowFormRecurring}>
-                    <div>
+					  {/*  <div>
                       <TextField
                         floatingLabelText="depreciation factor"
                         floatingLabelFixed={true}
@@ -297,7 +297,7 @@ export class ExpenseRow extends Component {
                         disabled={this.props.expense.multiplier_depreciation === null}
                         onChange={(e) => this.handleChange('depreciation', e.target.value)}
                       />
-                    </div>
+					  </div>*/}
                   </div>
                 </div>
               </CardText>
