@@ -21,6 +21,8 @@ export class ExpenseTable extends Component {
   }
 
   render() {
+	  let filterFcn = this.hideInapplicableExpenses;
+	  let geoLevels = this.props.geoLevels;
     return (
       <div className={styles.expenseTable}>
       {
@@ -31,7 +33,18 @@ export class ExpenseTable extends Component {
             </p>
             {
               this.props.expenses
-                .filter((expense) => expense.expense_id === expenseGroup.id)
+				.filter((expense => { 
+					
+					let countryHasNoIntermediate2 = this.props.geoLevels["Level 3"].name === null; 
+					let expenseIsIntermediate2 = expense.multiplier_area === "level_3";
+					let expenseIsApplicable = !countryHasNoIntermediate2 || !expenseIsIntermediate2;
+					
+					let idsMatch = expense.expense_id === expenseGroup.id 
+					let showExpense = idsMatch && expenseIsApplicable;
+					return showExpense;
+					
+					}
+				))
                 .map((expense, index) =>
                   <ExpenseRowActive expense={expense} activeCurrency={this.props.activeCurrency} key={index}/>
                 )
