@@ -51,6 +51,7 @@ export class Costing extends Component {
                 <p>Target Capacity: <strong>{capacityLevels[targetLevelIndex] || capacityLevels[4]} ({targetLevelIndex + 1})</strong></p>
               </div>
               <div className={styles.expenseTableLabels}>
+                <div className={styles.expenseRowFake}>&nbsp;</div>
                 <div className={styles.expenseRowName}>&nbsp;</div>
                 <div className={styles.expenseRowCosts}>Start-up costs</div>
                 <div className={styles.expenseRowCosts}>Recurring annual costs</div>
