@@ -5,21 +5,40 @@ import styles from './Peeper.css';
 
 export class Peeper extends Component {
   render() {
-    return (
-      <div
-        className={`${styles.peeper} ${this.props.show ? styles.peeperActive: null}`}
-      >
-        <div
-          className={styles.peeperLabel}
-          onClick={this.props.togglePeeper}
-        >
-          <AVPlayArrow/>
-          <strong>{this.props.label}</strong>
-        </div>
-        <div className={styles.peeperContent}>
-        {this.props.children}
-        </div>
-      </div>
-    );
+	  if (this.props.bold) {
+		return (
+		  <div
+			className={`${styles.peeper} ${this.props.show ? styles.peeperActive: null}`}
+		  >
+			<div
+			  className={styles.peeperLabel}
+			  onClick={this.props.togglePeeper}
+			>
+			  <AVPlayArrow/>
+			  <b>{this.props.label}</b>
+			</div>
+			<div className={styles.peeperContent}>
+			{this.props.children}
+			</div>
+		  </div>
+		);
+	  } else {
+		 return (
+		  <div
+			className={`${styles.peeper} ${this.props.show ? styles.peeperActive: null}`}
+		  >
+			<div
+			  className={styles.peeperLabel}
+			  onClick={this.props.togglePeeper}
+			>
+			  <AVPlayArrow/>
+			  <strong>{this.props.label}</strong>
+			</div>
+			<div className={styles.peeperContent}>
+			{this.props.children}
+			</div>
+		  </div>
+		); 
+	  }
   }
 }

@@ -42,19 +42,20 @@ export class Costing extends Component {
           return (
             <Peeper
               key={index}
+			  bold={true}
               label={`Indicator ${index + 1} of ${this.props.activeCapacity.indicators.length}: ${indicator.name}`}
               show={this.state.peep[indicator.jee_id]}
               togglePeeper={() => this.handlePeep(indicator.jee_id)}
             >
               <div>
-                <p>Current Capacity: <strong>{capacityLevels[selectedLevelIndex]} ({selectedLevelIndex + 1})</strong></p>
-                <p>Target Capacity: <strong>{capacityLevels[targetLevelIndex] || capacityLevels[4]} ({targetLevelIndex + 1})</strong></p>
+                <p><b>Current Capacity: </b><strong>{capacityLevels[selectedLevelIndex]} ({selectedLevelIndex + 1})</strong></p>
+                <p><b>Target Capacity: </b><strong>{capacityLevels[targetLevelIndex] || capacityLevels[4]} ({targetLevelIndex + 1})</strong></p>
               </div>
               <div className={styles.expenseTableLabels}>
                 <div className={styles.expenseRowFake}>&nbsp;</div>
                 <div className={styles.expenseRowName}>&nbsp;</div>
-                <div className={styles.expenseRowCosts}>Start-up costs</div>
-                <div className={styles.expenseRowCosts}>Recurring annual costs</div>
+                <div className={styles.expenseRowHeaders}>Start-up costs</div>
+                <div className={styles.expenseRowHeaders}>Recurring annual costs</div>
                 <div className={styles.expenseRowAction}>&nbsp;</div>
               </div>
               <ExpenseTable geoLevels={this.props.geoLevels} expenses={expensesInTargetLevel} activeCurrency={this.props.activeCurrency} />
