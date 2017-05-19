@@ -57,30 +57,32 @@ class App extends Component {
               <Route path="/directory" component={Directory}></Route>
             </div>
             <div className={styles.footer}>
-              <a href="https://www.georgetown.edu/" target="_blank">
-                <img
-                  alt={'Georgetown University'}
-                  className={styles.georgetownLogo}
-                  src={georgetownLogo}
-                />
-              </a>
-			  <br></br>
-              {/*<span className={styles.georgetownLink}>
-                <a href="https://www.georgetown.edu/" target="_blank">Georgetown University</a>
-              </span>*/}
-              <span className={styles.builtBy}>Built by </span>
-              {/*<span>, </span>*/}
-				  {/*<span className={styles.talusLink}>
-                <a href="http://www.talusanalytics.com" target="_blank">Talus Analytics</a>
-				  </span>*/}
-              <a href="http://www.talusanalytics.com" target="_blank">
-                <img
-                  alt={'Talus Analytics'}
-                  className={styles.talusLogo}
-                  src={talusLogo}
-                />
-              </a>
-            </div>
+				<table>
+					<tr>
+					<th>
+						<a href="https://www.georgetown.edu/" target="_blank">
+						<img
+						  alt={'Georgetown University'}
+						  className={styles.georgetownLogo}
+						  src={georgetownLogo}
+						/>
+					  </a>
+					</th>
+					<th>
+						<span className={styles.builtBy}>Built by</span>
+					</th>
+					<th>
+						<a href="http://www.talusanalytics.com" target="_blank">
+						<img
+						  alt={'Talus Analytics'}
+						  className={styles.talusLogo}
+						  src={talusLogo}
+						/>
+					  </a>
+					</th>
+					</tr>
+				</table>
+			</div>
           </div>
         </Router>
       </MuiThemeProvider>

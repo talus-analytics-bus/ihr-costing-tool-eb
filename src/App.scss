@@ -76,7 +76,6 @@
 
 .footer {
   position: relative;
-  padding: 0px 0 22px;
   width: 100%;
   text-align: center;
   font-size: 0.9em;
@@ -96,22 +95,17 @@
 }
 
 .georgetownLogo {
-  position: relative;
-  top: 17px;
-  left: 7px;
-  height: 100px;
+  height: 90px;
 }
+
 .talusLogo {
-  position: relative;
-  top: 17px;
-  left: 7px;
   height: 42px;
 }
 
-.talusLogo {
-  margin-left: -7px;
+.builtBy {
+	padding-left:80px;
 }
 
-.builtBy {
-	margin-left:80px;
+table {
+	margin: 1em auto;
 }
