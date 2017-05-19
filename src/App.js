@@ -8,11 +8,12 @@ import {
   BrowserRouter as Router,
   Route,
   Link,
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import globeIcon from './images/globe.png';
 import georgetownLogo from './images/georgetown_wide.png';
 import talusLogo from './images/talus.png';
+import { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 
 import { Home } from './scenes/Home/Home';
 import { IdentificationActive } from './scenes/Identification/IdentificationActive';
@@ -29,12 +30,11 @@ const muiTheme = getMuiTheme({
   },
 });
 
-
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Router>
+        <Router onUpdate={() => window.scrollTo(0, 0)}>
           <div className={styles.container}>
 			  <Toolbar className={styles.header}>
 				  <img
@@ -46,6 +46,7 @@ class App extends Component {
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
             </Toolbar>
+            <Breadcrumbs />
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
               <Route path="/identification" component={IdentificationActive}></Route>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Checkbox from 'material-ui/Checkbox';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import styles from '../Results.scss';
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
 import DataTables from 'material-ui-datatables';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import styles from '../Results.scss';
 
 import {CostChartLegend} from './CostChartLegend.js';
@@ -182,7 +181,6 @@ export class CostSummary extends Component {
 			}
 			xAxis.scale(x);
 			xAxisG.call(xAxis);
-			const bandwidth = x.rangeBand();
 
 			// add or remove bars based on new data
 			const barGroups = chart.selectAll('.bar-group')
@@ -210,6 +208,7 @@ export class CostSummary extends Component {
 			const barGroups = chart.selectAll('.bar-group');
 
 			// adjust y axis
+			const dataType = this.getDataType();
 			if (dataType === 'expense') {
 				y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.cost)]);
 			} else {
@@ -219,7 +218,6 @@ export class CostSummary extends Component {
 			yAxisG.call(yAxis);
 
 			// update bar values
-			const dataType = this.getDataType();
 			const bandwidth = x.rangeBand();
 			barGroups.transition()
 				.attr('transform', (d) => {
