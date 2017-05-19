@@ -15,9 +15,33 @@ export class ExpenseRow extends Component {
       ...props.expense.multipliers,
       sourceOpen: false
     };
-
+	
+		/* Apply exchange rate to cost */
+		  let exchange_rates = this.props.activeCurrency.details.exchange_rates;
+		  if (exchange_rates.length > 0) {
+			  var exchange_rate_multiplier = exchange_rates[0].multiplier;
+		  } else {
+			  var exchange_rate_multiplier = 1.0;
+		  }
+		this.state.cost = this.state.cost * exchange_rate_multiplier;
+		this.props.expense.defaults.cost = this.state.cost;
   }
 
+  
+  getStartup = () => {
+	  var output =  [
+		  this.state.cost || 0,
+		  this.state.duration || 1,
+		  this.state.staff || 1,
+		  (this.state.area !== null) ? this.state.area : 1,
+		  this.state.population || 1,
+		  this.state.facility || 1,
+		].reduce((acc, el) => acc * el, 1);
+		/*].reduce((acc, el) => acc * el, 1) * exchange_rate_multiplier;*/
+		
+		return output;
+  }
+  
   getRecurring = () => {
 	  let isRecurring = this.state.cost_type === "recurring";
 	  let isDepreciating = this.state.depreciation !== null && this.state.depreciation != 1.0;
@@ -31,6 +55,7 @@ export class ExpenseRow extends Component {
 		  this.state.population || 1,
 		  this.state.facility || 1,
 		].reduce((acc, el) => acc * el, 1) * this.state.depreciation;
+		/*].reduce((acc, el) => acc * el, 1) * this.state.depreciation * exchange_rate_multiplier;*/
 		return output
 		} else {
 			/* IF it's not depreciating, and it's recurring, then the recurring annual costs are the startup costs*/
@@ -43,12 +68,17 @@ export class ExpenseRow extends Component {
 				  this.state.population || 1,
 				  this.state.facility || 1,
 				].reduce((acc, el) => acc * el, 1);
+				/*].reduce((acc, el) => acc * el, 1) * exchange_rate_multiplier;*/
 				return output;
 			} else {
 				/*If it's not depreciating and not recurring, recurring annual costs are zero*/
 				return 0.0;
 			}
 		}
+		
+		
+		
+		
   }
   
   nullHintText = (value) => {
@@ -105,6 +135,8 @@ export class ExpenseRow extends Component {
     this.setState({
       ...this.props.expense.defaults,
     });
+	/* And apply exchange rate */
+	
   }
 
   cancel = () => {
@@ -128,14 +160,18 @@ export class ExpenseRow extends Component {
           </div>
           <div className={styles.expenseRowName}>{this.props.expense.sophistication_name}</div>
           <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
-            {this.formatCurrency([
+            {/*this.formatCurrency([
               this.state.cost || 0,
               this.state.duration || 1,
               this.state.staff || 1,
               (this.state.area !== null) ? this.state.area : 1,
               this.state.population || 1,
               this.state.facility || 1,
-            ].reduce((acc, el) => acc * el, 1))}
+            ].reduce((acc, el) => acc * el, 1))*/
+			
+			this.formatCurrency( this.getStartup() )
+			
+			}
           </div>
           <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
             {
