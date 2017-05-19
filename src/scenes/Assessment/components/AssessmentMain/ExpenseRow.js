@@ -38,7 +38,6 @@ export class ExpenseRow extends Component {
 		  this.state.facility || 1,
 		].reduce((acc, el) => acc * el, 1);
 		/*].reduce((acc, el) => acc * el, 1) * exchange_rate_multiplier;*/
-		
 		return output;
   }
   
@@ -148,7 +147,11 @@ export class ExpenseRow extends Component {
     this.props.changeValues(this.props.expense.expense_id, this.props.expense.sophistication_level[0], this.state);
   }
 
+  
+	
+  
   render() {
+	  
     return (
       <div className={styles.expenseRow} key={this.props.expense.sophistication_level[0]}>
         <div className={styles.expenseRowSummary}>

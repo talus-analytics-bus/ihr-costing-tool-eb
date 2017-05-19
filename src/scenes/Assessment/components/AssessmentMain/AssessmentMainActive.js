@@ -12,6 +12,7 @@ export const mapStateToProps = (state) => {
     activeCountry: state.identification.country,
     activeCurrency: state.identification.currency,
     assessmentFirst: state.start.manual.assessmentFirst,
+	geoLevels: state.identification.geo_levels,
   }
 }
 

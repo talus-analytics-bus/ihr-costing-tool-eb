@@ -57,7 +57,7 @@ export class Costing extends Component {
                 <div className={styles.expenseRowCosts}>Recurring annual costs</div>
                 <div className={styles.expenseRowAction}>&nbsp;</div>
               </div>
-              <ExpenseTable expenses={expensesInTargetLevel} activeCurrency={this.props.activeCurrency} />
+              <ExpenseTable geoLevels={this.props.geoLevels} expenses={expensesInTargetLevel} activeCurrency={this.props.activeCurrency} />
             </Peeper>
           )
         })

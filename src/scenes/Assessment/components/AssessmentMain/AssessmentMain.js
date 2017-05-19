@@ -29,6 +29,7 @@ export class AssessmentMain extends Component {
               <Costing
                 activeCapacity={this.props.activeCapacity}
                 activeCurrency={this.props.activeCurrency}
+				geoLevels={this.props.geoLevels}
               />
           }
           <div className={styles.assessmentAction}>
