@@ -373,7 +373,7 @@ export class CostSummary extends Component {
 								</div>
 								: ''
 							}
-							{
+							{/*{
 								(this.state.activeCapacity) ?
 								<div className={styles.filterBox}>
 									<div className={styles.filterTitle}>Indicator:</div>
@@ -393,7 +393,7 @@ export class CostSummary extends Component {
 			            />
 								</div>
 								: ''
-							}
+	}*/}
 						</div>
 					</div>
 					<div className={styles.rightColumn}>
