@@ -35,7 +35,7 @@ export class AssessmentMain extends Component {
             <RaisedButton
               className={styles.actionButton}
               primary={true}
-              label="Previous Step"
+              label="Previous"
               onClick={() => this.props.prevStep(this.props.assessmentFirst)}
             />
             <RaisedButton
