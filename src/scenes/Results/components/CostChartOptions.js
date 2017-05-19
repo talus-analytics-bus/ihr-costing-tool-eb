@@ -15,11 +15,11 @@ export class CostChartOptions extends Component {
 		return (
 			<div className={styles.costChartOptions}>
 				<div className={styles.costChartOptionsTitle}>Chart Options</div>
-				<Checkbox
+					{/*<Checkbox
 					checked={this.props.showByCategoryValue}
 					onCheck={this.props.toggleByCategory}
 					label="View expenses by category"
-				/>
+					/>*/}
 				<div className={styles.costChartOptionsSubtitle}>View expenses for:</div>
         <RadioButtonGroup
           name="costYear"
