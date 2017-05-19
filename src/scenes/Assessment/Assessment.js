@@ -57,6 +57,8 @@ export class Assessment extends Component {
         return expense.multiplier_population;
       case 'depreciation':
         return expense.multiplier_depreciation;
+	  case 'cost':
+		  return expense.cost;
       default:
         return 0;
     }
@@ -80,7 +82,7 @@ export class Assessment extends Component {
   }
 
   getValues = (expense) => ({
-    cost: expense.cost || 0,
+    cost: this.getMultiplier('cost', expense),
     duration: expense.cost_duration || 0,
     area: this.getMultiplier('area', expense),
     staff: this.getMultiplier('staff', expense),
