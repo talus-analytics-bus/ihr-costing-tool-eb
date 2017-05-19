@@ -54,6 +54,8 @@ export class CountryDetails extends Component {
                 What is the current total population of your country?
               </p>
             </div>
+			<div className={styles.populationFake}>
+			</div>
             <div className={styles.populationCount}>
             {
               !this.props.population.editing && (

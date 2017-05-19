@@ -26,9 +26,9 @@
   flex-direction: column;
 }
 
-.geoLevelCount .geoLevelCountNumber {
+/*.geoLevelCount .geoLevelCountNumber {
   align-self: flex-end;
-}
+}*/
 
 .geoLevelAction {
   display: flex;

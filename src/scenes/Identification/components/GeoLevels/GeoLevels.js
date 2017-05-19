@@ -92,7 +92,7 @@ export class GeoLevels extends Component {
     return (
       <div className={styles.geoLevels}>
         <div className={styles.geoLevelsTitle}>Geographic Organization</div>
-        <div className={`${styles.geoLevel} ${styles.geoLevelHeadings}`}>
+			{/*<div className={`${styles.geoLevel} ${styles.geoLevelHeadings}`}>
           <div className={styles.geoLevelRow}>
             <p>Geographic Level</p>
           </div>
@@ -105,7 +105,7 @@ export class GeoLevels extends Component {
           <div className={styles.geoLevelAction}>
             &nbsp;
           </div>
-        </div>
+			</div>*/}
         {
           Object.keys(this.props.geoLevels)
             .map(this.geoLevel.bind(this))
