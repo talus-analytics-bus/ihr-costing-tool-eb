@@ -5,7 +5,15 @@ import MenuItem from 'material-ui/MenuItem';
 import styles from './CurrencyDropdown.css';
 
 export class CurrencyDropdown extends Component {
+	
+	currencySort = (a,b) => {
+		if(a.name < b.name) return -1;
+		if(a.name > b.name) return 1;
+		return 0;
+	}
+	
   render() {
+	  this.props.currencies.sort(this.currencySort)
     return (
       <div className={styles.currencyDropdown}>
         <p>
