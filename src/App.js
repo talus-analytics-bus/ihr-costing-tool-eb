@@ -30,16 +30,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
-
 class App extends Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      page: 'upload',
-    }
-  }
-
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -55,11 +46,7 @@ class App extends Component {
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
             </Toolbar>
-            {
-              (this.state.page !== 'home' && this.state.page !== 'assessment')
-              ? <Breadcrumbs page={this.state.page} />
-              : ''
-            }
+            <Breadcrumbs />
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
               <Route path="/identification" component={IdentificationActive}></Route>
