@@ -39,7 +39,7 @@ export class AssessmentDescription extends Component {
               this.props.activeCapacity.as_measured_by
               ? <div>
                 <p>
-                  <b>How is this capacity measured? </b>
+                  <b>As Measured By: </b>
                   {this.props.activeCapacity.as_measured_by}
                 </p>
               </div>
@@ -59,7 +59,7 @@ export class AssessmentDescription extends Component {
               this.props.activeCapacity.as_measured_by
               ? <div>
                 <p>
-                  <b>Additional notes: </b>
+                  <b>Additional Notes: </b>
                   {this.props.activeCapacity.notes}
                 </p>
               </div>

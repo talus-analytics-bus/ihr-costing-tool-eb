@@ -48,7 +48,7 @@ export class Costing extends Component {
             >
               <div>
                 <p>Current Capacity: <strong>{capacityLevels[selectedLevelIndex]} ({selectedLevelIndex + 1})</strong></p>
-                <p>Upgrade capacity to <strong>{capacityLevels[targetLevelIndex] || capacityLevels[4]} ({targetLevelIndex + 1})</strong></p>
+                <p>Target Capacity: <strong>{capacityLevels[targetLevelIndex] || capacityLevels[4]} ({targetLevelIndex + 1})</strong></p>
               </div>
               <div className={styles.expenseTableLabels}>
                 <div className={styles.expenseRowName}>&nbsp;</div>

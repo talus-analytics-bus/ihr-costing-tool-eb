@@ -20,7 +20,6 @@ export class Upload extends Component {
           <p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below:</p>
           <div>
             <RaisedButton className={styles.uploadButton} label="Select a File" primary={true} />
-            <RaisedButton className={styles.uploadButton} label="Upload"/>
           </div>
         </div>
         <div className={styles.buttonGroup}>

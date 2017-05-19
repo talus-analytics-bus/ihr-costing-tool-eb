@@ -40,7 +40,7 @@ export class CapacityTable extends Component {
   render() {
     return (
       <div className={styles.capacityTableContainer}>
-        <p>Choose a score for each indicator below based on {this.props.activeCountry.details.name || 'the country'}&#39;s current capacity, per the JEE assessment:</p>
+        <h4>Choose a score for each indicator below based on {this.props.activeCountry.details.name || 'the country'}&#39;s current capacity, per the JEE assessment:</h4>
         <div>
           <div className={styles.capacityTable}>
             <div className={styles.capacityRow}>

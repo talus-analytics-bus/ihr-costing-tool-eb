@@ -7,7 +7,7 @@ export const geoLevels = [
 
 export const labels = {
   'Level 1': 'Central',
-  'Level 2': 'Intermediate-1',
-  'Level 3': 'Intermediate-2 (Optional)',
+  'Level 2': 'Intermediate',
+  'Level 3': 'Intermediate 2 (Optional)',
   'Level 4': 'Local',
 };

@@ -10,10 +10,9 @@ export class ManualAssessment extends Component {
     return (
       <div>
         <h2>Enter JEE scores manually</h2>
-        <p>
-          Would you like to enter all JEE indicator scores before costing
-          or enter the score for each indicator as you cost?
-        </p>
+        <h4>
+          Choose a method below to enter JEE indicator scores.
+        </h4>
         <div>
           <RadioButtonGroup
             name="assessFirst"
@@ -23,12 +22,12 @@ export class ManualAssessment extends Component {
             <RadioButton
               className={styles.radioButton}
               value={true}
-              label="Enter all indicator scores first"
+              label="Enter scores for all indicators; then cost all indicators"
             />
             <RadioButton
               className={styles.radioButton}
               value={false}
-              label="Enter scores as I cost each indicator"
+              label="Enters scores and cost for each indicator sequentially"
             />
           </RadioButtonGroup>
         </div>

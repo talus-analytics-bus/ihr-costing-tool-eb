@@ -20,7 +20,7 @@ export class Home extends Component {
             The International Health Regulations (IHR) Costing Tool supports countries in estimating the
             costs to fully implement IHR core capacities to prevent, detect, and respond to public health threats.
             The IHR Costing Tool aligns costs with indicators specified by the
-            International Health Regulations Joint External Evaluation tool (JEE).
+            Joint External Evaluation Tool (JEE).
           </p>
         </div>
 
