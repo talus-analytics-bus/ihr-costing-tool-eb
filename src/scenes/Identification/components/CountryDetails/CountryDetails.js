@@ -77,13 +77,9 @@ export class CountryDetails extends Component {
             }
             </div>
             <div className={styles.populationAction}>
-              {
-                !this.props.population.editing && (
-                  <RaisedButton
-                    label="Modify"
-                    onClick={() => this.props.toggleEdit('population', this.props.population.editing, this.state.population)}/>
-                )
-              }
+              <RaisedButton
+                label={this.props.population.editing ? 'Save' : 'Modify'}
+                onClick={() => this.props.toggleEdit('population', this.props.population.editing, this.state.population)}/>
             </div>
           </div>
         </div>
@@ -119,13 +115,9 @@ export class CountryDetails extends Component {
                 }
               </div>
               <div className={styles.otherDetailsAction}>
-                {
-                  !this.props.staff.epi_count.editing && (
-                    <RaisedButton
-                      label="Modify"
-                      onClick={() => this.props.toggleEdit('epi_count')}/>
-                  )
-                }
+                <RaisedButton
+                  label={this.props.staff.epi_count.editing ? 'Save' : 'Modify'}
+                  onClick={() => this.props.toggleEdit('epi_count')}/>
               </div>
             </div>
             <div className={styles.otherDetails}>
@@ -152,13 +144,9 @@ export class CountryDetails extends Component {
                 }
               </div>
               <div className={styles.otherDetailsAction}>
-                {
-                  !this.props.staff.chw_count.editing && (
-                    <RaisedButton
-                      label="Modify"
-                      onClick={() => this.props.toggleEdit('chw_count')}/>
-                  )
-                }
+                <RaisedButton
+                  label={this.props.staff.chw_count.editing ? 'Save' : 'Modify'}
+                  onClick={() => this.props.toggleEdit('chw_count')}/>
               </div>
             </div>
             <div className={styles.otherDetails}>
@@ -185,13 +173,9 @@ export class CountryDetails extends Component {
                 }
               </div>
               <div className={styles.otherDetailsAction}>
-                {
-                  !this.props.facilities.editing && (
-                    <RaisedButton
-                      label="Modify"
-                      onClick={() => this.props.toggleEdit('facilities')}/>
-                  )
-                }
+                <RaisedButton
+                  label={this.props.facilities.editing ? 'Save' : 'Modify'}
+                  onClick={() => this.props.toggleEdit('facilities')}/>
               </div>
             </div>
           </div>
