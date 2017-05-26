@@ -7,7 +7,9 @@ export class CapacityProgress extends Component {
   getNumCompleted = () => {
     let numCompleted = 0;
     this.props.entries.forEach((indicator) => {
-      numCompleted += indicator.capacities.filter(c => c.completed).length;
+      numCompleted += indicator.capacities.filter((c) => {
+        return c.complete_assessment && c.complete_costing;
+      }).length;
     });
     return numCompleted;
   }
