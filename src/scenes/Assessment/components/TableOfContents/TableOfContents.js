@@ -10,6 +10,28 @@ import arrowImage from '../../../../images/chevron_right.png';
 import styles from './TableOfContents.css';
 
 class Capacity extends Component {
+  isCurrent = () => this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex;
+
+  // determines icon
+  imageSrc = (stage) => {
+    const sameCapacityIndex = this.props.active.capacity === this.props.capacityIndex;
+    const sameCoreCapacityIndex = this.props.active.core === this.props.coreIndex;
+    const sameStage = this.props.capacity.stage === stage;
+    const isActive = sameCapacityIndex && sameCoreCapacityIndex && sameStage;
+
+    if (isActive) {
+      return activeImage;
+    }
+
+    const isCompleted = this.props.capacity[`complete_${stage || 'assessment'}`] || false;
+
+    if (isCompleted) {
+      return checkMarkImage;
+    }
+
+    return xMarkImage;
+  }
+
   render() {
     return (
       <div
@@ -22,26 +44,30 @@ class Capacity extends Component {
             : ''
         }
         <p>{this.props.capacity.name}</p>
-        <div className={styles.capacityChildContainer}>
-          <div className={`${styles.capacityChild} ${this.props.capacity.stage === 'assessment' ? styles.ccActive : null}`}>
-            <img
-              alt=''
-              className={styles.completeIcon}
-              src={this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex && this.props.capacity.stage === 'assessment' ? activeImage : (this.props.capacity.completed ? checkMarkImage : xMarkImage)}
-              onClick={() => true}
-            />
-            <span>Assessment</span>
+        {
+          this.isCurrent() &&
+          <div className={styles.capacityChildContainer}>
+            <div className={`${styles.capacityChild} ${this.props.capacity.stage === 'assessment' ? styles.ccActive : null}`}>
+              <img
+                alt=''
+                className={styles.completeIcon}
+                src={this.imageSrc('assessment')}
+                onClick={() => true}
+              />
+              <span>Assessment</span>
+            </div>
+            <div className={`${styles.capacityChild} ${this.props.capacity.stage === 'costing' ? styles.ccActive : null}`}>
+              <img
+                alt=''
+                className={styles.completeIcon}
+                src={this.imageSrc('costing')}
+                onClick={() => true}
+              />
+              <span>Costing</span>
+            </div>
           </div>
-          <div className={`${styles.capacityChild} ${this.props.capacity.stage === 'costing' ? styles.ccActive : null}`}>
-            <img
-              alt=''
-              className={styles.completeIcon}
-              src={this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex && this.props.capacity.stage === 'costing' ? activeImage : (this.props.capacity.completed ? checkMarkImage : xMarkImage)}
-              onClick={() => true}
-            />
-            <span>Costing</span>
-          </div>
-        </div>
+        }
+
       </div>
     )
   }
