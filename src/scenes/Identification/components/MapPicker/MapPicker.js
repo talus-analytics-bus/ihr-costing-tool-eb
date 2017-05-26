@@ -3,6 +3,7 @@ import d3 from 'd3';
 import * as topojson from 'topojson';
 import styles from './MapPicker.css';
 import {CountryPath} from "../CountryPath/CountryPath";
+import FlatButton from 'material-ui/FlatButton';
 
 let currentProjection;
 const projection = (width, height) => {
@@ -16,35 +17,32 @@ const path = ({width = 0, height = 0}) => {
     .projection(projection(width, height));
 }
 
-const redraw = () => {
-  const t = currentProjection.translate();
-  const s = currentProjection.scale();
-
-  const tx = t[0] * d3.event.scale + d3.event.translate[0];
-  const ty = t[1] * d3.event.scale + d3.event.translate[1];
-  currentProjection.translate([tx, ty]);
-  currentProjection.scale(s * d3.event.scale);
-  // TODO need to update d attribute in CountryPath
-}
-
-
-let pathEl;
+let pathEl, defaultZoom;
 
 export class MapPicker extends Component {
   constructor(props) {
     super(props);
 
+    defaultZoom = {
+      translate: 0,
+      scale: 1,
+    };
+
     this.state = {
+      ...defaultZoom,
       features: [],
       dimensions: {},
       activeCountry: this.props.activeCountry,
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const zoom = d3.behavior.zoom().on('zoom', redraw);
-    d3.select(this.refs.svgEl).call(zoom);
+  resetZoom = () => {
+    this.setState({
+      ...defaultZoom,
+    })
+  }
 
+  componentWillReceiveProps(nextProps) {
     const cMap = nextProps.countryMap;
     let checkMap, features, limit = 0;
 
@@ -81,6 +79,16 @@ export class MapPicker extends Component {
       dimensions,
     });
     pathEl = path(dimensions);
+
+    const zoom = d3.behavior.zoom()
+      .scaleExtent([1, 8])
+      .on('zoom', () => {
+        this.setState({
+          translate: d3.event.translate,
+          scale: d3.event.scale,
+        })
+      });
+    d3.select(this.refs.svgEl).call(zoom);
   }
 
   selectCountry = (country) => {
@@ -99,6 +107,10 @@ export class MapPicker extends Component {
   }
 
   render() {
+    const originalZoom = () => {
+      return this.state.scale === defaultZoom.scale && this.state.translate === defaultZoom.translate
+    }
+
     return (
       <div
         className={styles.mapPicker}
@@ -109,18 +121,35 @@ export class MapPicker extends Component {
           height={this.state.dimensions.height}
           ref="svgEl"
         >
-        {
-          this.state.features.map((feature) =>
-            <CountryPath
-              key={feature.properties.NAME_LONG}
-              d={pathEl(feature)}
-              countryDetails={feature.properties}
-              active={this.state.activeCountry === feature.properties.ISO_A2}
-              handleTouchTap={this.selectCountry}
-            ></CountryPath>
-          )
-        }
+          <g
+            transform={`
+              translate(
+                ${ this.state.translate }
+              )
+              scale(${ this.state.scale })
+            `}
+          >
+            {
+              this.state.features.map((feature) =>
+                <CountryPath
+                  key={feature.properties.NAME_LONG}
+                  d={pathEl(feature)}
+                  countryDetails={feature.properties}
+                  active={this.state.activeCountry === feature.properties.ISO_A2}
+                  handleTouchTap={this.selectCountry}
+                ></CountryPath>
+              )
+            }
+          </g>
         </svg>
+        {
+          !originalZoom() &&
+          <FlatButton
+            label="Reset"
+            onClick={this.resetZoom}
+          />
+        }
+
       </div>
     )
   }
