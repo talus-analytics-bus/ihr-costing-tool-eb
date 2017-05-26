@@ -44,6 +44,7 @@ export class GeoLevels extends Component {
             this.props.geoLevels[key].editing && (
               <TextField
                 defaultValue={this.props.geoLevels[key].name}
+                hintText={!Boolean(this.props.geoLevels[key].name) ? 'undefined' : null}
                 onChange={(e) => this.handleChange(e, key, 'name')}
                 onKeyPress={(e) => this.handleKeyPress(e, key)}
                 errorText={this.props.geoLevels[key].error}
@@ -65,7 +66,8 @@ export class GeoLevels extends Component {
           this.props.geoLevels[key].editing && (
             <TextField
               type="number"
-              defaultValue={this.props.geoLevels[key].value || 0}
+              defaultValue={this.props.geoLevels[key].value}
+              hintText={!Boolean(this.props.geoLevels[key].value) ? 'undefined' : null}
               onChange={(e) => this.handleChange(e, key)}
               onKeyPress={(e) => this.handleKeyPress(e, key)}
               errorText={this.props.geoLevels[key].error}

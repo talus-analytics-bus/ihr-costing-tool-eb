@@ -228,28 +228,29 @@ export const identificationReducer = (state = initialState, action) => {
         advanced: {
           staff: {
             epi_count: {
-              editing: false,
+              editing: !Boolean(action.details.advanced_info.staff.national_epi_count),
               value: action.details.advanced_info.staff.national_epi_count
             },
             chw_count: {
-              editing: false,
+              editing: !Boolean(action.details.advanced_info.staff.national_chw_count),
               value: action.details.advanced_info.staff.national_chw_count
             },
           },
           facilities: {
-            editing: false,
+            editing: !Boolean(action.details.advanced_info.national_health_care_facilities_count),
             value: action.details.advanced_info.national_health_care_facilities_count,
           },
         },
         population: {
           value: action.details.basic_info.population,
-          editing: false,
+          editing: !Boolean(action.details.basic_info.population),
         },
         geo_levels: Object.keys(geoLevelMapping)
           .reduce((prev, curr) => {
             prev[geoLevelMapping[curr]] = {
               name: action.details.basic_info[curr].area_name,
               value: action.details.basic_info[curr].area_count,
+              editing: !Boolean(action.details.basic_info[curr].area_count)
             }
             return prev;
           }, {}),

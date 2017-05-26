@@ -41,9 +41,9 @@ export class CountryDetails extends Component {
       <div className={styles.countryDetails}>
         <h2>Enter country details</h2>
         <h4>Costs associated with implementing the International Health Regulations depend on the
-        population size, geographic organization, and public health infrastructure in your country. 
-        Review and complete the information below for use by the costing calculations. 
-        Default values are provided, where available, and can be changed using the MODIFY button. 
+        population size, geographic organization, and public health infrastructure in your country.
+        Review and complete the information below for use by the costing calculations.
+        Default values are provided, where available, and can be changed using the MODIFY button.
         Complete all blanks by selecting the corresponding MODIFY button and entering the correct value.
         </h4>
         <div className={styles.countryDetailsContent}>
@@ -68,6 +68,7 @@ export class CountryDetails extends Component {
               this.props.population.editing && (
                 <TextField
                   defaultValue={this.props.population.value || 0}
+                  hintText={!Boolean(this.props.population.value) ? 'undefined' : null}
                   onChange={(e) => this.handlePopulationChange(e)}
                   onKeyPress={(e) => this.handleKeyPress(e, 'population')}
                   errorText={this.props.population.error}
@@ -109,7 +110,8 @@ export class CountryDetails extends Component {
                 {
                   this.props.staff.epi_count.editing && (
                     <TextField
-                      defaultValue={this.props.staff.epi_count.value || 0}
+                      defaultValue={this.props.staff.epi_count.value}
+                      hintText={!Boolean(this.props.staff.epi_count.value) ? 'undefined' : null}
                       onChange={(e) => this.handleChange(e, 'epi_count')}
                       onKeyPress={(e) => this.handleKeyPress(e, 'epi_count')}
                     />
@@ -141,7 +143,8 @@ export class CountryDetails extends Component {
                 {
                   this.props.staff.chw_count.editing && (
                     <TextField
-                      defaultValue={this.props.staff.chw_count.value || 0}
+                      defaultValue={this.props.staff.chw_count.value}
+                      hintText={!Boolean(this.props.staff.chw_count.value) ? 'undefined' : null}
                       onChange={(e) => this.handleChange(e, 'chw_count')}
                       onKeyPress={(e) => this.handleKeyPress(e, 'chw_count')}
                     />
@@ -173,7 +176,8 @@ export class CountryDetails extends Component {
                 {
                   this.props.facilities.editing && (
                     <TextField
-                      defaultValue={this.props.facilities.value || 0}
+                      defaultValue={this.props.facilities.value}
+                      hintText={!Boolean(this.props.facilities.value) ? 'undefined' : null}
                       onChange={(e) => this.handleChange(e, 'facilities')}
                       onKeyPress={(e) => this.handleKeyPress(e, 'facilities')}
                     />
