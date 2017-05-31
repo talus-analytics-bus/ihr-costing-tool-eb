@@ -1,0 +1,17 @@
+.menuItem {
+  display: inline-block;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 0.95em;
+
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+  &:hover,
+  &.active {
+    background-color: #f6f6f6;
+  }
+}

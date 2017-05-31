@@ -44,6 +44,7 @@ export class GeoLevels extends Component {
             this.props.geoLevels[key].editing && (
               <TextField
                 defaultValue={this.props.geoLevels[key].name}
+                hintText={!Boolean(this.props.geoLevels[key].name) ? 'undefined' : null}
                 onChange={(e) => this.handleChange(e, key, 'name')}
                 onKeyPress={(e) => this.handleKeyPress(e, key)}
                 errorText={this.props.geoLevels[key].error}
@@ -65,7 +66,8 @@ export class GeoLevels extends Component {
           this.props.geoLevels[key].editing && (
             <TextField
               type="number"
-              defaultValue={this.props.geoLevels[key].value || 0}
+              defaultValue={this.props.geoLevels[key].value}
+              hintText={!Boolean(this.props.geoLevels[key].value) ? 'undefined' : null}
               onChange={(e) => this.handleChange(e, key)}
               onKeyPress={(e) => this.handleKeyPress(e, key)}
               errorText={this.props.geoLevels[key].error}
@@ -74,15 +76,11 @@ export class GeoLevels extends Component {
         }
         </div>
         <div className={styles.geoLevelAction}>
-          {
-            !this.props.geoLevels[key].editing && (
-              <RaisedButton
-                className={styles.geoLevelActionButton}
-                label="Modify"
-                onClick={() => this.props.toggleEdit(key, this.props.geoLevels[key].editing, this.state[key])}
-              />
-            )
-          }
+          <RaisedButton
+            className={styles.geoLevelActionButton}
+            label={this.props.geoLevels[key].editing ? 'Save' : 'Modify'}
+            onClick={() => this.props.toggleEdit(key, this.props.geoLevels[key].editing, this.state[key])}
+          />
         </div>
       </div>
     )
@@ -92,20 +90,6 @@ export class GeoLevels extends Component {
     return (
       <div className={styles.geoLevels}>
         <div className={styles.geoLevelsTitle}>Geographic Organization</div>
-			{/*<div className={`${styles.geoLevel} ${styles.geoLevelHeadings}`}>
-          <div className={styles.geoLevelRow}>
-            <p>Geographic Level</p>
-          </div>
-          <div className={styles.geoLevelName}>
-            <p>Name</p>
-          </div>
-          <div className={styles.geoLevelCount}>
-            <p>Number In Country</p>
-          </div>
-          <div className={styles.geoLevelAction}>
-            &nbsp;
-          </div>
-			</div>*/}
         {
           Object.keys(this.props.geoLevels)
             .map(this.geoLevel.bind(this))
