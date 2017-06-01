@@ -12,6 +12,17 @@ export class ExpenseTable extends Component {
     }
   }
 
+  expensesInCategory = (expenses, category) => expenses
+    .filter((expense) => {
+      const countryHasNoIntermediate2 = this.props.geoLevels["Level 3"].name === null;
+      const expenseIsIntermediate2 = expense.multiplier_area === "level_3";
+      const expenseIsApplicable = !countryHasNoIntermediate2 || !expenseIsIntermediate2;
+      const inCategory = expense.category === category;
+      const showExpense = inCategory && expenseIsApplicable;
+
+      return showExpense;
+    });
+
   render() {
     return (
       <div className={styles.expenseTable}>
@@ -22,17 +33,7 @@ export class ExpenseTable extends Component {
                 {category}
               </p>
               {
-                this.props.expenses
-                  .filter((expense) => {
-                    const countryHasNoIntermediate2 = this.props.geoLevels["Level 3"].name === null;
-                    const expenseIsIntermediate2 = expense.multiplier_area === "level_3";
-                    const expenseIsApplicable = !countryHasNoIntermediate2 || !expenseIsIntermediate2;
-                    const inCategory = expense.category === category;
-                    const showExpense = inCategory && expenseIsApplicable;
-
-                    return showExpense;
-
-                  })
+                this.expensesInCategory(this.props.expenses, category)
                   .map((expense, index) =>
                     <ExpenseRowActive expense={expense} activeCurrency={this.props.activeCurrency} key={index}/>
                   )
