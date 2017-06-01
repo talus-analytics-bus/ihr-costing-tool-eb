@@ -17,7 +17,7 @@ export class ExpenseRow extends Component {
     };
 
     /* Apply exchange rate to cost */
-    let exchange_rates = this.props.activeCurrency.details.exchange_rates;
+    let exchange_rates = this.props.activeCurrency.details.exchange_rates || [];
     if (exchange_rates.length > 0) {
       var exchange_rate_multiplier = exchange_rates[0].multiplier;
     } else {
