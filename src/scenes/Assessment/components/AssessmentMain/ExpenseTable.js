@@ -4,13 +4,7 @@ import styles from './AssessmentMain.scss';
 import {ExpenseRowActive} from './ExpenseRowActive';
 
 export class ExpenseTable extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      categories: [...new Set(props.expenses.map((expense) => expense.category))]
-    }
-  }
+  categories = () => [...new Set(this.props.expenses.map((expense) => expense.category))]
 
   expensesInCategory = (expenses, category) => expenses
     .filter((expense) => {
@@ -27,7 +21,7 @@ export class ExpenseTable extends Component {
     return (
       <div className={styles.expenseTable}>
         {
-          this.state.categories.map((category) =>
+          this.categories.map((category) =>
             <div key={category}>
               <p>
                 {category}

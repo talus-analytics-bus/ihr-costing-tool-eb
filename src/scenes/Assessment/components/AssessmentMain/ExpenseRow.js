@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Popover from 'material-ui/Popover';
 import styles from './AssessmentMain.scss';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardText} from 'material-ui/Card';
 
 export class ExpenseRow extends Component {
   constructor(props) {
@@ -17,19 +17,20 @@ export class ExpenseRow extends Component {
     };
 
     /* Apply exchange rate to cost */
+    let exchange_rate_multiplier;
     let exchange_rates = this.props.activeCurrency.details.exchange_rates || [];
     if (exchange_rates.length > 0) {
-      var exchange_rate_multiplier = exchange_rates[0].multiplier;
+      exchange_rate_multiplier = exchange_rates[0].multiplier;
     } else {
-      var exchange_rate_multiplier = 1.0;
+      exchange_rate_multiplier = 1.0;
     }
-    this.state.cost = this.state.cost * exchange_rate_multiplier;
-    this.props.expense.defaults.cost = this.state.cost;
+    this.setState({
+      cost: this.state.cost * exchange_rate_multiplier,
+    })
   }
 
-
   getStartup = () => {
-    var output = [
+    return [
       this.state.cost || 0,
       this.state.duration || 1,
       this.state.staff || 1,
@@ -37,42 +38,33 @@ export class ExpenseRow extends Component {
       this.state.population || 1,
       this.state.facility || 1,
     ].reduce((acc, el) => acc * el, 1);
-    return output;
-  }
+  };
 
   getRecurring = () => {
-    let isRecurring = this.state.cost_type === "recurring";
-    let isDepreciating = this.state.depreciation !== null && this.state.depreciation != 1.0;
-    /*If it's depreciating, then the recurring annual cost equals the startup costs times the depreciation factor*/
-    if (isDepreciating) {
-      var output = [
-          this.state.cost || 0,
-          this.state.duration || 1,
-          this.state.staff || 1,
-          (this.state.area !== null) ? this.state.area : 1,
-          this.state.population || 1,
-          this.state.facility || 1,
-        ].reduce((acc, el) => acc * el, 1) * this.state.depreciation;
-      return output
-    } else {
-      /* IF it's not depreciating, and it's recurring, then the recurring annual costs are the startup costs*/
-      if (isRecurring) {
-        var output = [
-          this.state.cost || 0,
-          this.state.duration || 1,
-          this.state.staff || 1,
-          (this.state.area !== null) ? this.state.area : 1,
-          this.state.population || 1,
-          this.state.facility || 1,
-        ].reduce((acc, el) => acc * el, 1);
-        return output;
-      } else {
-        /*If it's not depreciating and not recurring, recurring annual costs are zero*/
-        return 0.0;
-      }
+    const isRecurring = this.state.cost_type === "recurring";
+    const isDepreciating = this.state.depreciation !== null && this.state.depreciation !== 1.0;
+
+    // If it's not depreciating and not recurring, recurring annual costs are zero
+    if (!isRecurring && !isDepreciating) {
+      return 0.0;
     }
 
+    const recurringCost = [
+      this.state.cost || 0,
+      this.state.duration || 1,
+      this.state.staff || 1,
+      (this.state.area !== null) ? this.state.area : 1,
+      this.state.population || 1,
+      this.state.facility || 1,
+    ].reduce((acc, el) => acc * el, 1);
 
+    // If it's depreciating, then the recurring annual cost equals the startup costs times the depreciation factor
+    if (isDepreciating) {
+      return recurringCost * this.state.depreciation;
+    }
+    if (isRecurring) {
+      return recurringCost;
+    }
   }
 
   nullHintText = (value) => {
@@ -96,7 +88,7 @@ export class ExpenseRow extends Component {
 
   formatCurrency = (value) => {
 
-    /*Format currency as USD by default*/
+    // Format currency as USD by default
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -105,23 +97,23 @@ export class ExpenseRow extends Component {
 
     /*If currency code is a 3-character upper case letter code, add a space after.
      Otherwise, do not add a space.*/
-    var currencyCode_tmp = this.props.activeCurrency.key;
-
-    var regexp = /[A-Z][A-Z][A-Z]/gi;
-    var addSpace = regexp.test(currencyCode_tmp);
+    const currencyCode_tmp = this.props.activeCurrency.key;
+    const regexp = /[A-Z][A-Z][A-Z]/gi;
+    const addSpace = regexp.test(currencyCode_tmp);
+    let currencyCode;
 
     if (currencyCode_tmp === "USD") {
-      var currencyCode = "$";
+      currencyCode = "$";
     }
     else if (addSpace) {
-      var currencyCode = currencyCode_tmp + " ";
+      currencyCode = currencyCode_tmp + " ";
     } else {
-      var currencyCode = currencyCode_tmp;
+      currencyCode = currencyCode_tmp;
     }
 
-    var formattedValArr = formatter.format(value || 0).split("$");
-    formattedValArr[0] = currencyCode;
+    const formattedValArr = formatter.format(value || 0).split("$");
 
+    formattedValArr[0] = currencyCode;
     return formattedValArr.join("");
   }
 
