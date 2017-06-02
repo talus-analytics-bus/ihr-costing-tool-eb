@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -15,71 +15,66 @@ export class ExpenseRow extends Component {
       ...props.expense.multipliers,
       sourceOpen: false
     };
-	
-		/* Apply exchange rate to cost */
-		  let exchange_rates = this.props.activeCurrency.details.exchange_rates;
-		  if (exchange_rates.length > 0) {
-			  var exchange_rate_multiplier = exchange_rates[0].multiplier;
-		  } else {
-			  var exchange_rate_multiplier = 1.0;
-		  }
-		this.state.cost = this.state.cost * exchange_rate_multiplier;
-		this.props.expense.defaults.cost = this.state.cost;
+
+    /* Apply exchange rate to cost */
+    let exchange_rates = this.props.activeCurrency.details.exchange_rates || [];
+    if (exchange_rates.length > 0) {
+      var exchange_rate_multiplier = exchange_rates[0].multiplier;
+    } else {
+      var exchange_rate_multiplier = 1.0;
+    }
+    this.state.cost = this.state.cost * exchange_rate_multiplier;
+    this.props.expense.defaults.cost = this.state.cost;
   }
 
-  
+
   getStartup = () => {
-	  var output =  [
-		  this.state.cost || 0,
-		  this.state.duration || 1,
-		  this.state.staff || 1,
-		  (this.state.area !== null) ? this.state.area : 1,
-		  this.state.population || 1,
-		  this.state.facility || 1,
-		].reduce((acc, el) => acc * el, 1);
-		/*].reduce((acc, el) => acc * el, 1) * exchange_rate_multiplier;*/
-		return output;
+    var output = [
+      this.state.cost || 0,
+      this.state.duration || 1,
+      this.state.staff || 1,
+      (this.state.area !== null) ? this.state.area : 1,
+      this.state.population || 1,
+      this.state.facility || 1,
+    ].reduce((acc, el) => acc * el, 1);
+    return output;
   }
-  
+
   getRecurring = () => {
-	  let isRecurring = this.state.cost_type === "recurring";
-	  let isDepreciating = this.state.depreciation !== null && this.state.depreciation != 1.0;
-	  /*If it's depreciating, then the recurring annual cost equals the startup costs times the depreciation factor*/
-	  if (isDepreciating) {
-		var output =  [
-		  this.state.cost || 0,
-		  this.state.duration || 1,
-		  this.state.staff || 1,
-		  (this.state.area !== null) ? this.state.area : 1,
-		  this.state.population || 1,
-		  this.state.facility || 1,
-		].reduce((acc, el) => acc * el, 1) * this.state.depreciation;
-		/*].reduce((acc, el) => acc * el, 1) * this.state.depreciation * exchange_rate_multiplier;*/
-		return output
-		} else {
-			/* IF it's not depreciating, and it's recurring, then the recurring annual costs are the startup costs*/
-			if (isRecurring) {
-				var output =  [
-				  this.state.cost || 0,
-				  this.state.duration || 1,
-				  this.state.staff || 1,
-				  (this.state.area !== null) ? this.state.area : 1,
-				  this.state.population || 1,
-				  this.state.facility || 1,
-				].reduce((acc, el) => acc * el, 1);
-				/*].reduce((acc, el) => acc * el, 1) * exchange_rate_multiplier;*/
-				return output;
-			} else {
-				/*If it's not depreciating and not recurring, recurring annual costs are zero*/
-				return 0.0;
-			}
-		}
-		
-		
-		
-		
+    let isRecurring = this.state.cost_type === "recurring";
+    let isDepreciating = this.state.depreciation !== null && this.state.depreciation != 1.0;
+    /*If it's depreciating, then the recurring annual cost equals the startup costs times the depreciation factor*/
+    if (isDepreciating) {
+      var output = [
+          this.state.cost || 0,
+          this.state.duration || 1,
+          this.state.staff || 1,
+          (this.state.area !== null) ? this.state.area : 1,
+          this.state.population || 1,
+          this.state.facility || 1,
+        ].reduce((acc, el) => acc * el, 1) * this.state.depreciation;
+      return output
+    } else {
+      /* IF it's not depreciating, and it's recurring, then the recurring annual costs are the startup costs*/
+      if (isRecurring) {
+        var output = [
+          this.state.cost || 0,
+          this.state.duration || 1,
+          this.state.staff || 1,
+          (this.state.area !== null) ? this.state.area : 1,
+          this.state.population || 1,
+          this.state.facility || 1,
+        ].reduce((acc, el) => acc * el, 1);
+        return output;
+      } else {
+        /*If it's not depreciating and not recurring, recurring annual costs are zero*/
+        return 0.0;
+      }
+    }
+
+
   }
-  
+
   nullHintText = (value) => {
     if (value) {
       return '';
@@ -100,33 +95,33 @@ export class ExpenseRow extends Component {
   }
 
   formatCurrency = (value) => {
-	
-	/*Format currency as USD by default*/
+
+    /*Format currency as USD by default*/
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
     });
-	
-	/*If currency code is a 3-character upper case letter code, add a space after.
-	Otherwise, do not add a space.*/
-	var currencyCode_tmp = this.props.activeCurrency.key;
-	
-	var regexp = /[A-Z][A-Z][A-Z]/gi;
-	var addSpace = regexp.test(currencyCode_tmp);
-	
-	if (currencyCode_tmp === "USD") {
-		var currencyCode = "$";
-	}
-	else if (addSpace) {
-		var currencyCode = currencyCode_tmp + " ";
-	} else {
-		var currencyCode = currencyCode_tmp;
-	}
-	
-	var formattedValArr = formatter.format(value || 0).split("$");
-	formattedValArr[0] = currencyCode;
-	
+
+    /*If currency code is a 3-character upper case letter code, add a space after.
+     Otherwise, do not add a space.*/
+    var currencyCode_tmp = this.props.activeCurrency.key;
+
+    var regexp = /[A-Z][A-Z][A-Z]/gi;
+    var addSpace = regexp.test(currencyCode_tmp);
+
+    if (currencyCode_tmp === "USD") {
+      var currencyCode = "$";
+    }
+    else if (addSpace) {
+      var currencyCode = currencyCode_tmp + " ";
+    } else {
+      var currencyCode = currencyCode_tmp;
+    }
+
+    var formattedValArr = formatter.format(value || 0).split("$");
+    formattedValArr[0] = currencyCode;
+
     return formattedValArr.join("");
   }
 
@@ -134,8 +129,8 @@ export class ExpenseRow extends Component {
     this.setState({
       ...this.props.expense.defaults,
     });
-	/* And apply exchange rate */
-	
+    /* And apply exchange rate */
+
   }
 
   cancel = () => {
@@ -147,11 +142,9 @@ export class ExpenseRow extends Component {
     this.props.changeValues(this.props.expense.expense_id, this.props.expense.sophistication_level[0], this.state);
   }
 
-  
-	
-  
+
   render() {
-	  
+
     return (
       <div className={styles.expenseRow} key={this.props.expense.sophistication_level[0]}>
         <div className={styles.expenseRowSummary}>
@@ -163,37 +156,10 @@ export class ExpenseRow extends Component {
           </div>
           <div className={styles.expenseRowName}>{this.props.expense.sophistication_name}</div>
           <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
-            {/*this.formatCurrency([
-              this.state.cost || 0,
-              this.state.duration || 1,
-              this.state.staff || 1,
-              (this.state.area !== null) ? this.state.area : 1,
-              this.state.population || 1,
-              this.state.facility || 1,
-            ].reduce((acc, el) => acc * el, 1))*/
-			
-			this.formatCurrency( this.getStartup() )
-			
-			}
+            {this.formatCurrency(this.getStartup())}
           </div>
           <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
-            {
-				/*this.formatCurrency(
-                this.state.multiplier_depreciation ?
-                  [
-                    this.state.cost || 0,
-                    this.state.duration || 1,
-                    this.state.staff || 1,
-                    this.state.area || 1,
-                    this.state.population || 1,
-                    this.state.facility || 1,
-                    this.state.depreciation || 0,
-                  ].reduce((acc, el) => acc * el, 1)
-                  : 0
-				)*/
-				
-				this.formatCurrency( this.getRecurring() )
-            }
+            {this.formatCurrency(this.getRecurring())}
           </div>
           <div className={styles.expenseRowAction}>
             {
@@ -290,17 +256,6 @@ export class ExpenseRow extends Component {
                     }
                   </div>
                   <div className={styles.expenseRowFormRecurring}>
-					  {/*  <div>
-                      <TextField
-                        floatingLabelText="depreciation factor"
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                        value={this.state.depreciation}
-                        hintText={this.nullHintText(this.state.depreciation)}
-                        disabled={this.props.expense.multiplier_depreciation === null}
-                        onChange={(e) => this.handleChange('depreciation', e.target.value)}
-                      />
-					  </div>*/}
                   </div>
                 </div>
               </CardText>
@@ -319,8 +274,6 @@ export class ExpenseRow extends Component {
                 />
                 <RaisedButton
                   label="View sources"
-                  // onClick={this.toggleSource}
-                  // onRequestClose={this.toggleSource}
                 />
                 <Popover
                   open={this.state.sourceOpen}
@@ -334,7 +287,7 @@ export class ExpenseRow extends Component {
               </CardActions>
             </Card>
 
-            :null
+            : null
         }
       </div>
     );
