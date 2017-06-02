@@ -21,7 +21,7 @@ export class ExpenseTable extends Component {
     return (
       <div className={styles.expenseTable}>
         {
-          this.categories.map((category) =>
+          this.categories().map((category) =>
             <div key={category}>
               <p>
                 {category}

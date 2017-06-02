@@ -2,19 +2,12 @@ import React, {Component} from 'react';
 
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import Popover from 'material-ui/Popover';
 import styles from './AssessmentMain.scss';
-import {Card, CardActions, CardText} from 'material-ui/Card';
+import { ExpenseRowEdit } from './ExpenseRowEdit';
 
 export class ExpenseRow extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      ...props.expense.multipliers,
-      sourceOpen: false
-    };
 
     /* Apply exchange rate to cost */
     let exchange_rate_multiplier;
@@ -24,9 +17,12 @@ export class ExpenseRow extends Component {
     } else {
       exchange_rate_multiplier = 1.0;
     }
-    this.setState({
-      cost: this.state.cost * exchange_rate_multiplier,
-    })
+
+    this.state = {
+      ...props.expense.multipliers,
+      sourceOpen: false,
+      cost: props.expense.multipliers.cost * exchange_rate_multiplier,
+    };
   }
 
   getStartup = () => {
@@ -65,13 +61,6 @@ export class ExpenseRow extends Component {
     if (isRecurring) {
       return recurringCost;
     }
-  }
-
-  nullHintText = (value) => {
-    if (value) {
-      return '';
-    }
-    return 'n/a';
   }
 
   handleChange = (key, value) => {
@@ -166,119 +155,15 @@ export class ExpenseRow extends Component {
         </div>
         {
           this.props.expense.editing ?
-            <Card>
-              <CardText>
-                <div className={styles.expenseRowForm}>
-                  <div className={styles.expenseRowFormStartup}>
-                    <div>
-                      <TextField
-                        floatingLabelText={this.props.expense.cost_unit}
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                        value={this.state.cost}
-                        hintText={this.nullHintText(this.state.cost)}
-                        onChange={(e) => this.handleChange('cost', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        floatingLabelText={this.props.expense.cost_duration_unit}
-                        floatingLabelFixed={true}
-                        className={styles.expenseRowInput}
-                        value={this.state.duration}
-                        hintText={this.nullHintText(this.state.duration)}
-                        onChange={(e) => this.handleChange('duration', e.target.value)}
-                      />
-                    </div>
-                    {
-                      this.props.expense.multiplier_staff !== null &&
-                      <div>
-                        <TextField
-                          floatingLabelText="staff"
-                          floatingLabelFixed={true}
-                          className={styles.expenseRowInput}
-                          value={this.state.staff}
-                          hintText={this.nullHintText(this.state.staff)}
-                          disabled={this.props.expense.multiplier_staff === null}
-                          onChange={(e) => this.handleChange('staff', e.target.value)}
-                        />
-                      </div>
-                    }
-                    {
-                      this.props.expense.multiplier_area !== null &&
-                      <div>
-                        <TextField
-                          floatingLabelText="area"
-                          floatingLabelFixed={true}
-                          className={styles.expenseRowInput}
-                          value={this.state.area}
-                          hintText={this.nullHintText(this.state.area)}
-                          disabled={this.props.expense.multiplier_area === null}
-                          onChange={(e) => this.handleChange('area', e.target.value)}
-                        />
-                      </div>
-                    }
-                    {
-                      this.props.expense.multiplier_population !== null &&
-                      <div>
-                        <TextField
-                          floatingLabelText="population"
-                          floatingLabelFixed={true}
-                          className={styles.expenseRowInput}
-                          value={this.state.population}
-                          hintText={this.nullHintText(this.state.population)}
-                          disabled={this.props.expense.multiplier_population === null}
-                          onChange={(e) => this.handleChange('population', e.target.value)}
-                        />
-                      </div>
-                    }
-                    {
-                      this.props.expense.multiplier_facility !== null &&
-                      <div>
-                        <TextField
-                          floatingLabelText="facilities"
-                          floatingLabelFixed={true}
-                          className={styles.expenseRowInput}
-                          value={this.state.facility}
-                          hintText={this.nullHintText(this.state.facility)}
-                          disabled={this.props.expense.multiplier_facility === null}
-                          onChange={(e) => this.handleChange('facility', e.target.value)}
-                        />
-                      </div>
-                    }
-                  </div>
-                  <div className={styles.expenseRowFormRecurring}>
-                  </div>
-                </div>
-              </CardText>
-              <CardActions>
-                <RaisedButton
-                  label="Set to defaults"
-                  onClick={this.reset}
-                />
-                <RaisedButton
-                  label="Cancel"
-                  onClick={this.cancel}
-                />
-                <RaisedButton
-                  label="Confirm"
-                  onClick={this.save}
-                />
-                <RaisedButton
-                  label="View sources"
-                />
-                <Popover
-                  open={this.state.sourceOpen}
-                >
-                  <Card>
-                    <CardText>
-                      {this.props.expense.sources}
-                    </CardText>
-                  </Card>
-                </Popover>
-              </CardActions>
-            </Card>
-
+            <ExpenseRowEdit
+              expense={this.props.expense}
+              currentState={this.state}
+              handleChange={this.handleChange}
+              handleReset={this.reset}
+              handleCancel={this.cancel}
+              handleSave={this.save}
+              handleSource={this.toggleSource}
+            />
             : null
         }
       </div>
