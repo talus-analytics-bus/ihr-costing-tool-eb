@@ -1,0 +1,14 @@
+.instructions {
+  composes: fixedWidth from '../../App.scss';
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 20px 50px 50px;
+}
+
+.instructionsAction {
+  text-align: center;
+  margin-top: 30px;
+}

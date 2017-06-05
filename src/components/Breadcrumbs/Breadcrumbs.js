@@ -9,6 +9,10 @@ const items = [
     path: '/',
   },
   {
+    name: 'Instructions',
+    path: '/instructions/',
+  },
+  {
     name: 'Identification',
     path: '/identification/',
   },

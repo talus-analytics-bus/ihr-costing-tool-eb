@@ -28,7 +28,7 @@ export class Home extends Component {
           <RaisedButton
             primary={true}
             label="Enter"
-            containerElement={<Link to="/identification/" />}
+            containerElement={<Link to="/instructions/" />}
           />
         </div>
       </div>
