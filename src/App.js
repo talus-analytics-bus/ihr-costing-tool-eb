@@ -16,6 +16,7 @@ import talusLogo from './images/talus.png';
 import { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 
 import { Home } from './scenes/Home/Home';
+import { Instructions } from './scenes/Instructions/Instructions';
 import { IdentificationActive } from './scenes/Identification/IdentificationActive';
 import { Upload } from './scenes/Upload/Upload';
 import { Start } from './scenes/Start/Start';
@@ -49,6 +50,7 @@ class App extends Component {
             <Breadcrumbs />
             <div className={styles.main}>
               <Route exact path="/" component={Home}></Route>
+              <Route path="/instructions" component={Instructions}></Route>
               <Route path="/identification" component={IdentificationActive}></Route>
               <Route path="/upload" component={Upload}></Route>
               <Route path="/start" component={Start}></Route>
