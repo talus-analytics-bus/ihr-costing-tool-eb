@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import styles from './AssessmentMain.scss';
 import { ExpenseRowEdit } from './ExpenseRowEdit';
 
+import { getStartupCosts, getRecurringCost } from '../../../../lib/costing';
+
 export class ExpenseRow extends Component {
   constructor(props) {
     super(props);
@@ -25,43 +27,9 @@ export class ExpenseRow extends Component {
     };
   }
 
-  getStartup = () => {
-    return [
-      this.state.cost || 0,
-      this.state.duration || 1,
-      this.state.staff || 1,
-      (this.state.area !== null) ? this.state.area : 1,
-      this.state.population || 1,
-      this.state.facility || 1,
-    ].reduce((acc, el) => acc * el, 1);
-  };
+  getStartup = () => getStartupCosts(this.state);
 
-  getRecurring = () => {
-    const isRecurring = this.state.cost_type === "recurring";
-    const isDepreciating = this.state.depreciation !== null && this.state.depreciation !== 1.0;
-
-    // If it's not depreciating and not recurring, recurring annual costs are zero
-    if (!isRecurring && !isDepreciating) {
-      return 0.0;
-    }
-
-    const recurringCost = [
-      this.state.cost || 0,
-      this.state.duration || 1,
-      this.state.staff || 1,
-      (this.state.area !== null) ? this.state.area : 1,
-      this.state.population || 1,
-      this.state.facility || 1,
-    ].reduce((acc, el) => acc * el, 1);
-
-    // If it's depreciating, then the recurring annual cost equals the startup costs times the depreciation factor
-    if (isDepreciating) {
-      return recurringCost * this.state.depreciation;
-    }
-    if (isRecurring) {
-      return recurringCost;
-    }
-  }
+  getRecurring = () => getRecurringCost(this.state);
 
   handleChange = (key, value) => {
     this.setState({

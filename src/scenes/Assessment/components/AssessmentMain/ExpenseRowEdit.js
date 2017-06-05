@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, CardActions, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Popover from 'material-ui/Popover';
