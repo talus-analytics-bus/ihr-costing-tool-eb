@@ -108,8 +108,11 @@ export class CostSummary extends Component {
 
 	// version 2 of cost chart
 	buildCostChart(selector, param={}) {
-		var n = 4, // The number of series.
-	    m = 58; // The number of values per series.
+		var n = 6, // The number of series.
+	    m = 3; // The number of values per series.
+
+		const width = 920;
+		const height = 380;
 
 		// The xz array has m elements, representing the x-values shared by all series.
 		// The yz array has n elements, representing the y-values of each of the n series.
@@ -121,20 +124,33 @@ export class CostSummary extends Component {
 		    var yMax = d3.max(yz, function(y) { return d3.max(y); });
 		    var y1Max = d3.max(y01z, function(y) { return d3.max(y, function(d) { return d[1]; }); });
 
-		var svg = d3.select(selector),
+		var chart = d3.select(selector),
 		    margin = {top: 40, right: 10, bottom: 20, left: 10},
-		    width = +svg.attr("width") - margin.left - margin.right,
-		    height = +svg.attr("height") - margin.top - margin.bottom,
-		    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		    // width = +chart.attr("width") - margin.left - margin.right,
+		    // height = +chart.attr("height") - margin.top - margin.bottom,
+		    g = chart.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		chart
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom);
 
 		var x = d3.scaleBand()
 		    .domain(xz)
 		    .rangeRound([0, width])
-		    .padding(0.08);
+		    .padding(0.4);
+
+		const xAxis = d3.axisBottom();
+
+		const xAxisG = chart.append('g')
+			.attr('class', 'x-axis axis')
+			.attr('transform', `translate(0, ${height})`);
 
 		var y = d3.scaleLinear()
 		    .domain([0, y1Max])
 		    .range([height, 0]);
+
+		// const y = d3.scaleLinear()
+		// 	.range([height, 0]);
 
 		var color = d3.scaleOrdinal()
 		    .domain(d3.range(n))
@@ -158,12 +174,12 @@ export class CostSummary extends Component {
 		    .attr("y", function(d) { return y(d[1]); })
 		    .attr("height", function(d) { return y(d[0]) - y(d[1]); });
 
-		g.append("g")
-		    .attr("class", "axis axis--x")
-		    .attr("transform", "translate(0," + height + ")")
-		    .call(d3.axisBottom(x)
-		        .tickSize(0)
-		        .tickPadding(6));
+		// g.append("g")
+		//     .attr("class", "axis axis--x")
+		//     .attr("transform", "translate(0," + height + ")")
+		//     .call(d3.axisBottom(x)
+		//         .tickSize(0)
+		//         .tickPadding(6));
 
 		d3.selectAll("input")
 		    .on("change", changed);
@@ -206,6 +222,53 @@ export class CostSummary extends Component {
 		      .attr("width", x.bandwidth());
 		}
 
+		// add axes labels
+		const xAxisLabel = chart.append('text')
+			.attr('x', width / 2)
+			.attr('y', height + 70)
+			.style('text-anchor', 'middle')
+			.style('font-size', '0.9em')
+			.text('Core Capacity');
+		this.yAxisLabel = chart.append('text')
+			.attr('x', -height / 2)
+			.attr('y', -70)
+			.attr('transform', 'rotate(-90)')
+			.style('text-anchor', 'middle')
+			.style('font-size', '0.9em')
+			.text('1-Year Cost');
+
+		chart.update = () => {
+			// get data
+			let chartData;
+			const dataType = this.getDataType();
+			if (!this.state.activeCore) {
+				xAxisLabel.text('Core Capacity');
+				chartData = jeeTree;
+			} else if (!this.state.activeCapacity) {
+				xAxisLabel.text('Capacity');
+				chartData = jeeTree.find(d => d.name === this.state.activeCore).capacities;
+			} else if (!this.state.activeIndicator) {
+				xAxisLabel.text('Indicator');
+				chartData = jeeTree
+					.find(d => d.name === this.state.activeCore).capacities
+					.find(dd => dd.name === this.state.activeCapacity).indicators;
+			} else {
+				xAxisLabel.text('Expense');
+				chartData = jeeTree
+					.find(d => d.name === this.state.activeCore).capacities
+					.find(dd => dd.name === this.state.activeCapacity).indicators
+					.find(ddd => ddd.name === this.state.activeIndicator).expenses;
+			}
+
+			// // adjust axes
+			// if (dataType === 'indicator') {
+			// 	x.domain(chartData.map(d => d.jee_id));
+			// } else {
+			// 	x.domain(chartData.map(d => d.name));
+			// }
+		}
+
+
 		// Returns an array of m psuedorandom, smoothly-varying non-negative numbers.
 		// Inspired by Lee Byron’s test data generator.
 		// http://leebyron.com/streamgraph/
@@ -235,6 +298,8 @@ export class CostSummary extends Component {
 
 		  return values;
 		}
+
+		chart.update();
 	
 	};
 
