@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import d3 from 'd3';
+import * as d3 from "d3";
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
 import {ScoreProgress} from './ScoreProgress.js';
 import styles from '../Results.scss';

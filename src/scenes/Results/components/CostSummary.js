@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import d3 from 'd3';
+import * as d3 from "d3";
 import DataTables from 'material-ui-datatables';
 import styles from '../Results.scss';
 
@@ -8,6 +8,8 @@ import {CostChartOptions} from './CostChartOptions.js';
 
 import xMarkImage from '../../../images/x.png';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
+
+console.log(d3);
 
 const formatMoney = d3.format('$,.0f');
 const categories = [
@@ -118,19 +120,21 @@ export class CostSummary extends Component {
 				.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 		// define scales and add axes
-		const x = d3.scale.ordinal()
-			.rangeRoundBands([0, width], 0.4);
-		const xAxis = d3.svg.axis()
-			.orient('bottom');
+		const x = d3.scaleBand()
+			.range([0, width])
+			.round(true)
+			.padding(0.4);
+		const xAxis = d3.axisBottom();
+			// .orient('bottom');
 		const xAxisG = chart.append('g')
 			.attr('class', 'x-axis axis')
 			.attr('transform', `translate(0, ${height})`);
 
-		const y = d3.scale.linear()
+		const y = d3.scaleLinear()
 			.range([height, 0]);
-		const yAxis = d3.svg.axis()
-			.orient('left')
-			.innerTickSize(-width)
+		const yAxis = d3.axisLeft()
+			// .orient('left')
+			.tickSizeInner(-width)
 			.tickFormat(d3.format('$.2s'));
 		const yAxisG = chart.append('g')
 			.attr('class', 'y-axis axis');
@@ -183,6 +187,10 @@ export class CostSummary extends Component {
 			xAxisG.call(xAxis);
 
 			// add or remove bars based on new data
+			console.log('chartData = ')
+			console.log(chartData)
+			console.log('categories = ')
+			console.log(categories);
 			const barGroups = chart.selectAll('.bar-group')
 				.data(chartData);
 			const newBarGroups = barGroups.enter().append('g')
@@ -200,13 +208,12 @@ export class CostSummary extends Component {
 				.style('text-anchor', 'middle')
 				.style('font-size', '0.9em');
 
-			chart.updateBarHeight(1);
 			barGroups.exit().remove();
+			chart.updateBarHeight(1);
 		}
 
 		chart.updateBarHeight = (multiplier) => {
 			const barGroups = chart.selectAll('.bar-group');
-
 			// adjust y axis
 			const dataType = this.getDataType();
 			if (dataType === 'expense') {
@@ -218,9 +225,13 @@ export class CostSummary extends Component {
 			yAxisG.call(yAxis);
 
 			// update bar values
-			const bandwidth = x.rangeBand();
+			var bandwidth = x.bandwidth();
+			console.log('bandwidth = ' + bandwidth)
 			barGroups.transition()
 				.attr('transform', (d) => {
+					console.log(x.domain())
+					console.log(d.name)
+					console.log(d)
 					if (dataType === 'indicator') return `translate(${x(d.jee_id)}, 0)`;
 					return `translate(${x(d.name)}, 0)`;
 				})
@@ -229,9 +240,9 @@ export class CostSummary extends Component {
 					runningCost *= (0.8 + 0.3 * Math.random()) * multiplier;
 					const originalCost = runningCost;
 					d3.select(this).selectAll('.bar').transition()
-						.attr('width', bandwidth)
 						.each(function() {
 							d3.select(this).transition()
+								.attr('width', bandwidth)
 								.attr('y', y(runningCost))
 								.attr('height', height - y(runningCost));
 							runningCost -= (1.5 * originalCost / 6) * Math.random();
@@ -248,7 +259,7 @@ export class CostSummary extends Component {
 
 		chart.styleChart = () => {
 			// chart styling
-			const bandwidth = x.rangeBand();
+			const bandwidth = x.bandwidth();
 			chart.selectAll('.tick text')
 				.style('font-size', '0.9em');
 			chart.selectAll('.tick line')
