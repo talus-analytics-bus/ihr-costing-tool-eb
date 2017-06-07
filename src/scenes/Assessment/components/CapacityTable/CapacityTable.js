@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Checkbox from 'material-ui/Checkbox';
-import styles from './AssessmentMain.scss';
+import styles from './CapacityTable.scss';
 import { capacityLevels } from '../../Assessment';
 
 export class CapacityTable extends Component {
