@@ -14,12 +14,7 @@ export class CostChartOptions extends Component {
 		return (
 			<div className={styles.costChartOptions}>
 				<div className={styles.costChartOptionsTitle}>Chart Options</div>
-					{/*<Checkbox
-					checked={this.props.showByCategoryValue}
-					onCheck={this.props.toggleByCategory}
-					label="View expenses by category"
-					/>*/}
-				<div className={styles.costChartOptionsSubtitle}>View expenses for:</div>
+        <div className={styles.costChartOptionsSubtitle}>View expenses for:</div>
         <RadioButtonGroup
           name="costYear"
           valueSelected={this.props.costCategory}
@@ -39,6 +34,23 @@ export class CostChartOptions extends Component {
             className={styles.radioButton}
             value={"5"}
             label="5-year Cost"
+          />
+        </RadioButtonGroup>
+				<div className={styles.costChartOptionsSubtitle}>View chart as:</div>
+        <RadioButtonGroup
+          name="chartType"
+          valueSelected={this.props.chartType}
+          onChange={this.props.changeChartType}
+        >
+          <RadioButton
+            className={styles.radioButton}
+            value={"stacked"}
+            label="Stacked bars"
+          />
+          <RadioButton
+            className={styles.radioButton}
+            value={"grouped"}
+            label="Grouped bars"
           />
         </RadioButtonGroup>
 			</div>

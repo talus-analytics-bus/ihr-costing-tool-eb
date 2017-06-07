@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import d3 from 'd3';
+import * as d3 from "d3";
 import DataTables from 'material-ui-datatables';
 import styles from '../Results2.scss';
 
-import {CostChartLegend} from './CostChartLegend.js';
-import {CostChartOptions} from './CostChartOptions.js';
+import {CostChartLegend} from './CostChartLegend2.js';
+import {CostChartOptions} from './CostChartOptions2.js';
 
 import xMarkImage from '../../../images/x.png';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
@@ -106,171 +106,304 @@ export class CostSummary extends Component {
 		return 'expense';
 	}
 
+	// version 2 of cost chart
 	buildCostChart(selector, param={}) {
-		// start drawing chart
-		const margin = { top: 10, right: 40, bottom: 110, left: 95 };
-		const width = 800;
-		const height = 300;
-		const chart = d3.select(selector)
-			.attr('width', width + margin.left + margin.right)
-			.attr('height', height + margin.top + margin.bottom)
-			.append('g')
-				.attr('transform', `translate(${margin.left}, ${margin.top})`);
+		var n = 4, // The number of series.
+	    m = 58; // The number of values per series.
 
-		// define scales and add axes
-		const x = d3.scale.ordinal()
-			.rangeRoundBands([0, width], 0.4);
-		const xAxis = d3.svg.axis()
-			.orient('bottom');
-		const xAxisG = chart.append('g')
-			.attr('class', 'x-axis axis')
-			.attr('transform', `translate(0, ${height})`);
+		// The xz array has m elements, representing the x-values shared by all series.
+		// The yz array has n elements, representing the y-values of each of the n series.
+		// Each yz[i] is an array of m non-negative numbers representing a y-value for xz[i].
+		// The y01z array has the same structure as yz, but with stacked [y₀, y₁] instead of y.
+		var xz = d3.range(m);
+		    var yz = d3.range(n).map(function() { return bumps(m); });
+		    var y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz));
+		    var yMax = d3.max(yz, function(y) { return d3.max(y); });
+		    var y1Max = d3.max(y01z, function(y) { return d3.max(y, function(d) { return d[1]; }); });
 
-		const y = d3.scale.linear()
-			.range([height, 0]);
-		const yAxis = d3.svg.axis()
-			.orient('left')
-			.innerTickSize(-width)
-			.tickFormat(d3.format('$.2s'));
-		const yAxisG = chart.append('g')
-			.attr('class', 'y-axis axis');
+		var svg = d3.select(selector),
+		    margin = {top: 40, right: 10, bottom: 20, left: 10},
+		    width = +svg.attr("width") - margin.left - margin.right,
+		    height = +svg.attr("height") - margin.top - margin.bottom,
+		    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		// add axes labels
-		const xAxisLabel = chart.append('text')
-			.attr('x', width / 2)
-			.attr('y', height + 70)
-			.style('text-anchor', 'middle')
-			.style('font-size', '0.9em')
-			.text('Core Capacity');
-		this.yAxisLabel = chart.append('text')
-			.attr('x', -height / 2)
-			.attr('y', -70)
-			.attr('transform', 'rotate(-90)')
-			.style('text-anchor', 'middle')
-			.style('font-size', '0.9em')
-			.text('1-Year Cost');
+		var x = d3.scaleBand()
+		    .domain(xz)
+		    .rangeRound([0, width])
+		    .padding(0.08);
 
-		chart.update = () => {
-			// get data
-			let chartData;
-			const dataType = this.getDataType();
-			if (!this.state.activeCore) {
-				xAxisLabel.text('Core Capacity');
-				chartData = jeeTree;
-			} else if (!this.state.activeCapacity) {
-				xAxisLabel.text('Capacity');
-				chartData = jeeTree.find(d => d.name === this.state.activeCore).capacities;
-			} else if (!this.state.activeIndicator) {
-				xAxisLabel.text('Indicator');
-				chartData = jeeTree
-					.find(d => d.name === this.state.activeCore).capacities
-					.find(dd => dd.name === this.state.activeCapacity).indicators;
-			} else {
-				xAxisLabel.text('Expense');
-				chartData = jeeTree
-					.find(d => d.name === this.state.activeCore).capacities
-					.find(dd => dd.name === this.state.activeCapacity).indicators
-					.find(ddd => ddd.name === this.state.activeIndicator).expenses;
-			}
+		var y = d3.scaleLinear()
+		    .domain([0, y1Max])
+		    .range([height, 0]);
 
-			// adjust axes
-			if (dataType === 'indicator') {
-				x.domain(chartData.map(d => d.jee_id));
-			} else {
-				x.domain(chartData.map(d => d.name));
-			}
-			xAxis.scale(x);
-			xAxisG.call(xAxis);
+		var color = d3.scaleOrdinal()
+		    .domain(d3.range(n))
+		    .range(d3.schemeCategory20c);
 
-			// add or remove bars based on new data
-			const barGroups = chart.selectAll('.bar-group')
-				.data(chartData);
-			const newBarGroups = barGroups.enter().append('g')
-				.attr('class', 'bar-group');
-			categories.forEach((category) => {
-				newBarGroups.selectAll('.bar')
-					.data(categories)
-					.enter().append('rect')
-						.attr('class', 'bar')
-						.attr('category', category)
-						.style('fill', d => d.color);
-			});
-			newBarGroups.append('text')
-				.attr('class', 'value-label')
-				.style('text-anchor', 'middle')
-				.style('font-size', '0.9em');
+		var series = g.selectAll(".series")
+		  .data(y01z)
+		  .enter().append("g")
+		    .attr("fill", function(d, i) { return color(i); });
 
-			chart.updateBarHeight(1);
-			barGroups.exit().remove();
+		var rect = series.selectAll("rect")
+		  .data(function(d) { return d; })
+		  .enter().append("rect")
+		    .attr("x", function(d, i) { return x(i); })
+		    .attr("y", height)
+		    .attr("width", x.bandwidth())
+		    .attr("height", 0);
+
+		rect.transition()
+		    .delay(function(d, i) { return i * 10; })
+		    .attr("y", function(d) { return y(d[1]); })
+		    .attr("height", function(d) { return y(d[0]) - y(d[1]); });
+
+		g.append("g")
+		    .attr("class", "axis axis--x")
+		    .attr("transform", "translate(0," + height + ")")
+		    .call(d3.axisBottom(x)
+		        .tickSize(0)
+		        .tickPadding(6));
+
+		d3.selectAll("input")
+		    .on("change", changed);
+
+		var timeout = d3.timeout(function() {
+		  d3.select("input[value=\"grouped\"]")
+		      .property("checked", true)
+		      .dispatch("change");
+		}, 2000);
+
+		function changed() {
+		  timeout.stop();
+		  if (this.value === "grouped") transitionGrouped();
+		  else transitionStacked();
 		}
 
-		chart.updateBarHeight = (multiplier) => {
-			const barGroups = chart.selectAll('.bar-group');
+		function transitionGrouped() {
+		  y.domain([0, yMax]);
 
-			// adjust y axis
-			const dataType = this.getDataType();
-			if (dataType === 'expense') {
-				y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.cost)]);
-			} else {
-				y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.fixedCost)]);
-			}
-			yAxis.scale(y);
-			yAxisG.call(yAxis);
-
-			// update bar values
-			const bandwidth = x.rangeBand();
-			barGroups.transition()
-				.attr('transform', (d) => {
-					if (dataType === 'indicator') return `translate(${x(d.jee_id)}, 0)`;
-					return `translate(${x(d.name)}, 0)`;
-				})
-				.each(function(d) {
-					let runningCost = (dataType === 'expense') ? d.cost : d.fixedCost;
-					runningCost *= (0.8 + 0.3 * Math.random()) * multiplier;
-					const originalCost = runningCost;
-					d3.select(this).selectAll('.bar').transition()
-						.attr('width', bandwidth)
-						.each(function() {
-							d3.select(this).transition()
-								.attr('y', y(runningCost))
-								.attr('height', height - y(runningCost));
-							runningCost -= (1.5 * originalCost / 6) * Math.random();
-						});
-					d3.select(this).select('.value-label')
-						.text(formatMoney(originalCost))
-						.transition()
-							.attr('x', bandwidth / 2)
-							.attr('y', y(originalCost) - 5);
-				});
-
-			chart.styleChart();
+		  rect.transition()
+		      .duration(500)
+		      .delay(function(d, i) { return i * 10; })
+		      .attr("x", function(d, i) { return x(i) + x.bandwidth() / n * this.parentNode.__data__.key; })
+		      .attr("width", x.bandwidth() / n)
+		    .transition()
+		      .attr("y", function(d) { return y(d[1] - d[0]); })
+		      .attr("height", function(d) { return y(0) - y(d[1] - d[0]); });
 		}
 
-		chart.styleChart = () => {
-			// chart styling
-			const bandwidth = x.rangeBand();
-			chart.selectAll('.tick text')
-				.style('font-size', '0.9em');
-			chart.selectAll('.tick line')
-				.style('fill', 'none')
-				.style('stroke', 'rgba(0,0,0,0.3)');
-			chart.selectAll('.axis path, .axis line')
-				.style('fill', 'none')
-				.style('stroke', '#333')
-				.style('shape-rendering', 'crispEdges');
-			chart.selectAll('.x-axis .tick text')
-				.call(wrap, bandwidth);
-			chart.selectAll('.y-axis .tick:nth-child(n+2) line')
-				.style('stroke', '#ccc')
-				.style('stroke-dasharray', '3,3');
-			chart.selectAll('.y-axis .tick text')
-				.attr('x', -10);
+		function transitionStacked() {
+		  y.domain([0, y1Max]);
+
+		  rect.transition()
+		      .duration(500)
+		      .delay(function(d, i) { return i * 10; })
+		      .attr("y", function(d) { return y(d[1]); })
+		      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+		    .transition()
+		      .attr("x", function(d, i) { return x(i); })
+		      .attr("width", x.bandwidth());
 		}
 
-		chart.update();
+		// Returns an array of m psuedorandom, smoothly-varying non-negative numbers.
+		// Inspired by Lee Byron’s test data generator.
+		// http://leebyron.com/streamgraph/
+		function bumps(m) {
+		  var values = [], i, j, w, x, y, z;
 
-		return chart;
-	}
+		  // Initialize with uniform random values in [0.1, 0.2).
+		  for (i = 0; i < m; ++i) {
+		    values[i] = 0.1 + 0.1 * Math.random();
+		  }
+
+		  // Add five random bumps.
+		  for (j = 0; j < 5; ++j) {
+		    x = 1 / (0.1 + Math.random());
+		    y = 2 * Math.random() - 0.5;
+		    z = 10 / (0.1 + Math.random());
+		    for (i = 0; i < m; i++) {
+		      w = (i / m - y) * z;
+		      values[i] += x * Math.exp(-w * w);
+		    }
+		  }
+
+		  // Ensure all values are positive.
+		  for (i = 0; i < m; ++i) {
+		    values[i] = Math.max(0, values[i]);
+		  }
+
+		  return values;
+		}
+	
+	};
+
+	// buildCostChart(selector, param={}) {
+	// 	// start drawing chart
+	// 	const margin = { top: 10, right: 40, bottom: 110, left: 95 };
+	// 	const width = 800;
+	// 	const height = 300;
+	// 	const chart = d3.select(selector)
+	// 		.attr('width', width + margin.left + margin.right)
+	// 		.attr('height', height + margin.top + margin.bottom)
+	// 		.append('g')
+	// 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+	// 	// define scales and add axes
+	// 	const x = d3.scaleBand()
+	// 		.range([0, width])
+	// 		.round(true)
+	// 		.padding(0.4);
+	// 	const xAxis = d3.axisBottom();
+	// 		// .orient('bottom');
+	// 	const xAxisG = chart.append('g')
+	// 		.attr('class', 'x-axis axis')
+	// 		.attr('transform', `translate(0, ${height})`);
+
+	// 	const y = d3.scaleLinear()
+	// 		.range([height, 0]);
+	// 	const yAxis = d3.axisLeft()
+	// 		// .orient('left')
+	// 		.tickSizeInner(-width)
+	// 		.tickFormat(d3.format('$.2s'));
+	// 	const yAxisG = chart.append('g')
+	// 		.attr('class', 'y-axis axis');
+
+	// 	// add axes labels
+	// 	const xAxisLabel = chart.append('text')
+	// 		.attr('x', width / 2)
+	// 		.attr('y', height + 70)
+	// 		.style('text-anchor', 'middle')
+	// 		.style('font-size', '0.9em')
+	// 		.text('Core Capacity');
+	// 	this.yAxisLabel = chart.append('text')
+	// 		.attr('x', -height / 2)
+	// 		.attr('y', -70)
+	// 		.attr('transform', 'rotate(-90)')
+	// 		.style('text-anchor', 'middle')
+	// 		.style('font-size', '0.9em')
+	// 		.text('1-Year Cost');
+
+	// 	chart.update = () => {
+	// 		// get data
+	// 		let chartData;
+	// 		const dataType = this.getDataType();
+	// 		if (!this.state.activeCore) {
+	// 			xAxisLabel.text('Core Capacity');
+	// 			chartData = jeeTree;
+	// 		} else if (!this.state.activeCapacity) {
+	// 			xAxisLabel.text('Capacity');
+	// 			chartData = jeeTree.find(d => d.name === this.state.activeCore).capacities;
+	// 		} else if (!this.state.activeIndicator) {
+	// 			xAxisLabel.text('Indicator');
+	// 			chartData = jeeTree
+	// 				.find(d => d.name === this.state.activeCore).capacities
+	// 				.find(dd => dd.name === this.state.activeCapacity).indicators;
+	// 		} else {
+	// 			xAxisLabel.text('Expense');
+	// 			chartData = jeeTree
+	// 				.find(d => d.name === this.state.activeCore).capacities
+	// 				.find(dd => dd.name === this.state.activeCapacity).indicators
+	// 				.find(ddd => ddd.name === this.state.activeIndicator).expenses;
+	// 		}
+
+	// 		// adjust axes
+	// 		if (dataType === 'indicator') {
+	// 			x.domain(chartData.map(d => d.jee_id));
+	// 		} else {
+	// 			x.domain(chartData.map(d => d.name));
+	// 		}
+	// 		xAxis.scale(x);
+	// 		xAxisG.call(xAxis);
+
+	// 		// add or remove bars based on new data
+	// 		const barGroups = chart.selectAll('.bar-group')
+	// 			.data(chartData);
+	// 		const newBarGroups = barGroups.enter().append('g')
+	// 			.attr('class', 'bar-group');
+	// 		categories.forEach((category) => {
+	// 			newBarGroups.selectAll('.bar')
+	// 				.data(categories)
+	// 				.enter().append('rect')
+	// 					.attr('class', 'bar')
+	// 					.attr('category', category)
+	// 					.style('fill', d => d.color);
+	// 		});
+	// 		newBarGroups.append('text')
+	// 			.attr('class', 'value-label')
+	// 			.style('text-anchor', 'middle')
+	// 			.style('font-size', '0.9em');
+
+	// 		barGroups.exit().remove();
+	// 		chart.updateBarHeight(1);
+	// 	}
+
+	// 	chart.updateBarHeight = (multiplier) => {
+	// 		const barGroups = chart.selectAll('.bar-group');
+	// 		// adjust y axis
+	// 		const dataType = this.getDataType();
+	// 		if (dataType === 'expense') {
+	// 			y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.cost)]);
+	// 		} else {
+	// 			y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.fixedCost)]);
+	// 		}
+	// 		yAxis.scale(y);
+	// 		yAxisG.call(yAxis);
+
+	// 		// update bar values
+	// 		var bandwidth = x.bandwidth();
+	// 		barGroups.transition()
+	// 			.attr('transform', (d) => {
+	// 				if (dataType === 'indicator') return `translate(${x(d.jee_id)}, 0)`;
+	// 				return `translate(${x(d.name)}, 0)`;
+	// 			})
+	// 			.each(function(d) {
+	// 				let runningCost = (dataType === 'expense') ? d.cost : d.fixedCost;
+	// 				runningCost *= (0.8 + 0.3 * Math.random()) * multiplier;
+	// 				const originalCost = runningCost;
+	// 				d3.select(this).selectAll('.bar').transition()
+	// 					.each(function() {
+	// 						d3.select(this).transition()
+	// 							.attr('width', bandwidth)
+	// 							.attr('y', y(runningCost))
+	// 							.attr('height', height - y(runningCost));
+	// 						runningCost -= (1.5 * originalCost / 6) * Math.random();
+	// 					});
+	// 				d3.select(this).select('.value-label')
+	// 					.text(formatMoney(originalCost))
+	// 					.transition()
+	// 						.attr('x', bandwidth / 2)
+	// 						.attr('y', y(originalCost) - 5);
+	// 			});
+
+	// 		chart.styleChart();
+	// 	}
+
+	// 	chart.styleChart = () => {
+	// 		// chart styling
+	// 		const bandwidth = x.bandwidth();
+	// 		chart.selectAll('.tick text')
+	// 			.style('font-size', '0.9em');
+	// 		chart.selectAll('.tick line')
+	// 			.style('fill', 'none')
+	// 			.style('stroke', 'rgba(0,0,0,0.3)');
+	// 		chart.selectAll('.axis path, .axis line')
+	// 			.style('fill', 'none')
+	// 			.style('stroke', '#333')
+	// 			.style('shape-rendering', 'crispEdges');
+	// 		chart.selectAll('.x-axis .tick text')
+	// 			.call(wrap, bandwidth);
+	// 		chart.selectAll('.y-axis .tick:nth-child(n+2) line')
+	// 			.style('stroke', '#ccc')
+	// 			.style('stroke-dasharray', '3,3');
+	// 		chart.selectAll('.y-axis .tick text')
+	// 			.attr('x', -10);
+	// 	}
+
+	// 	chart.update();
+
+	// 	return chart;
+	// }
 
 	componentDidMount() {
 		this.costChart = this.buildCostChart('.costChart');
@@ -396,7 +529,7 @@ export class CostSummary extends Component {
 					</div>
 					<div className={styles.rightColumn}>
 						<div className={styles.costChartContainer}>
-							<svg className="costChart"></svg>
+							<svg className="costChart" width="960" height="500"></svg>
 							<div className={styles.costChartUnderneath}>
 								<CostChartOptions
 									showByCategoryValue={this.state.showByCategory}

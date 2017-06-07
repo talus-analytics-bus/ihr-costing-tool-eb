@@ -9,8 +9,6 @@ import {CostChartOptions} from './CostChartOptions.js';
 import xMarkImage from '../../../images/x.png';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
 
-console.log(d3);
-
 const formatMoney = d3.format('$,.0f');
 const categories = [
 	{ name: 'Consumable Materials', color: '#0868ac' },
@@ -125,7 +123,7 @@ export class CostSummary extends Component {
 			.round(true)
 			.padding(0.4);
 		const xAxis = d3.axisBottom();
-			// .orient('bottom');
+
 		const xAxisG = chart.append('g')
 			.attr('class', 'x-axis axis')
 			.attr('transform', `translate(0, ${height})`);
@@ -133,9 +131,9 @@ export class CostSummary extends Component {
 		const y = d3.scaleLinear()
 			.range([height, 0]);
 		const yAxis = d3.axisLeft()
-			// .orient('left')
 			.tickSizeInner(-width)
 			.tickFormat(d3.format('$.2s'));
+			
 		const yAxisG = chart.append('g')
 			.attr('class', 'y-axis axis');
 
