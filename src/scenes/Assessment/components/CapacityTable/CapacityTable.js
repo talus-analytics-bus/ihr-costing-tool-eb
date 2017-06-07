@@ -3,8 +3,18 @@ import React, { Component } from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import styles from './CapacityTable.scss';
 import { capacityLevels } from '../../Assessment';
+import {CapacityTableHeaderCell} from "./CapacityTableHeaderCell";
 
 export class CapacityTable extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeColumn: 0,
+    };
+  }
+
+
   capacityRows = () => {
     const name = (index) => `${capacityLevels[index] === 'None' ? 'No' : capacityLevels[index]} Capacity - ${index + 1}`;
 
@@ -44,12 +54,14 @@ export class CapacityTable extends Component {
         <div>
           <div className={styles.capacityTable}>
             <div className={styles.capacityRow}>
-              <div className={styles.capacityCell}></div>
+              <CapacityTableHeaderCell/>
               {
-                this.props.activeCapacity.indicators.map((indicator) =>
-                  <div className={styles.capacityCell} key={indicator.jee_id}>
-                    <p>{indicator.name}</p>
-                  </div>
+                this.props.activeCapacity.indicators.map((indicator, index) =>
+                  <CapacityTableHeaderCell
+                    active={this.state.activeColumn === index}
+                    activeText={indicator.name}
+                    inactiveText={indicator.jee_id}
+                  />
                 )
               }
             </div>
