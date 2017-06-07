@@ -27,7 +27,7 @@ export class CountryPicker extends Component {
           }),
       ])
         .then(() => {
-          this.selectCountry('US');
+          this.selectCountry('CH');
         })
     }
   }

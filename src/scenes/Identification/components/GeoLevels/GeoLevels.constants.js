@@ -8,6 +8,6 @@ export const geoLevels = [
 export const labels = {
   'Level 1': 'Central',
   'Level 2': 'Intermediate (e.g., province, district)',
-  'Level 3': 'Intermediate 2 (Optional)',
+  'Level 3': 'Intermediate 2 (optional)',
   'Level 4': 'Local (e.g., county, division)',
 };
