@@ -16,8 +16,9 @@ export class CountryDropdown extends Component {
 	  this.props.countries.sort(this.countrySort)
     return (
       <div className={styles.countryDropdown}>
+      <h2>Country and Currency</h2>
         <p>
-          What country would you like to assess and cost for?
+          Choose country
         </p>
         <DropDownMenu
           maxHeight={300}

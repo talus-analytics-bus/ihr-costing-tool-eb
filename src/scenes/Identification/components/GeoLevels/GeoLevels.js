@@ -89,7 +89,7 @@ export class GeoLevels extends Component {
   render() {
     return (
       <div className={styles.geoLevels}>
-        <div className={styles.geoLevelsTitle}>Geographic Organization</div>
+        <div className={styles.geoLevelsTitle}>Administrative Organization</div>
         {
           Object.keys(this.props.geoLevels)
             .map(this.geoLevel.bind(this))

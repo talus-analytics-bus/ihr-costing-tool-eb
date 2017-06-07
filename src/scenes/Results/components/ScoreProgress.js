@@ -20,7 +20,7 @@ export class ScoreProgress extends Component {
 		return (
 			<div className={styles.progressBar}>
 				<div className={styles.progressBarTitle}>
-					Progress towards Demonstrated/Sustainable Capacity:
+					Cumulative progress towards Demonstrated/Sustainable Capacity across all indicators:
 				</div>
 				<svg width={this.state.width + 100} height="110">
 					<defs>

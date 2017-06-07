@@ -17,7 +17,7 @@ export class CurrencyDropdown extends Component {
     return (
       <div className={styles.currencyDropdown}>
         <p>
-          What currency would you like to work with?
+          Choose currency for costing
         </p>
         <DropDownMenu value={this.props.active} onChange={ (e, i, v) => this.props.handleChange(v) }>
           {

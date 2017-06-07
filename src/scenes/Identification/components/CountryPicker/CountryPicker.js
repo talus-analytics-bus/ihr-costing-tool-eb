@@ -56,7 +56,13 @@ export class CountryPicker extends Component {
   render() {
     return (
       <div className={styles.countryPicker}>
-        <h2>Create Your Profile</h2>
+        <h1>Customize for Costing</h1>
+        <h4>Costs associated with implementing the International Health Regulations depend on the country,
+        population size, geopolitical organization, and public health infrastructure.
+        Review and complete the information below for use by the costing calculations.
+        Default values are provided, where available, and can be changed using the MODIFY button.
+        Complete all required blanks by entering the correct value and clicking SAVE.
+        </h4>
         <div className={styles.countryPickerContent}>
           <div className={styles.countryPickerSelect}>
             <CountryDropdown

@@ -27,7 +27,7 @@ export class ManualAssessment extends Component {
             <RadioButton
               className={styles.radioButton}
               value={false}
-              label="Enters scores and cost for each indicator sequentially"
+              label="Enter scores and cost for each indicator sequentially"
             />
           </RadioButtonGroup>
         </div>
