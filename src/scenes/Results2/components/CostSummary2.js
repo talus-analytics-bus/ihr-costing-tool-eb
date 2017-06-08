@@ -123,7 +123,10 @@ export class CostSummary extends Component {
 		    var y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz));
 		    var yMax = d3.max(yz, function(y) { return d3.max(y); });
 		    var y1Max = d3.max(y01z, function(y) { return d3.max(y, function(d) { return d[1]; }); });
-
+		console.log('y01z = ')
+		console.log(y01z)
+		console.log('yz = ')
+		console.log(yz)
 		var chart = d3.select(selector),
 		    margin = {top: 40, right: 10, bottom: 20, left: 10},
 		    // width = +chart.attr("width") - margin.left - margin.right,
@@ -145,34 +148,31 @@ export class CostSummary extends Component {
 			.attr('class', 'x-axis axis')
 			.attr('transform', `translate(0, ${height})`);
 
-		var y = d3.scaleLinear()
-		    .domain([0, y1Max])
-		    .range([height, 0]);
+		// var y = d3.scaleLinear()
+		//     .domain([0, y1Max])
+		//     .range([height, 0]);
 
-		// const y = d3.scaleLinear()
-		// 	.range([height, 0]);
+		const y = d3.scaleLinear()
+			.range([height, 0]);
 
 		var color = d3.scaleOrdinal()
 		    .domain(d3.range(n))
 		    .range(d3.schemeCategory20c);
 
-		var series = g.selectAll(".series")
-		  .data(y01z)
-		  .enter().append("g")
-		    .attr("fill", function(d, i) { return color(i); });
 
-		var rect = series.selectAll("rect")
-		  .data(function(d) { return d; })
-		  .enter().append("rect")
-		    .attr("x", function(d, i) { return x(i); })
-		    .attr("y", height)
-		    .attr("width", x.bandwidth())
-		    .attr("height", 0);
+		// var series = g.selectAll(".series")
+		//   .data(y01z)
+		//   .enter().append("g")
+		//     .attr("fill", function(d, i) { return color(i); });
+		
+		// var rect = series.selectAll("rect")
+		//   .data(function(d) { return d; })
+		//   .enter().append("rect")
+		//     .attr("x", function(d, i) { return x(i); })
+		//     .attr("y", height)
+		//     .attr("width", x.bandwidth())
+		//     .attr("height", 0);
 
-		rect.transition()
-		    .delay(function(d, i) { return i * 10; })
-		    .attr("y", function(d) { return y(d[1]); })
-		    .attr("height", function(d) { return y(d[0]) - y(d[1]); });
 
 		// g.append("g")
 		//     .attr("class", "axis axis--x")
@@ -189,38 +189,6 @@ export class CostSummary extends Component {
 		      .property("checked", true)
 		      .dispatch("change");
 		}, 2000);
-
-		function changed() {
-		  timeout.stop();
-		  if (this.value === "grouped") transitionGrouped();
-		  else transitionStacked();
-		}
-
-		function transitionGrouped() {
-		  y.domain([0, yMax]);
-
-		  rect.transition()
-		      .duration(500)
-		      .delay(function(d, i) { return i * 10; })
-		      .attr("x", function(d, i) { return x(i) + x.bandwidth() / n * this.parentNode.__data__.key; })
-		      .attr("width", x.bandwidth() / n)
-		    .transition()
-		      .attr("y", function(d) { return y(d[1] - d[0]); })
-		      .attr("height", function(d) { return y(0) - y(d[1] - d[0]); });
-		}
-
-		function transitionStacked() {
-		  y.domain([0, y1Max]);
-
-		  rect.transition()
-		      .duration(500)
-		      .delay(function(d, i) { return i * 10; })
-		      .attr("y", function(d) { return y(d[1]); })
-		      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-		    .transition()
-		      .attr("x", function(d, i) { return x(i); })
-		      .attr("width", x.bandwidth());
-		}
 
 		// add axes labels
 		const xAxisLabel = chart.append('text')
@@ -266,8 +234,93 @@ export class CostSummary extends Component {
 			// } else {
 			// 	x.domain(chartData.map(d => d.name));
 			// }
+			// xAxis.scale(x);
+			// xAxisG.call(xAxis);
+
+			y.domain([0, y1Max])
+
+			console.log('chartData = ');
+			console.log(chartData);
+
+			var series = g.selectAll(".bar-group")
+			  .data(y01z)
+			  .enter().append("g")
+			  	.attr('class', 'bar-group')
+			    .attr("fill", function(d, i) { return color(i); });
+
+			var rect = series.selectAll("rect")
+			  .data(function(d) { return d; })
+			  .enter().append("rect")
+			    .attr("x", function(d, i) { console.log(d); return x(i); })
+			    .attr("y", height)
+			    .attr("width", x.bandwidth())
+			    .attr("height", 0);
+
+			rect.transition()
+			    .delay(function(d, i) { return i * 10; })
+			    .attr("y", function(d) { return y(d[1]); })
+			    .attr("height", function(d) { return y(d[0]) - y(d[1]); });
+
+			// // add or remove bars based on new data
+			// console.log('chartData = ')
+			// console.log(chartData)
+			// console.log('categories = ')
+			// console.log(categories);
+			// const barGroups = chart.selectAll('.bar-group')
+			// 	.data(chartData);
+			// const newBarGroups = barGroups.enter().append('g')
+			// 	.attr('class', 'bar-group');
+			// categories.forEach((category) => {
+			// 	newBarGroups.selectAll('.bar')
+			// 		.data(categories)
+			// 		.enter().append('rect')
+			// 			.attr('class', 'bar')
+			// 			.attr('category', category)
+			// 			.style('fill', d => d.color);
+			// });
+			// newBarGroups.append('text')
+			// 	.attr('class', 'value-label')
+			// 	.style('text-anchor', 'middle')
+			// 	.style('font-size', '0.9em');
+
+			// barGroups.exit().remove();
+
 		}
 
+		function changed() {
+		  timeout.stop();
+		  if (this.value === "grouped") transitionGrouped();
+		  else transitionStacked();
+		}
+
+		function transitionGrouped() {
+		  y.domain([0, yMax]);
+
+		  var rect = g.selectAll(".bar-group").selectAll("rect");
+
+		  rect.transition()
+		      .duration(500)
+		      .delay(function(d, i) { return i * 10; })
+		      .attr("x", function(d, i) { return x(i) + x.bandwidth() / n * this.parentNode.__data__.key; })
+		      .attr("width", x.bandwidth() / n)
+		    .transition()
+		      .attr("y", function(d) { return y(d[1] - d[0]); })
+		      .attr("height", function(d) { return y(0) - y(d[1] - d[0]); });
+		}
+
+		function transitionStacked() {
+		  y.domain([0, y1Max]);
+
+		  var rect = g.selectAll(".bar-group").selectAll("rect");
+		  rect.transition()
+		      .duration(500)
+		      .delay(function(d, i) { return i * 10; })
+		      .attr("y", function(d) { return y(d[1]); })
+		      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+		    .transition()
+		      .attr("x", function(d, i) { return x(i); })
+		      .attr("width", x.bandwidth());
+		}
 
 		// Returns an array of m psuedorandom, smoothly-varying non-negative numbers.
 		// Inspired by Lee Byron’s test data generator.
