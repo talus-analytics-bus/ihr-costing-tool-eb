@@ -178,7 +178,7 @@ export const bulletChart = {};
 	        .attr("height", height / 3)
 	        .attr("x", reverse ? x0 : 0)
 	        .attr("y", height / 3)
-	        .style("fill", 'steelblue');
+	        .style("fill", '#4e4e4e');
 
 	      // Update the marker lines.
 	      var marker = g.selectAll("line.marker")
