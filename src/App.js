@@ -23,7 +23,7 @@ import { Start } from './scenes/Start/Start';
 import { AssessmentActive } from './scenes/Assessment/AssessmentActive';
 import { Costing } from './scenes/Costing/Costing';
 import { Results } from './scenes/Results/Results';
-// import { Results2 } from './scenes/Results2/Results2';
+import { Results2 } from './scenes/Results2/Results2';
 import { Directory } from './scenes/Directory/Directory';
 
 const muiTheme = getMuiTheme({
@@ -58,7 +58,7 @@ class App extends Component {
               <Route path="/assessment" component={AssessmentActive}></Route>
               <Route path="/Costing" component={Costing}></Route>
               <Route path="/Results" component={Results}></Route>
-              {/*<Route path="/Results2" component={Results2}></Route>*/}
+              <Route path="/Results2" component={Results2}></Route>
               <Route path="/directory" component={Directory}></Route>
             </div>
             <div className={styles.footer}>
