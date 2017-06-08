@@ -254,7 +254,7 @@ export class CostSummary extends Component {
 
 		chart.styleChart = () => {
 			// chart styling
-			const bandwidth = x.bandwidth();
+			const bandwidth = x.rangeBand();
 			chart.selectAll('.tick text')
 				.style('font-size', '0.9em');
 			chart.selectAll('.tick line')
