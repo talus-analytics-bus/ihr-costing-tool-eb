@@ -52,7 +52,7 @@ export class SummaryMetrics extends Component {
 				<div className={styles.categoryContent}>
 					<div className={styles.categoryTextContainer}>
 						<div className={styles.categoryTextLabel}>
-							Most Spending (<span className={styles.green}>{'$3,288,823'})</span>:
+							Most Spending (<span>{'$3,288,823'})</span>:
 						</div>
 						<div className={styles.categoryText}>
 							Physical Infrastructure
@@ -60,7 +60,7 @@ export class SummaryMetrics extends Component {
 					</div>
 					<div className={styles.categoryTextContainer}>
 						<div className={styles.categoryTextLabel}>
-							Least Spending (<span className={styles.green}>{'$507,634'})</span>:
+							Least Spending (<span>{'$507,634'})</span>:
 						</div>
 						<div className={styles.categoryText}>
 							Consumable Materials
