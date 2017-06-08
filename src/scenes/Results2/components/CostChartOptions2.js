@@ -23,12 +23,12 @@ export class CostChartOptions extends Component {
           <RadioButton
             className={styles.radioButton}
             value={"1"}
-            label="1-year Cost"
+            label="First Year Cost"
           />
           <RadioButton
             className={styles.radioButton}
             value={"2"}
-            label="2-year Cost"
+            label="Recurring Annual Costs"
           />
           <RadioButton
             className={styles.radioButton}
