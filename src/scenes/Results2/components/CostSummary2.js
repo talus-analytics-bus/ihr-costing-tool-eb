@@ -96,6 +96,7 @@ export class CostSummary extends Component {
 			showByCategory: true,
 			showTable: false,
 			costCategory: '1',
+			chartType: 'stacked'
 		};
 	}
 
@@ -108,87 +109,86 @@ export class CostSummary extends Component {
 
 	// version 2 of cost chart
 	buildCostChart(selector, param={}) {
-		var n = 6, // The number of series.
-	    m = 3; // The number of values per series.
+		console.log('initializing')
+		//JSON data
+		var data=[{"date":23,"success":10,"failure":20,"exception":4}, {"date":24,"success":30,"failure":10,"exception":3},{"date":25,"success":50,"failure":20,"exception":8},
+		{"date":26,"success":22,"failure":2,"exception":4},{"date":28,"success":32,"failure":8,"exception":2}]
 
-		const width = 920;
-		const height = 380;
+		const catNames = ['Consumable Materials',
+					'Durable Equipment',
+					'Human Capabilities',
+					'Physical Infrastructure',
+					'Technology',
+					'Tools and Processes'];
+		// //array of keys except date
+		// var keys = d3.keys(data[0]).filter(function(key) { return key !== "date"; });
+		// data.forEach(function(d) {
+		//    var y0 = 0;
+		//     d.key = keys.map(function(name) { 
+		//       return {name: name, y0:y0, y1: y0 += +d[name],value: +d[name]}; });
+		//     d.total = d.key[d.key.length - 1].y1;
+		// });
 
-		// The xz array has m elements, representing the x-values shared by all series.
-		// The yz array has n elements, representing the y-values of each of the n series.
-		// Each yz[i] is an array of m non-negative numbers representing a y-value for xz[i].
-		// The y01z array has the same structure as yz, but with stacked [y₀, y₁] instead of y.
-		var xz = d3.range(m);
-		    var yz = d3.range(n).map(function() { return bumps(m); });
-		    var y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz));
-		    var yMax = d3.max(yz, function(y) { return d3.max(y); });
-		    var y1Max = d3.max(y01z, function(y) { return d3.max(y, function(d) { return d[1]; }); });
-		console.log('y01z = ')
-		console.log(y01z)
-		console.log('yz = ')
-		console.log(yz)
-		var chart = d3.select(selector),
-		    margin = {top: 40, right: 10, bottom: 20, left: 10},
-		    // width = +chart.attr("width") - margin.left - margin.right,
-		    // height = +chart.attr("height") - margin.top - margin.bottom,
-		    g = chart.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		// Set our margins
+		var margin = {
+		    top: 20,
+		    right: 20,
+		    bottom: 30,
+		    left: 60
+		};
+		const width = 700 - margin.left - margin.right;
+		const height = 350 - margin.top - margin.bottom;
+		// const yGroupMax = d3.max(data, function(d) { return d3.max(d.key, function(d) { return d.value; }); });
+		// const yStackMax = d3.max(data, function (d) {return d.total;});
+		const yGroupMax = 10000;
+		const yStackMax = 10000;
 
-		chart
-			.attr('width', width + margin.left + margin.right)
-			.attr('height', height + margin.top + margin.bottom);
+		var x0 = d3.scaleBand() // stacked
+          .range([0, width])
+          .padding(0.4);
 
-		var x = d3.scaleBand()
-		    .domain(xz)
-		    .rangeRound([0, width])
-		    .padding(0.4);
+		var x1 = d3.scaleBand() // grouped
+            .rangeRound([0, x0.bandwidth()]);
+
+		var color = d3.scaleOrdinal()
+			.range(['#d0d1e6','#a6bddb','#67a9cf','#3690c0','#02818a','#016450'])
+			.domain(catNames);
 
 		const xAxis = d3.axisBottom();
 
-		const xAxisG = chart.append('g')
+		const y = d3.scaleLinear()
+			.range([height, 0]);
+			
+		const yAxis = d3.axisLeft()
+			.tickSizeInner(-width)
+			.tickFormat(d3.format('$.2s'))
+			.scale(y);
+
+		// Add our chart to the #chart div
+		var chart = d3.select(selector)
+		    .attr("width", width + margin.left + margin.right)
+		    .attr("height", height + margin.top + margin.bottom)
+		    .append("g")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	    const xAxisG = chart.append('g')
 			.attr('class', 'x-axis axis')
 			.attr('transform', `translate(0, ${height})`);
 
-		// var y = d3.scaleLinear()
-		//     .domain([0, y1Max])
-		//     .range([height, 0]);
+		const yAxisG = chart.append('g')
+			.attr('class', 'y-axis axis');
 
-		const y = d3.scaleLinear()
-			.range([height, 0]);
-
-		var color = d3.scaleOrdinal()
-		    .domain(d3.range(n))
-		    .range(d3.schemeCategory20c);
-
-
-		// var series = g.selectAll(".series")
-		//   .data(y01z)
-		//   .enter().append("g")
-		//     .attr("fill", function(d, i) { return color(i); });
-		
-		// var rect = series.selectAll("rect")
-		//   .data(function(d) { return d; })
-		//   .enter().append("rect")
-		//     .attr("x", function(d, i) { return x(i); })
-		//     .attr("y", height)
-		//     .attr("width", x.bandwidth())
-		//     .attr("height", 0);
-
-
-		// g.append("g")
-		//     .attr("class", "axis axis--x")
-		//     .attr("transform", "translate(0," + height + ")")
-		//     .call(d3.axisBottom(x)
-		//         .tickSize(0)
-		//         .tickPadding(6));
-
-		d3.selectAll("input")
-		    .on("change", changed);
-
-		var timeout = d3.timeout(function() {
-		  d3.select("input[value=\"grouped\"]")
-		      .property("checked", true)
-		      .dispatch("change");
-		}, 2000);
+		function getRandomFractions (n) {
+				var num = 1;
+				const output = [];
+				for (let i = 0; i < (n-1); i++) {
+					const origNum = num;
+					num = num * Math.random();
+					output.push(origNum - num);
+				}
+				output.push(num);
+				return output;
+			}
 
 		// add axes labels
 		const xAxisLabel = chart.append('text')
@@ -205,7 +205,8 @@ export class CostSummary extends Component {
 			.style('font-size', '0.9em')
 			.text('1-Year Cost');
 
-		chart.update = () => {
+		chart.update = (chartType, updateData, multiplier) => {
+			console.log('called chart.update()')
 			// get data
 			let chartData;
 			const dataType = this.getDataType();
@@ -228,131 +229,250 @@ export class CostSummary extends Component {
 					.find(ddd => ddd.name === this.state.activeIndicator).expenses;
 			}
 
-			// // adjust axes
-			// if (dataType === 'indicator') {
-			// 	x.domain(chartData.map(d => d.jee_id));
-			// } else {
-			// 	x.domain(chartData.map(d => d.name));
-			// }
-			// xAxis.scale(x);
-			// xAxisG.call(xAxis);
+			console.log('chartData = ')
+			console.log(chartData)
 
-			y.domain([0, y1Max])
+				
+			// prepare the data
+			// get costs for each expense category
+			// TODO use data from the tool, not fake data
+			var dataColl;
+			console.log("updateData = " + updateData);
+			if (updateData) {
+				console.log("said to update data")
+				dataColl = [];
+				chartData.forEach(function(d) {
+					var newObj = {};
+					// fake data generation routine:
+					// get cost
+					const originalCost = d.fixedCost * multiplier;
+					const randomFracs = getRandomFractions(categories.length);
+					for (let i = 0; i < categories.length; i++) {
+						newObj[categories[i].name] = originalCost * randomFracs[i];
+					}
+					newObj.total = originalCost;
+					if (dataType === 'indicator') newObj.jee_id = d.jee_id;
+					else newObj.name = d.name;
+				   	dataColl.push(newObj)
+				});
+				var newData = [];
+			   	dataColl.forEach(function(d){
+					// generate stack bar heights data object
+				   	var y0 = 0;
+				   	
+				    d.key = catNames.map(function(name) { 
+					      return {
+					      	name: name, 
+					      	y0: y0, 
+					      	y1: y0 += +d[name],
+					      	value: +d[name]
+					      }; 
+					  });
+					var newObj = {};
+					newObj.key = d.key;
+					if (dataType === 'indicator') newObj.jee_id = d.jee_id;
+					else newObj.name = d.name;
+					newObj.total = d.total;
+				    newData.push(newObj);
+				    // d.total = d.key[d.key.length - 1].y1;
+			   	});
 
-			console.log('chartData = ');
-			console.log(chartData);
+			   	dataColl = newData;
+			   	this.setState({dataColl: dataColl});
+			} else {
+				dataColl = this.state.dataColl;
+			}
 
-			var series = g.selectAll(".bar-group")
-			  .data(y01z)
-			  .enter().append("g")
-			  	.attr('class', 'bar-group')
-			    .attr("fill", function(d, i) { return color(i); });
 
-			var rect = series.selectAll("rect")
-			  .data(function(d) { return d; })
-			  .enter().append("rect")
-			    .attr("x", function(d, i) { console.log(d); return x(i); })
-			    .attr("y", height)
-			    .attr("width", x.bandwidth())
-			    .attr("height", 0);
+			// adjust axes
+			if (dataType === 'indicator') {
+				x0.domain(chartData.map(d => d.jee_id));
+				// x1.domain(chartData.map(d => d.jee_id));
+			} else {
+				x0.domain(chartData.map(d => d.name));
+				// x1.domain(chartData.map(d => d.name));
+			}
 
-			rect.transition()
-			    .delay(function(d, i) { return i * 10; })
-			    .attr("y", function(d) { return y(d[1]); })
-			    .attr("height", function(d) { return y(d[0]) - y(d[1]); });
+		   	// const grouped = true;
+		   	const grouped = chartType === 'grouped';
+		   	console.log('grouped = ' + grouped)
+		   	// const grouped = d3.select("input[value=\"grouped\"]").property("checked");
+			x1.domain(catNames);
+			x1.rangeRound([0, x0.bandwidth()])
 
-			// // add or remove bars based on new data
-			// console.log('chartData = ')
-			// console.log(chartData)
-			// console.log('categories = ')
-			// console.log(categories);
-			// const barGroups = chart.selectAll('.bar-group')
-			// 	.data(chartData);
-			// const newBarGroups = barGroups.enter().append('g')
-			// 	.attr('class', 'bar-group');
-			// categories.forEach((category) => {
-			// 	newBarGroups.selectAll('.bar')
-			// 		.data(categories)
-			// 		.enter().append('rect')
-			// 			.attr('class', 'bar')
-			// 			.attr('category', category)
-			// 			.style('fill', d => d.color);
-			// });
-			// newBarGroups.append('text')
-			// 	.attr('class', 'value-label')
-			// 	.style('text-anchor', 'middle')
-			// 	.style('font-size', '0.9em');
+		   	const curXScale = grouped ? x1 : x0;
+			xAxis.scale(x0);
+			xAxisG.call(xAxis);
 
-			// barGroups.exit().remove();
+			// update y-axis
+			var yGroupMax = d3.max(dataColl, function(d) { return d3.max(d.key, function(d) { return d.value; }); });
+			var yStackMax = d3.max(dataColl, function (d) {return d.total;});
+
+			// console.log('yStackMax = ' + yStackMax)
+			// console.log('yGroupMax = ' + yGroupMax)
+			// console.log('y.range = ')
+			// console.log(y.range())
+
+			if (grouped) {
+				y.domain([0, yGroupMax]);
+			} else {
+				y.domain([0, yStackMax]);
+			}
+			yAxis.scale(y);
+			yAxisG.call(yAxis);
+
+			console.log('dataColl:')
+			console.log(dataColl);
+
+			// add or remove bars based on new data
+			var barGroups = chart.selectAll(".bar-group")
+		      .data(dataColl);
+
+		      const newBarGroups = barGroups.enter().append("g")
+		      .attr("class", "g")
+		      .attr("class", "bar-group")
+		      .attr("transform", function(d) { return "translate(" + x0(d.name) + ",0)"; });
+
+			if (!grouped) {
+				var newRect = newBarGroups.selectAll(".bar")
+					.data(function (d) {return d.key;})
+					    .enter().append("rect")
+						    .attr("class", "bar")
+						    .attr("width", x0.bandwidth())
+						    .attr("x", function(d) { return x0(d.name || d.jee_id); }) // or jee_id!
+						    .attr("y", function (d) {return y(d.y1);})
+						    .attr("height", function (d) {return y(d.y0) - y(d.y1);})
+						    .style("fill", function (d) {return color(d.name);});
+			} else {
+				var newRect = newBarGroups.selectAll(".bar")
+					.data(function (d) {return d.key;})
+					    .enter().append("rect")
+						    .attr("class", "bar")
+						    .attr("width", x1.bandwidth())
+					        .attr("x", function(d) { return x1(d.name || d.jee_id); })
+					        .attr("y", function(d) { return y(d.value); })
+					        .attr("height", function(d) { return height - y(d.value); })
+					        .style("fill", function(d) { return color(d.name); });
+			}		
+
+		      newBarGroups.append('text')
+				.attr('class', 'value-label')
+				.style('text-anchor', 'middle')
+				.style('font-size', '0.9em');
+			
+			barGroups.exit().remove();
+
+			chart.updateBarHeight(multiplier, grouped, dataColl, x0, x1);
 
 		}
 
-		function changed() {
-		  timeout.stop();
-		  if (this.value === "grouped") transitionGrouped();
-		  else transitionStacked();
+		chart.updateBarHeight = (multiplier, grouped, dataColl, x0, x1) => {
+			console.log('updating bar heights')
+			const barGroups = chart.selectAll('.bar-group')
+				.attr("transform", function(d) { return "translate(" + x0(d.name || d.jee_id) + ",0)"; });;
+			
+			// adjust y axis
+			yAxis.scale(y);
+			yAxisG.call(yAxis);
+
+			barGroups.data(dataColl);
+			// update bar values
+			if (grouped) {
+				var bandwidth = x1.bandwidth();
+				barGroups.selectAll('.bar')
+					.data(function (d) {return d.key;})
+						.transition()
+						.attr('width', bandwidth)
+						.attr('x', function(d){ return x1(d.name)})
+						.attr("y", function(d) { return y(d.value); })
+	       				.attr("height", function(d) { return height - y(d.value); })
+			} else {
+				var bandwidth = x0.bandwidth();
+				barGroups.selectAll('.bar')
+					.data(function (d) {return d.key;})
+						.transition()
+						.attr('width', bandwidth)
+						.attr('x', function(d){ return x0(d.name)})
+						.attr("y", function (d) {return y(d.y1);})
+						.attr("height", function (d) {return y(d.y0) - y(d.y1);})
+			}
+
+			// chart.styleChart();
 		}
 
-		function transitionGrouped() {
-		  y.domain([0, yMax]);
+		
+									// .attr('width', bandwidth)
+									// .attr("y", function (d) {return y(d.y1);})
+						   //  		.attr("height", function (d) {return y(d.y0) - y(d.y1);})
 
-		  var rect = g.selectAll(".bar-group").selectAll("rect");
+		// function changed() {
+		//   timeout.stop();
+		//   if (this.value === "grouped") transitionGrouped();
+		//   else transitionStacked();
+		// }
 
-		  rect.transition()
-		      .duration(500)
-		      .delay(function(d, i) { return i * 10; })
-		      .attr("x", function(d, i) { return x(i) + x.bandwidth() / n * this.parentNode.__data__.key; })
-		      .attr("width", x.bandwidth() / n)
-		    .transition()
-		      .attr("y", function(d) { return y(d[1] - d[0]); })
-		      .attr("height", function(d) { return y(0) - y(d[1] - d[0]); });
-		}
+		// function transitionGrouped() {
+		//   y.domain([0, yMax]);
 
-		function transitionStacked() {
-		  y.domain([0, y1Max]);
+		//   var rect = g.selectAll(".bar-group").selectAll("rect");
 
-		  var rect = g.selectAll(".bar-group").selectAll("rect");
-		  rect.transition()
-		      .duration(500)
-		      .delay(function(d, i) { return i * 10; })
-		      .attr("y", function(d) { return y(d[1]); })
-		      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-		    .transition()
-		      .attr("x", function(d, i) { return x(i); })
-		      .attr("width", x.bandwidth());
-		}
+		//   rect.transition()
+		//       .duration(500)
+		//       .delay(function(d, i) { return i * 10; })
+		//       .attr("x", function(d, i) { return x(i) + x.bandwidth() / n * this.parentNode.__data__.key; })
+		//       .attr("width", x.bandwidth() / n)
+		//     .transition()
+		//       .attr("y", function(d) { return y(d[1] - d[0]); })
+		//       .attr("height", function(d) { return y(0) - y(d[1] - d[0]); });
+		// }
 
-		// Returns an array of m psuedorandom, smoothly-varying non-negative numbers.
-		// Inspired by Lee Byron’s test data generator.
-		// http://leebyron.com/streamgraph/
-		function bumps(m) {
-		  var values = [], i, j, w, x, y, z;
+		// function transitionStacked() {
+		//   y.domain([0, y1Max]);
 
-		  // Initialize with uniform random values in [0.1, 0.2).
-		  for (i = 0; i < m; ++i) {
-		    values[i] = 0.1 + 0.1 * Math.random();
-		  }
+		//   var rect = g.selectAll(".bar-group").selectAll("rect");
+		//   rect.transition()
+		//       .duration(500)
+		//       .delay(function(d, i) { return i * 10; })
+		//       .attr("y", function(d) { return y(d[1]); })
+		//       .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+		//     .transition()
+		//       .attr("x", function(d, i) { return x(i); })
+		//       .attr("width", x.bandwidth());
+		// }
 
-		  // Add five random bumps.
-		  for (j = 0; j < 5; ++j) {
-		    x = 1 / (0.1 + Math.random());
-		    y = 2 * Math.random() - 0.5;
-		    z = 10 / (0.1 + Math.random());
-		    for (i = 0; i < m; i++) {
-		      w = (i / m - y) * z;
-		      values[i] += x * Math.exp(-w * w);
-		    }
-		  }
+		// // Returns an array of m psuedorandom, smoothly-varying non-negative numbers.
+		// // Inspired by Lee Byron’s test data generator.
+		// // http://leebyron.com/streamgraph/
+		// function bumps(m) {
+		//   var values = [], i, j, w, x, y, z;
 
-		  // Ensure all values are positive.
-		  for (i = 0; i < m; ++i) {
-		    values[i] = Math.max(0, values[i]);
-		  }
+		//   // Initialize with uniform random values in [0.1, 0.2).
+		//   for (i = 0; i < m; ++i) {
+		//     values[i] = 0.1 + 0.1 * Math.random();
+		//   }
 
-		  return values;
-		}
+		//   // Add five random bumps.
+		//   for (j = 0; j < 5; ++j) {
+		//     x = 1 / (0.1 + Math.random());
+		//     y = 2 * Math.random() - 0.5;
+		//     z = 10 / (0.1 + Math.random());
+		//     for (i = 0; i < m; i++) {
+		//       w = (i / m - y) * z;
+		//       values[i] += x * Math.exp(-w * w);
+		//     }
+		//   }
 
-		chart.update();
+		//   // Ensure all values are positive.
+		//   for (i = 0; i < m; ++i) {
+		//     values[i] = Math.max(0, values[i]);
+		//   }
+
+		//   return values;
+		// }
+
+		chart.update('stacked', true, 1);
+
+		return chart;
 	
 	};
 
@@ -529,23 +649,33 @@ export class CostSummary extends Component {
 	}
 
 	changeCore(event) {
-		this.setState({activeCore: event.target.value}, this.costChart.update);
+		this.setState({activeCore: event.target.value}, () => {
+			this.costChart.update(this.state.chartType, true, parseFloat(this.state.costCategory));
+		});
 	}
 
 	changeCapacity(event) {
-		this.setState({activeCapacity: event.target.value}, this.costChart.update);
+		this.setState({activeCapacity: event.target.value}, () => {
+			this.costChart.update(this.state.chartType, true, parseFloat(this.state.costCategory));
+		});
 	}
 
 	changeIndicator(event) {
-		this.setState({activeIndicator: event.target.value}, this.costChart.update);
+		this.setState({activeIndicator: event.target.value}, () => {
+			this.costChart.update(this.state.chartType, true, parseFloat(this.state.costCategory));
+		});
 	}
 
 	removeCapacity() {
-		this.setState({activeCore: '', activeCapacity: '', activeIndicator: ''}, this.costChart.update);
+		this.setState({activeCore: '', activeCapacity: '', activeIndicator: ''}, () => {
+			this.costChart.update(this.state.chartType, true, parseFloat(this.state.costCategory));
+		});
 	}
 
 	removeIndicator() {
-		this.setState({activeCapacity: '', activeIndicator: ''}, this.costChart.update);
+		this.setState({activeCapacity: '', activeIndicator: ''}, () => {
+			this.costChart.update(this.state.chartType, true, parseFloat(this.state.costCategory));
+		});
 	}
 
 	toggleByCategory() {
@@ -557,10 +687,19 @@ export class CostSummary extends Component {
 		this.setState({costCategory: event.target.value}, () => {
 			this.yAxisLabel.text(`${event.target.value}-Year Cost`);
 		});
+			this.costChart.update(this.state.chartType, true, parseFloat(event.target.value));
+		// if (event.target.value === "1") 
+		// else if (event.target.value === "2") this.costChart.update(this.state.chartType, false, 1.5);
+		// else if (event.target.value === "5") this.costChart.update(this.state.chartType, false, 5);
+	}
 
-		if (event.target.value === "1") this.costChart.updateBarHeight(1);
-		else if (event.target.value === "2") this.costChart.updateBarHeight(1.5);
-		else if (event.target.value === "5") this.costChart.updateBarHeight(2.5);
+	changeChartType(event) {
+		event.persist();
+		this.setState({chartType: event.target.value}, () => {
+			this.costChart.update(event.target.value, false, parseFloat(this.state.costCategory));
+		});
+		// if (event.target.value === "stacked") this.costChart.updateChart('stacked');
+		// else if (event.target.value === "grouped") this.costChart.updateChart('grouped');
 	}
 
 	styleTable() {
@@ -653,7 +792,9 @@ export class CostSummary extends Component {
 									showByCategoryValue={this.state.showByCategory}
 									toggleByCategory={() => this.toggleByCategory()}
 									costCategory={this.state.costCategory}
+									chartType={this.state.chartType}
 									changeCostCategory={(e) => this.changeCostCategory(e)}
+									changeChartType={(e) => this.changeChartType(e)}
 								/>
 								<CostChartLegend categories={categories} />
 							</div>

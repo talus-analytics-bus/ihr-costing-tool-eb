@@ -107,6 +107,7 @@ export class CostSummary extends Component {
 	}
 
 	buildCostChart(selector, param={}) {
+		
 		// start drawing chart
 		const margin = { top: 10, right: 40, bottom: 110, left: 95 };
 		const width = 800;
@@ -130,10 +131,11 @@ export class CostSummary extends Component {
 
 		const y = d3.scaleLinear()
 			.range([height, 0]);
+			
 		const yAxis = d3.axisLeft()
 			.tickSizeInner(-width)
 			.tickFormat(d3.format('$.2s'));
-			
+
 		const yAxisG = chart.append('g')
 			.attr('class', 'y-axis axis');
 
@@ -185,10 +187,6 @@ export class CostSummary extends Component {
 			xAxisG.call(xAxis);
 
 			// add or remove bars based on new data
-			console.log('chartData = ')
-			console.log(chartData)
-			console.log('categories = ')
-			console.log(categories);
 			const barGroups = chart.selectAll('.bar-group')
 				.data(chartData);
 			const newBarGroups = barGroups.enter().append('g')
@@ -224,7 +222,6 @@ export class CostSummary extends Component {
 
 			// update bar values
 			var bandwidth = x.bandwidth();
-			console.log('bandwidth = ' + bandwidth)
 			barGroups.transition()
 				.attr('transform', (d) => {
 					console.log(x.domain())
