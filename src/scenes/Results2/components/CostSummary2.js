@@ -124,8 +124,8 @@ export class CostSummary extends Component {
 		};
 		const width = 700 - margin.left - margin.right;
 		const height = 500 - margin.top - margin.bottom;
-		const yGroupMax = 10000;
-		const yStackMax = 10000;
+		// const yGroupMax = 10000;
+		// const yStackMax = 10000;
 
 		var x0 = d3.scaleBand() // stacked
           .range([0, width])
@@ -287,7 +287,7 @@ export class CostSummary extends Component {
 			xAxisG.call(xAxis);
 
 			// update y-axis
-			var yGroupMax = d3.max(dataColl, function(d) { return d3.max(d.catCosts, function(d) { return d.value; }); });
+			// var yGroupMax = d3.max(dataColl, function(d) { return d3.max(d.catCosts, function(d) { return d.value; }); });
 			var yStackMax = d3.max(dataColl, function (d) {return d.total;});
 
 			if (grouped) {

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { App } from './components/results-charts.js';
-// import * as utils from './components/results-charts.js'
-// import App from './components/results-charts.js'
+import { bulletChart } from './components/bulletChart.js';
 import { SummaryMetrics } from './components/SummaryMetrics';
 import { CostSummary } from './components/CostSummary2';
 
@@ -11,7 +9,7 @@ import styles from './Results2.scss';
 export class Results2 extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
-    App.initBulletChart('.bullet');
+    bulletChart.initBulletChart('.bullet');
   };
 
   render() {

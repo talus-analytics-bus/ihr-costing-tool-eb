@@ -1,15 +1,50 @@
-// import d3 from 'd3';
 import * as d3 from "d3";
-export const App = {};
+export const bulletChart = {};
 
 (() => {	
-	// TODO delete this test data
-	App.bulletsJSON = [{"ranges":[42,126,168],"measures":[92,132]}];
+
+	bulletChart.prepData = () => {
+		
+		const scoreRanges = [42, 126, 168]; // do not edit
+		const userScores = calcScores();
+
+		const bulletsJSON = [
+			{
+				"ranges": scoreRanges,
+				"measures":[
+					userScores.currentScore,
+					userScores.targetScore
+				]
+			}
+		];
+
+		bulletChart.bulletsJSON = bulletsJSON;
+		
+		// TODO make this function return the user's current
+		// total score and target total score
+		function calcScores() {
+
+			var output;
+
+			// TODO use real data here instead of fake data
+			// currentScore: Should be equal to the sum of
+			// the user's current indicator scores
+
+			// targetScore: Should be equal to the sum of
+			// the user's target indicator scores (the scores)
+			// the user is stepping up to
+
+			output = {currentScore: 92, targetScore: 132}
+			return output;
+		}
+	}
+
+	bulletChart.prepData();
 
 	/*
 	 *	Initialize the bullet chart showing score progress
 	 */
-	App.initBulletChart = (selector) => {
+	bulletChart.initBulletChart = (selector) => {
 
 		var margin = {top: 35, right: 40, bottom: 20, left: 0},
 	    width = 960 - margin.left - margin.right,
@@ -19,7 +54,7 @@ export const App = {};
 		    .width(width)
 		    .height(height);
 
-		  const data = App.bulletsJSON;
+		  const data = bulletChart.bulletsJSON;
 		  var svg = d3.select(selector)
 		      .data(data)
 			      .attr("class", "bullet")
@@ -278,7 +313,7 @@ export const App = {};
 /*
  *	Initialize the bar chart showing cost breakdowns
  */
-App.initBarChart = (selector) => {
+bulletChart.initBarChart = (selector) => {
 	var n = 4, // The number of series.
     m = 58; // The number of values per series.
 
