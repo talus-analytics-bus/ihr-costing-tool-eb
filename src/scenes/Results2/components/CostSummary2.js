@@ -255,7 +255,6 @@ export class CostSummary extends Component {
 					else newObj.name = d.name;
 					newObj.total = d.total;
 				    newData.push(newObj);
-				    // d.total = d.key[d.key.length - 1].y1;
 			   	});
 
 			   	dataColl = newData;
@@ -268,13 +267,10 @@ export class CostSummary extends Component {
 			// adjust axes
 			if (dataType === 'indicator') {
 				x0.domain(chartData.map(d => d.jee_id));
-				// x1.domain(chartData.map(d => d.jee_id));
 			} else {
 				x0.domain(chartData.map(d => d.name));
-				// x1.domain(chartData.map(d => d.name));
 			}
 
-		   	// const grouped = true;
 		   	const grouped = chartType === 'grouped';
 			x1.domain(catNames);
 			x1.rangeRound([0, x0.bandwidth()])
@@ -314,11 +310,6 @@ export class CostSummary extends Component {
 						    .attr("y", function (d) {return y(d.y1);})
 						    .attr("height", function (d) {return y(d.y0) - y(d.y1);})
 						    .style("fill", function (d) {return color(d.name);})
-						    // .each(function(d) {
-						    // 	var contentStr ='';
-						    // 	contentStr += d.name + ': ' + formatMoney(d.value);
-						    // 	d3.select(this).attr('data-tip',contentStr);
-						    // });
 			} else {
 				var newRect = newBarGroups.selectAll(".bar")
 					.data(function (d) {return d.key;})
@@ -329,11 +320,6 @@ export class CostSummary extends Component {
 					        .attr("y", function(d) { return y(d.value); })
 					        .attr("height", function(d) { return height - y(d.value); })
 					        .style("fill", function(d) { return color(d.name); })
-					   //      .each(function(d) {
-						  //   	var contentStr = '';
-						  //   	contentStr += '<b>${d.name}</b>' + ':<br>' + formatMoney(d.value);
-								// d3.select(this).attr('data-tip',contentStr);
-						  //   });
 			}		
 		      newBarGroups.append('text')
 				.attr('class', 'value-label')
@@ -368,11 +354,6 @@ export class CostSummary extends Component {
 						.transition()
 							.attr("y", function(d) { return y(d.value); })
 	       					.attr("height", function(d) { return height - y(d.value); })
-	       // 					.each(function(d) {
-						  //   	var contentStr ='';
-						  //   	contentStr += '<b>${d.name}</b>' + ':<br>' + formatMoney(d.value);
-								// d3.select(this).attr('data-tip',contentStr);
-						  //   });
 			} else {
 				var bandwidth = x0.bandwidth();
 				barGroups.selectAll('.bar')
@@ -385,11 +366,6 @@ export class CostSummary extends Component {
 						.transition()
 							.attr('width', bandwidth)
 							.attr('x', function(d){ return x0(d.name)})
-							// .each(function(d) {
-						 //    	var contentStr ='';
-						 //    	contentStr += '<b>${d.name}</b>' + ':<br>' + formatMoney(d.value);
-							// 	d3.select(this).attr('data-tip',contentStr);
-						 //    });
 			}
 			barGroups.selectAll('.bar').each(function(d){
 		    	var contentStr ='';
@@ -416,8 +392,6 @@ export class CostSummary extends Component {
 				.call(wrap, bandwidth);
 			chart.selectAll('.y-axis .tick:nth-child(n+2) line')
 				.style('stroke', '#ccc');
-			// chart.selectAll('.y-axis .tick text')
-			// 	.attr('x', -10);
 		}
 
 		chart.update('stacked', true, 1);
@@ -430,154 +404,6 @@ export class CostSummary extends Component {
 		return chart;
 		
 	};
-
-	// buildCostChart(selector, param={}) {
-	// 	// start drawing chart
-	// 	const margin = { top: 10, right: 40, bottom: 110, left: 95 };
-	// 	const width = 800;
-	// 	const height = 300;
-	// 	const chart = d3.select(selector)
-	// 		.attr('width', width + margin.left + margin.right)
-	// 		.attr('height', height + margin.top + margin.bottom)
-	// 		.append('g')
-	// 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-	// 	// define scales and add axes
-	// 	const x = d3.scaleBand()
-	// 		.range([0, width])
-	// 		.round(true)
-	// 		.padding(0.4);
-	// 	const xAxis = d3.axisBottom();
-	// 		// .orient('bottom');
-	// 	const xAxisG = chart.append('g')
-	// 		.attr('class', 'x-axis axis')
-	// 		.attr('transform', `translate(0, ${height})`);
-
-	// 	const y = d3.scaleLinear()
-	// 		.range([height, 0]);
-	// 	const yAxis = d3.axisLeft()
-	// 		// .orient('left')
-	// 		.tickSizeInner(-width)
-	// 		.tickFormat(d3.format('$.2s'));
-	// 	const yAxisG = chart.append('g')
-	// 		.attr('class', 'y-axis axis');
-
-	// 	// add axes labels
-	// 	const xAxisLabel = chart.append('text')
-	// 		.attr('x', width / 2)
-	// 		.attr('y', height + 70)
-	// 		.style('text-anchor', 'middle')
-	// 		.style('font-size', '0.9em')
-	// 		.text('Core Capacity');
-	// 	this.yAxisLabel = chart.append('text')
-	// 		.attr('x', -height / 2)
-	// 		.attr('y', -70)
-	// 		.attr('transform', 'rotate(-90)')
-	// 		.style('text-anchor', 'middle')
-	// 		.style('font-size', '0.9em')
-	// 		.text('1-Year Cost');
-
-	// 	chart.update = () => {
-	// 		// get data
-	// 		let chartData;
-	// 		const dataType = this.getDataType();
-	// 		if (!this.state.activeCore) {
-	// 			xAxisLabel.text('Core Capacity');
-	// 			chartData = jeeTree;
-	// 		} else if (!this.state.activeCapacity) {
-	// 			xAxisLabel.text('Capacity');
-	// 			chartData = jeeTree.find(d => d.name === this.state.activeCore).capacities;
-	// 		} else if (!this.state.activeIndicator) {
-	// 			xAxisLabel.text('Indicator');
-	// 			chartData = jeeTree
-	// 				.find(d => d.name === this.state.activeCore).capacities
-	// 				.find(dd => dd.name === this.state.activeCapacity).indicators;
-	// 		} else {
-	// 			xAxisLabel.text('Expense');
-	// 			chartData = jeeTree
-	// 				.find(d => d.name === this.state.activeCore).capacities
-	// 				.find(dd => dd.name === this.state.activeCapacity).indicators
-	// 				.find(ddd => ddd.name === this.state.activeIndicator).expenses;
-	// 		}
-
-	// 		// adjust axes
-	// 		if (dataType === 'indicator') {
-	// 			x.domain(chartData.map(d => d.jee_id));
-	// 		} else {
-	// 			x.domain(chartData.map(d => d.name));
-	// 		}
-	// 		xAxis.scale(x);
-	// 		xAxisG.call(xAxis);
-
-	// 		// add or remove bars based on new data
-	// 		const barGroups = chart.selectAll('.bar-group')
-	// 			.data(chartData);
-	// 		const newBarGroups = barGroups.enter().append('g')
-	// 			.attr('class', 'bar-group');
-	// 		categories.forEach((category) => {
-	// 			newBarGroups.selectAll('.bar')
-	// 				.data(categories)
-	// 				.enter().append('rect')
-	// 					.attr('class', 'bar')
-	// 					.attr('category', category)
-	// 					.style('fill', d => d.color);
-	// 		});
-	// 		newBarGroups.append('text')
-	// 			.attr('class', 'value-label')
-	// 			.style('text-anchor', 'middle')
-	// 			.style('font-size', '0.9em');
-
-	// 		barGroups.exit().remove();
-	// 		chart.updateBarHeight(1);
-	// 	}
-
-	// 	chart.updateBarHeight = (multiplier) => {
-	// 		const barGroups = chart.selectAll('.bar-group');
-	// 		// adjust y axis
-	// 		const dataType = this.getDataType();
-	// 		if (dataType === 'expense') {
-	// 			y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.cost)]);
-	// 		} else {
-	// 			y.domain([0, 1.2 * multiplier * d3.max(barGroups.data(), d => d.fixedCost)]);
-	// 		}
-	// 		yAxis.scale(y);
-	// 		yAxisG.call(yAxis);
-
-	// 		// update bar values
-	// 		var bandwidth = x.bandwidth();
-	// 		barGroups.transition()
-	// 			.attr('transform', (d) => {
-	// 				if (dataType === 'indicator') return `translate(${x(d.jee_id)}, 0)`;
-	// 				return `translate(${x(d.name)}, 0)`;
-	// 			})
-	// 			.each(function(d) {
-	// 				let runningCost = (dataType === 'expense') ? d.cost : d.fixedCost;
-	// 				runningCost *= (0.8 + 0.3 * Math.random()) * multiplier;
-	// 				const originalCost = runningCost;
-	// 				d3.select(this).selectAll('.bar').transition()
-	// 					.each(function() {
-	// 						d3.select(this).transition()
-	// 							.attr('width', bandwidth)
-	// 							.attr('y', y(runningCost))
-	// 							.attr('height', height - y(runningCost));
-	// 						runningCost -= (1.5 * originalCost / 6) * Math.random();
-	// 					});
-	// 				d3.select(this).select('.value-label')
-	// 					.text(formatMoney(originalCost))
-	// 					.transition()
-	// 						.attr('x', bandwidth / 2)
-	// 						.attr('y', y(originalCost) - 5);
-	// 			});
-
-	// 		chart.styleChart();
-	// 	}
-
-
-
-	// 	chart.update();
-
-	// 	return chart;
-	// }
 
 	componentDidMount() {
 		this.costChart = this.buildCostChart('.costChart');
