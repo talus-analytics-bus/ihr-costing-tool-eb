@@ -194,7 +194,6 @@ export class CostSummary extends Component {
 			.text('First Year Costs');
 
 		chart.update = (chartType, updateData, multiplier) => {
-			console.log('called chart.update()')
 			// get data
 			let chartData;
 			const dataType = this.getDataType();
@@ -217,17 +216,11 @@ export class CostSummary extends Component {
 					.find(ddd => ddd.name === this.state.activeIndicator).expenses;
 			}
 
-			console.log('chartData = ')
-			console.log(chartData)
-
-				
 			// prepare the data
 			// get costs for each expense category
 			// TODO use data from the tool, not fake data
 			var dataColl;
-			console.log("updateData = " + updateData);
 			if (updateData) {
-				console.log("said to update data")
 				dataColl = [];
 				chartData.forEach(function(d) {
 					var newObj = {};
@@ -283,8 +276,6 @@ export class CostSummary extends Component {
 
 		   	// const grouped = true;
 		   	const grouped = chartType === 'grouped';
-		   	console.log('grouped = ' + grouped)
-		   	// const grouped = d3.select("input[value=\"grouped\"]").property("checked");
 			x1.domain(catNames);
 			x1.rangeRound([0, x0.bandwidth()])
 
@@ -356,7 +347,6 @@ export class CostSummary extends Component {
 		}
 
 		chart.updateBarHeight = (multiplier, grouped, dataColl, x0, x1) => {
-			console.log('updating bar heights')
 			const barGroups = chart.selectAll('.bar-group')
 				.attr("transform", function(d) { return "translate(" + x0(d.name || d.jee_id) + ",0)"; });;
 			
