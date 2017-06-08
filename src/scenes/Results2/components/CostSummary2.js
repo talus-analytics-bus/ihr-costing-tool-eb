@@ -308,13 +308,8 @@ export class CostSummary extends Component {
 			var yGroupMax = d3.max(dataColl, function(d) { return d3.max(d.key, function(d) { return d.value; }); });
 			var yStackMax = d3.max(dataColl, function (d) {return d.total;});
 
-			// console.log('yStackMax = ' + yStackMax)
-			// console.log('yGroupMax = ' + yGroupMax)
-			// console.log('y.range = ')
-			// console.log(y.range())
-
 			if (grouped) {
-				y.domain([0, yGroupMax]);
+				y.domain([0, yStackMax]);
 			} else {
 				y.domain([0, yStackMax]);
 			}
@@ -382,19 +377,25 @@ export class CostSummary extends Component {
 				barGroups.selectAll('.bar')
 					.data(function (d) {return d.key;})
 						.transition()
-						.attr('width', bandwidth)
-						.attr('x', function(d){ return x1(d.name)})
-						.attr("y", function(d) { return y(d.value); })
-	       				.attr("height", function(d) { return height - y(d.value); })
+							.duration(500)
+      						.delay(function(d, i) { return i * 10; })
+							.attr('width', bandwidth)
+							.attr('x', function(d){ return x1(d.name)})
+						.transition()
+							.attr("y", function(d) { return y(d.value); })
+	       					.attr("height", function(d) { return height - y(d.value); })
 			} else {
 				var bandwidth = x0.bandwidth();
 				barGroups.selectAll('.bar')
 					.data(function (d) {return d.key;})
 						.transition()
-						.attr('width', bandwidth)
-						.attr('x', function(d){ return x0(d.name)})
-						.attr("y", function (d) {return y(d.y1);})
-						.attr("height", function (d) {return y(d.y0) - y(d.y1);})
+							.duration(500)
+      						.delay(function(d, i) { return i * 10; })
+							.attr("y", function (d) {return y(d.y1);})
+							.attr("height", function (d) {return y(d.y0) - y(d.y1);})
+						.transition()
+							.attr('width', bandwidth)
+							.attr('x', function(d){ return x0(d.name)})
 			}
 
 			// chart.styleChart();
@@ -471,6 +472,12 @@ export class CostSummary extends Component {
 		// }
 
 		chart.update('stacked', true, 1);
+		this.setState({chartType:'grouped'}, () => {
+			setTimeout(function(){
+    			//do what you need here
+				chart.update('grouped', false, 1)
+			}, 1000);
+		});
 
 		return chart;
 	
