@@ -10,7 +10,10 @@ export class CapacityTableHeaderCell extends Component {
 
   render() {
     return (
-      <div className={styles.capacityCell}>
+      <div
+        className={`${styles.capacityCell} ${!this.isActive() ? styles.capacityCellInactive : null}`}
+        onClick={this.props.handleClick}
+      >
         {
           this.isActive() ?
             this.activeText :

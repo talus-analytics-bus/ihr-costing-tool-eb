@@ -47,6 +47,7 @@
   flex: 1;
   border-right: 1px solid gray;
   padding: 5px 15px;
+  transition: all 0.2s;
 
   &:first-child {
     font-weight: 600;
@@ -64,13 +65,15 @@
   align-items: center;
   cursor: pointer;
 
-  &:hover {
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-  }
   p { flex-grow: 1; }
 }
 
 .capacityCellRadio {
   display: flex !important;
   flex-basis: 10%;
+}
+
+.capacityCellInactive {
+  flex: 0 0 50px;
+  box-shadow: 2px 0 5px -1px rgba(0, 0, 0, 0.4);
 }
