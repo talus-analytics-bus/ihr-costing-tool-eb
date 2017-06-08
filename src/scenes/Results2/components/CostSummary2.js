@@ -1,31 +1,30 @@
 import React, { Component } from 'react';
 import * as d3 from "d3";
+import ReactTooltip from 'react-tooltip';
 import DataTables from 'material-ui-datatables';
 import styles from '../Results2.scss';
-
 import {CostChartLegend} from './CostChartLegend2.js';
 import {CostChartOptions} from './CostChartOptions2.js';
-
 import xMarkImage from '../../../images/x.png';
 import { jeeTree } from '../../../data/jeeTree.js'; /* will want to import via api */
 
 const formatMoney = d3.format('$,.0f');
 const categories = [
-	{ name: 'Consumable Materials', color: '#0868ac' },
-	{ name: 'Durable Equipment', color: '#43a2ca' },
-	{ name: 'Human Capabilities', color: '#7bccc4' },
-	{ name: 'Physical Infrastructure', color: '#a8ddb5' },
-	{ name: 'Technology', color: '#ccebc5' },
-	{ name: 'Tools and Processes', color: '#f0f9e8' }
+	{ name: 'Consumable Materials', color: '#d0d1e6' },
+	{ name: 'Durable Equipment', color: '#a6bddb' },
+	{ name: 'Human Capabilities', color: '#67a9cf' },
+	{ name: 'Physical Infrastructure', color: '#3690c0' },
+	{ name: 'Technology', color: '#02818a' },
+	{ name: 'Tools and Processes', color: '#016450' }
 ];
 
 const columns = [
-	{ key: 'core', label: 'Core Capacity', sortable: true },
+	{ key: 'core', label: 'Core Element', sortable: true },
 	{ key: 'capacity', label: 'Capacity', sortable: true },
 	{ key: 'indicator_id', label: 'Indicator', sortable: true },
-	{ key: 'year_1_cost', label: '1-year Cost', sortable: true },
-	{ key: 'year_2_cost', label: '2-year Cost', sortable: true },
-	{ key: 'year_5_cost', label: '5-year Cost', sortable: true },
+	{ key: 'year_1_cost', label: 'First Year Costs', sortable: true },
+	{ key: 'year_2_cost', label: 'Recurring Annual Costs', sortable: true },
+	{ key: 'year_5_cost', label: '5-year Costs', sortable: true },
 ];
 
 const resultsData = [];
@@ -109,43 +108,28 @@ export class CostSummary extends Component {
 
 	// version 2 of cost chart
 	buildCostChart(selector, param={}) {
-		console.log('initializing')
-		//JSON data
-		var data=[{"date":23,"success":10,"failure":20,"exception":4}, {"date":24,"success":30,"failure":10,"exception":3},{"date":25,"success":50,"failure":20,"exception":8},
-		{"date":26,"success":22,"failure":2,"exception":4},{"date":28,"success":32,"failure":8,"exception":2}]
-
 		const catNames = ['Consumable Materials',
 					'Durable Equipment',
 					'Human Capabilities',
 					'Physical Infrastructure',
 					'Technology',
 					'Tools and Processes'];
-		// //array of keys except date
-		// var keys = d3.keys(data[0]).filter(function(key) { return key !== "date"; });
-		// data.forEach(function(d) {
-		//    var y0 = 0;
-		//     d.key = keys.map(function(name) { 
-		//       return {name: name, y0:y0, y1: y0 += +d[name],value: +d[name]}; });
-		//     d.total = d.key[d.key.length - 1].y1;
-		// });
 
 		// Set our margins
 		var margin = {
 		    top: 20,
 		    right: 20,
-		    bottom: 30,
-		    left: 60
+		    bottom: 130,
+		    left: 100
 		};
 		const width = 700 - margin.left - margin.right;
-		const height = 350 - margin.top - margin.bottom;
-		// const yGroupMax = d3.max(data, function(d) { return d3.max(d.key, function(d) { return d.value; }); });
-		// const yStackMax = d3.max(data, function (d) {return d.total;});
+		const height = 500 - margin.top - margin.bottom;
 		const yGroupMax = 10000;
 		const yStackMax = 10000;
 
 		var x0 = d3.scaleBand() // stacked
           .range([0, width])
-          .padding(0.4);
+          .padding(0.2);
 
 		var x1 = d3.scaleBand() // grouped
             .rangeRound([0, x0.bandwidth()]);
@@ -160,8 +144,10 @@ export class CostSummary extends Component {
 			.range([height, 0]);
 			
 		const yAxis = d3.axisLeft()
-			.tickSizeInner(-width)
+			.tickSizeOuter(10)
+			.tickArguments([6])
 			.tickFormat(d3.format('$.2s'))
+			.tickPadding(12)
 			.scale(y);
 
 		// Add our chart to the #chart div
@@ -193,17 +179,19 @@ export class CostSummary extends Component {
 		// add axes labels
 		const xAxisLabel = chart.append('text')
 			.attr('x', width / 2)
-			.attr('y', height + 70)
+			.attr('y', height + 80)
 			.style('text-anchor', 'middle')
-			.style('font-size', '0.9em')
-			.text('Core Capacity');
+			.style('font-weight', 'bold')
+			.style('font-size', '1.5em')
+			.text('Core Element');
 		this.yAxisLabel = chart.append('text')
 			.attr('x', -height / 2)
-			.attr('y', -70)
+			.attr('y', -80)
 			.attr('transform', 'rotate(-90)')
 			.style('text-anchor', 'middle')
-			.style('font-size', '0.9em')
-			.text('1-Year Cost');
+			.style('font-size', '1.5em')
+			.style('font-weight', 'bold')
+			.text('First Year Costs');
 
 		chart.update = (chartType, updateData, multiplier) => {
 			console.log('called chart.update()')
@@ -211,7 +199,7 @@ export class CostSummary extends Component {
 			let chartData;
 			const dataType = this.getDataType();
 			if (!this.state.activeCore) {
-				xAxisLabel.text('Core Capacity');
+				xAxisLabel.text('Core Element');
 				chartData = jeeTree;
 			} else if (!this.state.activeCapacity) {
 				xAxisLabel.text('Capacity');
@@ -316,9 +304,6 @@ export class CostSummary extends Component {
 			yAxis.scale(y);
 			yAxisG.call(yAxis);
 
-			console.log('dataColl:')
-			console.log(dataColl);
-
 			// add or remove bars based on new data
 			var barGroups = chart.selectAll(".bar-group")
 		      .data(dataColl);
@@ -337,7 +322,12 @@ export class CostSummary extends Component {
 						    .attr("x", function(d) { return x0(d.name || d.jee_id); }) // or jee_id!
 						    .attr("y", function (d) {return y(d.y1);})
 						    .attr("height", function (d) {return y(d.y0) - y(d.y1);})
-						    .style("fill", function (d) {return color(d.name);});
+						    .style("fill", function (d) {return color(d.name);})
+						    // .each(function(d) {
+						    // 	var contentStr ='';
+						    // 	contentStr += d.name + ': ' + formatMoney(d.value);
+						    // 	d3.select(this).attr('data-tip',contentStr);
+						    // });
 			} else {
 				var newRect = newBarGroups.selectAll(".bar")
 					.data(function (d) {return d.key;})
@@ -347,9 +337,13 @@ export class CostSummary extends Component {
 					        .attr("x", function(d) { return x1(d.name || d.jee_id); })
 					        .attr("y", function(d) { return y(d.value); })
 					        .attr("height", function(d) { return height - y(d.value); })
-					        .style("fill", function(d) { return color(d.name); });
+					        .style("fill", function(d) { return color(d.name); })
+					   //      .each(function(d) {
+						  //   	var contentStr = '';
+						  //   	contentStr += '<b>${d.name}</b>' + ':<br>' + formatMoney(d.value);
+								// d3.select(this).attr('data-tip',contentStr);
+						  //   });
 			}		
-
 		      newBarGroups.append('text')
 				.attr('class', 'value-label')
 				.style('text-anchor', 'middle')
@@ -384,6 +378,11 @@ export class CostSummary extends Component {
 						.transition()
 							.attr("y", function(d) { return y(d.value); })
 	       					.attr("height", function(d) { return height - y(d.value); })
+	       // 					.each(function(d) {
+						  //   	var contentStr ='';
+						  //   	contentStr += '<b>${d.name}</b>' + ':<br>' + formatMoney(d.value);
+								// d3.select(this).attr('data-tip',contentStr);
+						  //   });
 			} else {
 				var bandwidth = x0.bandwidth();
 				barGroups.selectAll('.bar')
@@ -396,91 +395,50 @@ export class CostSummary extends Component {
 						.transition()
 							.attr('width', bandwidth)
 							.attr('x', function(d){ return x0(d.name)})
+							// .each(function(d) {
+						 //    	var contentStr ='';
+						 //    	contentStr += '<b>${d.name}</b>' + ':<br>' + formatMoney(d.value);
+							// 	d3.select(this).attr('data-tip',contentStr);
+						 //    });
 			}
-
-			// chart.styleChart();
+			barGroups.selectAll('.bar').each(function(d){
+		    	var contentStr ='';
+		    	contentStr += d.name + ': ' + formatMoney(d.value);
+		    	d3.select(this).attr('data-tip',contentStr);
+			});
+			ReactTooltip.rebuild();
+			chart.styleChart(x0);
 		}
 
-		
-									// .attr('width', bandwidth)
-									// .attr("y", function (d) {return y(d.y1);})
-						   //  		.attr("height", function (d) {return y(d.y0) - y(d.y1);})
-
-		// function changed() {
-		//   timeout.stop();
-		//   if (this.value === "grouped") transitionGrouped();
-		//   else transitionStacked();
-		// }
-
-		// function transitionGrouped() {
-		//   y.domain([0, yMax]);
-
-		//   var rect = g.selectAll(".bar-group").selectAll("rect");
-
-		//   rect.transition()
-		//       .duration(500)
-		//       .delay(function(d, i) { return i * 10; })
-		//       .attr("x", function(d, i) { return x(i) + x.bandwidth() / n * this.parentNode.__data__.key; })
-		//       .attr("width", x.bandwidth() / n)
-		//     .transition()
-		//       .attr("y", function(d) { return y(d[1] - d[0]); })
-		//       .attr("height", function(d) { return y(0) - y(d[1] - d[0]); });
-		// }
-
-		// function transitionStacked() {
-		//   y.domain([0, y1Max]);
-
-		//   var rect = g.selectAll(".bar-group").selectAll("rect");
-		//   rect.transition()
-		//       .duration(500)
-		//       .delay(function(d, i) { return i * 10; })
-		//       .attr("y", function(d) { return y(d[1]); })
-		//       .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-		//     .transition()
-		//       .attr("x", function(d, i) { return x(i); })
-		//       .attr("width", x.bandwidth());
-		// }
-
-		// // Returns an array of m psuedorandom, smoothly-varying non-negative numbers.
-		// // Inspired by Lee Byron’s test data generator.
-		// // http://leebyron.com/streamgraph/
-		// function bumps(m) {
-		//   var values = [], i, j, w, x, y, z;
-
-		//   // Initialize with uniform random values in [0.1, 0.2).
-		//   for (i = 0; i < m; ++i) {
-		//     values[i] = 0.1 + 0.1 * Math.random();
-		//   }
-
-		//   // Add five random bumps.
-		//   for (j = 0; j < 5; ++j) {
-		//     x = 1 / (0.1 + Math.random());
-		//     y = 2 * Math.random() - 0.5;
-		//     z = 10 / (0.1 + Math.random());
-		//     for (i = 0; i < m; i++) {
-		//       w = (i / m - y) * z;
-		//       values[i] += x * Math.exp(-w * w);
-		//     }
-		//   }
-
-		//   // Ensure all values are positive.
-		//   for (i = 0; i < m; ++i) {
-		//     values[i] = Math.max(0, values[i]);
-		//   }
-
-		//   return values;
-		// }
+		chart.styleChart = (x0) => {
+			// chart styling
+			const bandwidth = x0.bandwidth();
+			chart.selectAll('.tick text')
+				.style('font-size', '1.5em');
+			chart.selectAll('.tick line')
+				.style('fill', 'none')
+				.style('stroke', 'rgba(0,0,0,1)');
+			chart.selectAll('.axis path, .axis line')
+				.style('fill', 'none')
+				.style('stroke', '#333')
+				.style('shape-rendering', 'crispEdges');
+			chart.selectAll('.x-axis .tick text')
+				.call(wrap, bandwidth);
+			chart.selectAll('.y-axis .tick:nth-child(n+2) line')
+				.style('stroke', '#ccc');
+			// chart.selectAll('.y-axis .tick text')
+			// 	.attr('x', -10);
+		}
 
 		chart.update('stacked', true, 1);
 		this.setState({chartType:'grouped'}, () => {
 			setTimeout(function(){
-    			//do what you need here
 				chart.update('grouped', false, 1)
 			}, 1000);
 		});
 
 		return chart;
-	
+		
 	};
 
 	// buildCostChart(selector, param={}) {
@@ -624,26 +582,7 @@ export class CostSummary extends Component {
 	// 		chart.styleChart();
 	// 	}
 
-	// 	chart.styleChart = () => {
-	// 		// chart styling
-	// 		const bandwidth = x.bandwidth();
-	// 		chart.selectAll('.tick text')
-	// 			.style('font-size', '0.9em');
-	// 		chart.selectAll('.tick line')
-	// 			.style('fill', 'none')
-	// 			.style('stroke', 'rgba(0,0,0,0.3)');
-	// 		chart.selectAll('.axis path, .axis line')
-	// 			.style('fill', 'none')
-	// 			.style('stroke', '#333')
-	// 			.style('shape-rendering', 'crispEdges');
-	// 		chart.selectAll('.x-axis .tick text')
-	// 			.call(wrap, bandwidth);
-	// 		chart.selectAll('.y-axis .tick:nth-child(n+2) line')
-	// 			.style('stroke', '#ccc')
-	// 			.style('stroke-dasharray', '3,3');
-	// 		chart.selectAll('.y-axis .tick text')
-	// 			.attr('x', -10);
-	// 	}
+
 
 	// 	chart.update();
 
@@ -692,7 +631,17 @@ export class CostSummary extends Component {
 	changeCostCategory(event) {
 		event.persist();
 		this.setState({costCategory: event.target.value}, () => {
-			this.yAxisLabel.text(`${event.target.value}-Year Cost`);
+			switch(event.target.value) {
+				case '1':
+					this.yAxisLabel.text('First Year Costs');
+					break;
+				case '2':
+					this.yAxisLabel.text('Recurring Annual Costs');
+					break;
+				case '5':
+					this.yAxisLabel.text('5-year Costs');
+					break;
+			}
 		});
 			this.costChart.update(this.state.chartType, true, parseFloat(event.target.value));
 		// if (event.target.value === "1") 
@@ -728,10 +677,8 @@ export class CostSummary extends Component {
 	render() {
 		return (
 			<div className={styles.costSummaryContainer}>
-				<h2 className={styles.costSummaryTitle}>Cost Summary</h2>
-				<div>
-					<i>Explore the final costs.</i>
-				</div>
+				<h2>Breakdown of implementation costs</h2>
+				<ReactTooltip />
 				<div>
 					<div className={styles.leftColumn}>
 						<div className={styles.tableFilterContainer}>
@@ -739,7 +686,7 @@ export class CostSummary extends Component {
 								Select from the dropdowns below to view costs:
 							</div>
 							<div className={styles.filterBox}>
-								<div className={styles.filterTitle}>Core Capacity:</div>
+								<div className={styles.filterTitle}>Core Element:</div>
 								<select className={styles.filterSelect} value={this.state.activeCore} onChange={(e) => this.changeCore(e)}>
 									<option value="">All</option>
 									<option value="Prevent">Prevent</option>
@@ -790,12 +737,7 @@ export class CostSummary extends Component {
 								: ''
 	}*/}
 						</div>
-					</div>
-					<div className={styles.rightColumn}>
-						<div className={styles.costChartContainer}>
-							<svg className="costChart" width="960" height="500"></svg>
-							<div className={styles.costChartUnderneath}>
-								<CostChartOptions
+						<CostChartOptions 
 									showByCategoryValue={this.state.showByCategory}
 									toggleByCategory={() => this.toggleByCategory()}
 									costCategory={this.state.costCategory}
@@ -803,6 +745,11 @@ export class CostSummary extends Component {
 									changeCostCategory={(e) => this.changeCostCategory(e)}
 									changeChartType={(e) => this.changeChartType(e)}
 								/>
+					</div>
+					<div className={styles.rightColumn}>
+						<div className={styles.costChartContainer}>
+							<svg className="costChart" width="960" height="500"></svg>
+							<div className={styles.costChartUnderneath}>
 								<CostChartLegend categories={categories} />
 							</div>
 						</div>

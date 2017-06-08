@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { App } from './components/results-charts.js';
 // import * as utils from './components/results-charts.js'
 // import App from './components/results-charts.js'
+import { SummaryMetrics } from './components/SummaryMetrics';
 import { CostSummary } from './components/CostSummary2';
 
 // import scss
@@ -11,7 +12,6 @@ export class Results2 extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     App.initBulletChart('.bullet');
-    // App.initBarChart('.barChart');
   };
 
   render() {
@@ -30,7 +30,7 @@ export class Results2 extends Component {
                 </defs>
               </svg>
             </div>
-          <h2>Breakdown of implementation costs</h2>
+            <SummaryMetrics></SummaryMetrics>
           <CostSummary></CostSummary>
       </div>
     )
