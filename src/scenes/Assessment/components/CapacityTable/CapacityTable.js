@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
-
-import Checkbox from 'material-ui/Checkbox';
-import styles from './AssessmentMain.scss';
+import styles from './CapacityTable.scss';
 import { capacityLevels } from '../../Assessment';
+import { CapacityTableHeaderCell } from './CapacityTableHeaderCell';
+import { CapacityTableCell } from './CapacityTableCell';
 
 export class CapacityTable extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeColumn: 0,
+    };
+  }
+
+
   capacityRows = () => {
     const name = (index) => `${capacityLevels[index] === 'None' ? 'No' : capacityLevels[index]} Capacity - ${index + 1}`;
 
@@ -37,6 +46,15 @@ export class CapacityTable extends Component {
     }))
   }
 
+  handleHeaderCellClick = (activeColumn) => this.setState({activeColumn});
+
+  handleCellClick = (row, column) => {
+    this.props.setActiveCapacityLevel(this.props.activeCapacity.indicators[column].jee_id, row);
+    this.setState({
+      activeColumn: column
+    });
+  }
+
   render() {
     return (
       <div className={styles.capacityTableContainer}>
@@ -44,12 +62,15 @@ export class CapacityTable extends Component {
         <div>
           <div className={styles.capacityTable}>
             <div className={styles.capacityRow}>
-              <div className={styles.capacityCell}></div>
+              <CapacityTableHeaderCell/>
               {
-                this.props.activeCapacity.indicators.map((indicator) =>
-                  <div className={styles.capacityCell} key={indicator.jee_id}>
-                    <p>{indicator.name}</p>
-                  </div>
+                this.props.activeCapacity.indicators.map((indicator, index) =>
+                  <CapacityTableHeaderCell
+                    active={this.state.activeColumn === index}
+                    activeText={indicator.name}
+                    inactiveText={indicator.jee_id}
+                    handleClick={() => this.handleHeaderCellClick(index)}
+                  />
                 )
               }
             </div>
@@ -59,17 +80,13 @@ export class CapacityTable extends Component {
                   <div className={styles.capacityCell}><p>{capacityRow.name}</p></div>
                   {
                     capacityRow.values.map((c, cIndex) =>
-                      <div
-                        className={styles.capacityCellWithRadio}
+                      <CapacityTableCell
                         key={cIndex}
-                        onClick={(e) => this.props.setActiveCapacityLevel(this.props.activeCapacity.indicators[cIndex].jee_id, index)}
-                      >
-                        <Checkbox
-                          className={styles.capacityCellRadio}
-                          checked={this.props.activeCapacity.indicators[cIndex].selectedLevel === index}
-                        />
-                        <p>{c}</p>
-                      </div>
+                        active={this.state.activeColumn === cIndex}
+                        checked={this.props.activeCapacity.indicators[cIndex].selectedLevel === index}
+                        handleClick={(e) => this.handleCellClick(index, cIndex)}
+                        text={c}
+                      />
                     )
                   }
                 </div>

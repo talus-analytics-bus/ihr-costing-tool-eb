@@ -4,7 +4,7 @@ import styles from './AssessmentMain.scss';
 import { Link } from 'react-router-dom';
 import { AssessmentBreadcrumbs } from '../AssessmentBreadcrumbs/AssessmentBreadcrumbs';
 import { AssessmentDescription } from './AssessmentDescription';
-import { CapacityTable } from './CapacityTable';
+import { CapacityTable } from '../CapacityTable/CapacityTable';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Costing } from './Costing';
 
