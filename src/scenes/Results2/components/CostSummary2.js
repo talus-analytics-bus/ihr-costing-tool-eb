@@ -106,7 +106,7 @@ export class CostSummary extends Component {
 		return 'expense';
 	}
 
-	// version 2 of cost chart
+	// Build the cost chart
 	buildCostChart(selector, param={}) {
 		const catNames = ['Consumable Materials',
 					'Durable Equipment',
@@ -195,6 +195,8 @@ export class CostSummary extends Component {
 
 		chart.update = (chartType, updateData, multiplier) => {
 			// get data
+			// TODO pull the jeeTree data from the application state, not the static
+			// jeeTree data that is currently being pulled
 			let chartData;
 			const dataType = this.getDataType();
 			if (!this.state.activeCore) {
@@ -219,9 +221,17 @@ export class CostSummary extends Component {
 			// prepare the data
 			// get costs for each expense category
 			// TODO use data from the tool, not fake data
+			// Pseudocode for how real code needs to work:
+			// For each entity in "chartData" (e.g., core element, core capacity, ...):
+				// (1) Calculate the sum of all the selected expenses for that entity by category
+				// (2) Store the costs by category in field 'catCosts' (code block below for structure of catCosts)
+				// (3) Store name or jeed_id of entity (whichever it has) in field 'name' or 'jee_id'
+				// (4) Store total of all the costs for the entity in field 'total'
+				// (5) Push the object storing these data to dataColl
 			var dataColl;
+			var catCostData;
 			if (updateData) {
-				dataColl = [];
+				catCostData = [];
 				chartData.forEach(function(d) {
 					var newObj = {};
 					// fake data generation routine:
@@ -234,14 +244,16 @@ export class CostSummary extends Component {
 					newObj.total = originalCost;
 					if (dataType === 'indicator') newObj.jee_id = d.jee_id;
 					else newObj.name = d.name;
-				   	dataColl.push(newObj)
+				   	catCostData.push(newObj)
 				});
-				var newData = [];
-			   	dataColl.forEach(function(d){
+				dataColl = [];
+			   	catCostData.forEach(function(d){
+					var newObj = {};
+
 					// generate stack bar heights data object
 				   	var y0 = 0;
 				   	
-				    d.key = catNames.map(function(name) { 
+				    newObj.catCosts = catNames.map(function(name) { 
 					      return {
 					      	name: name, 
 					      	y0: y0, 
@@ -249,20 +261,15 @@ export class CostSummary extends Component {
 					      	value: +d[name]
 					      }; 
 					  });
-					var newObj = {};
-					newObj.key = d.key;
 					if (dataType === 'indicator') newObj.jee_id = d.jee_id;
 					else newObj.name = d.name;
 					newObj.total = d.total;
-				    newData.push(newObj);
+				    dataColl.push(newObj);
 			   	});
-
-			   	dataColl = newData;
 			   	this.setState({dataColl: dataColl});
 			} else {
 				dataColl = this.state.dataColl;
 			}
-
 
 			// adjust axes
 			if (dataType === 'indicator') {
@@ -280,7 +287,7 @@ export class CostSummary extends Component {
 			xAxisG.call(xAxis);
 
 			// update y-axis
-			var yGroupMax = d3.max(dataColl, function(d) { return d3.max(d.key, function(d) { return d.value; }); });
+			var yGroupMax = d3.max(dataColl, function(d) { return d3.max(d.catCosts, function(d) { return d.value; }); });
 			var yStackMax = d3.max(dataColl, function (d) {return d.total;});
 
 			if (grouped) {
@@ -302,7 +309,7 @@ export class CostSummary extends Component {
 
 			if (!grouped) {
 				var newRect = newBarGroups.selectAll(".bar")
-					.data(function (d) {return d.key;})
+					.data(function (d) {return d.catCosts;})
 					    .enter().append("rect")
 						    .attr("class", "bar")
 						    .attr("width", x0.bandwidth())
@@ -312,7 +319,7 @@ export class CostSummary extends Component {
 						    .style("fill", function (d) {return color(d.name);})
 			} else {
 				var newRect = newBarGroups.selectAll(".bar")
-					.data(function (d) {return d.key;})
+					.data(function (d) {return d.catCosts;})
 					    .enter().append("rect")
 						    .attr("class", "bar")
 						    .attr("width", x1.bandwidth())
@@ -345,7 +352,7 @@ export class CostSummary extends Component {
 			if (grouped) {
 				var bandwidth = x1.bandwidth();
 				barGroups.selectAll('.bar')
-					.data(function (d) {return d.key;})
+					.data(function (d) {return d.catCosts;})
 						.transition()
 							.duration(500)
       						.delay(function(d, i) { return i * 10; })
@@ -357,7 +364,7 @@ export class CostSummary extends Component {
 			} else {
 				var bandwidth = x0.bandwidth();
 				barGroups.selectAll('.bar')
-					.data(function (d) {return d.key;})
+					.data(function (d) {return d.catCosts;})
 						.transition()
 							.duration(500)
       						.delay(function(d, i) { return i * 10; })
