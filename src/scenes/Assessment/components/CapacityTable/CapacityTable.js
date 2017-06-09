@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from './CapacityTable.scss';
-import { capacityLevels } from '../../Assessment';
+import { levels } from '../../../../lib/capacities';
 import { CapacityTableHeaderCell } from './CapacityTableHeaderCell';
 import { CapacityTableCell } from './CapacityTableCell';
 
@@ -15,7 +15,7 @@ export class CapacityTable extends Component {
 
 
   capacityRows = () => {
-    const name = (index) => `${capacityLevels[index] === 'None' ? 'No' : capacityLevels[index]} Capacity - ${index + 1}`;
+    const name = (index) => `${levels[index] === 'None' ? 'No' : levels[index]} Capacity - ${index + 1}`;
 
     const rows = [
       {
