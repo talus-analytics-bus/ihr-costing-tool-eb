@@ -15,7 +15,7 @@ export class ExpenseRowEdit extends Component {
 
   render = () => {
     return (
-      <Card>
+      <Card className={styles.expenseRowCard}>
         <CardText>
           <div className={styles.expenseRowForm}>
             <div className={styles.expenseRowFormStartup}>
