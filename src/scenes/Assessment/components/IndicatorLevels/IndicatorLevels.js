@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {
-  levels,
+  levels as capacityLevels,
   getSelectedLevelIndex,
   getTargetLevelIndex,
 } from '../../../../lib/capacities';
 import styles from './IndicatorLevels.scss';
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
+import { IndicatorLevel } from './IndicatorLevel';
 
 export class IndicatorLevels extends Component {
   getLevels = () => {
@@ -16,11 +15,11 @@ export class IndicatorLevels extends Component {
 
     return {
       selected: {
-        label: `Current Capacity ${levels[selectedLevelIndex]}`,
+        label: `Current Capacity: ${capacityLevels[selectedLevelIndex]}`,
         index: selectedLevelIndex,
       },
       target: {
-        label: `Target Capacity ${levels[targetLevelIndex]}`,
+        label: `Target Capacity: ${capacityLevels[targetLevelIndex]}`,
         index: targetLevelIndex,
       },
     }
@@ -28,21 +27,18 @@ export class IndicatorLevels extends Component {
 
   render() {
     const levels = this.getLevels();
+    const keys = ['selected', 'target'];
 
     return (
       <div className={styles.indicatorLevels}>
-        <Chip
-          className={styles.indicatorLevel}
-        >
-          <Avatar>{levels.selected.index}</Avatar>
-          {levels.selected.label}
-        </Chip>
-        <Chip
-          className={styles.indicatorLevel}
-        >
-          <Avatar>{levels.target.index}</Avatar>
-          {levels.target.label}
-        </Chip>
+        {
+          keys.map((key) =>
+          <IndicatorLevel
+            key={key}
+            {...levels[key]}
+          />
+          )
+        }
       </div>
     );
   }

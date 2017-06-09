@@ -52,3 +52,11 @@ describe('.getLevels()', () => {
     });
   });
 });
+
+describe('render', () => {
+  it('should render two indicator levels', () => {
+    const expected = 2;
+
+    expect(wrapper.find('IndicatorLevel').length).toEqual(expected);
+  });
+});
