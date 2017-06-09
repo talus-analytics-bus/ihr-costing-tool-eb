@@ -3,6 +3,8 @@ import {Peeper} from "../../../../components/Peeper/Peeper";
 import { ExpenseTable } from './ExpenseTable';
 import { capacityLevels } from '../../Assessment';
 import styles from './AssessmentMain.scss';
+import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 
 export class Costing extends Component {
   constructor(props) {
@@ -47,9 +49,19 @@ export class Costing extends Component {
               show={this.state.peep[indicator.jee_id]}
               togglePeeper={() => this.handlePeep(indicator.jee_id)}
             >
-              <div>
-                <p><b>Current Capacity: </b><strong>{capacityLevels[selectedLevelIndex]} ({selectedLevelIndex + 1})</strong></p>
-                <p><b>Target Capacity: </b><strong>{capacityLevels[targetLevelIndex] || capacityLevels[4]} ({targetLevelIndex + 1})</strong></p>
+              <div className={styles.indicatorLevels}>
+                <Chip
+                  className={styles.indicatorLevel}
+                >
+                  <Avatar>{selectedLevelIndex + 1}</Avatar>
+                  Current Capacity: {capacityLevels[selectedLevelIndex]}
+                </Chip>
+                <Chip
+                  className={styles.indicatorLevel}
+                >
+                  <Avatar>{targetLevelIndex + 1}</Avatar>
+                  Target Capacity: {capacityLevels[targetLevelIndex] || capacityLevels[4]}
+                </Chip>
               </div>
               <div className={styles.expenseTableLabels}>
                 <div className={styles.expenseRowFake}>&nbsp;</div>
