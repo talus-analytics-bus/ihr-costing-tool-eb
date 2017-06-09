@@ -45,7 +45,7 @@ export class CountryPath extends Component {
         className={this.state.styles.join(' ')}
         onMouseOver={this.handleMouseOver}
         onMouseLeave={this.handleMouseLeave}
-        onTouchTap={this.handleTouchTap}
+        onClick={this.handleTouchTap}
       ></path>
     )
   }

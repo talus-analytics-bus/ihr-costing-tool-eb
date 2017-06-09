@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import d3 from 'd3';
+import * as d3 from 'd3';
 import DataTables from 'material-ui-datatables';
 import styles from '../Results.scss';
 
@@ -119,21 +119,20 @@ export class CostSummary extends Component {
 				.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 		// define scales and add axes
-		const x = d3.scale.ordinal()
-			.rangeRoundBands([0, width], 0.4);
-		const xAxis = d3.svg.axis()
-			.orient('bottom');
+		const x = d3.scaleBand()
+			.rangeRound([0, width])
+			.padding(0.4);
+		const xAxis = d3.axisBottom();
 
 		const xAxisG = chart.append('g')
 			.attr('class', 'x-axis axis')
 			.attr('transform', `translate(0, ${height})`);
 
-		const y = d3.scale.linear()
+		const y = d3.scaleLinear()
 			.range([height, 0]);
 			
-		const yAxis = d3.svg.axis()
-			.orient('left')
-			.innerTickSize(-width)
+		const yAxis = d3.axisLeft()
+			.tickSizeInner(-width)
 			.tickFormat(d3.format('$.2s'));
 
 		const yAxisG = chart.append('g')
@@ -221,12 +220,9 @@ export class CostSummary extends Component {
 			yAxisG.call(yAxis);
 
 			// update bar values
-			var bandwidth = x.rangeBand();
+			var bandwidth = x.bandwidth();
 			barGroups.transition()
 				.attr('transform', (d) => {
-					console.log(x.domain())
-					console.log(d.name)
-					console.log(d)
 					if (dataType === 'indicator') return `translate(${x(d.jee_id)}, 0)`;
 					return `translate(${x(d.name)}, 0)`;
 				})
@@ -254,7 +250,7 @@ export class CostSummary extends Component {
 
 		chart.styleChart = () => {
 			// chart styling
-			const bandwidth = x.rangeBand();
+			const bandwidth = x.bandwidth();
 			chart.selectAll('.tick text')
 				.style('font-size', '0.9em');
 			chart.selectAll('.tick line')

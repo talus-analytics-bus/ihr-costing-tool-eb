@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import d3 from 'd3';
+import * as d3 from 'd3';
 import * as topojson from 'topojson';
 import styles from './MapPicker.css';
 import {CountryPath} from "../CountryPath/CountryPath";
@@ -7,13 +7,13 @@ import FlatButton from 'material-ui/FlatButton';
 
 let currentProjection;
 const projection = (width, height) => {
-  return currentProjection = d3.geo.mercator()
+  return currentProjection = d3.geoMercator()
     .scale(120)
     .translate([width / 2, height / 1.5]);
 }
 
 const path = ({width = 0, height = 0}) => {
-  return d3.geo.path()
+  return d3.geoPath()
     .projection(projection(width, height));
 }
 
@@ -80,7 +80,7 @@ export class MapPicker extends Component {
     });
     pathEl = path(dimensions);
 
-    const zoom = d3.behavior.zoom()
+    const zoom = d3.zoom()
       .scaleExtent([1, 8])
       .on('zoom', () => {
         this.setState({
@@ -92,6 +92,8 @@ export class MapPicker extends Component {
   }
 
   selectCountry = (country) => {
+    console.log('clicked');
+    console.log(country);
     this.setState({
       activeCountry: country.ISO_A2,
     });
