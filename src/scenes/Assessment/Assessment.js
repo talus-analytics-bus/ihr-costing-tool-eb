@@ -7,14 +7,6 @@ import { AssessmentMainActive } from './components/AssessmentMain/AssessmentMain
 
 import styles from './Assessment.css';
 
-export const capacityLevels = [
-  'None',
-  'Limited',
-  'Developed',
-  'Demonstrated',
-  'Sustainable',
-]
-
 const geoLevelMapping = (name) => {
   const key = name.split('_').join(' ');
 

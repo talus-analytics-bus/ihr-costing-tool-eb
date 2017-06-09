@@ -1,3 +1,5 @@
+@import "../../../../styles/colors";
+
 /* --- Assessment --- */
 
 .indicatorLabel {
@@ -23,16 +25,16 @@
   border-bottom: 1px solid gray;
 
   &:nth-child(2) .capacityCell:first-child {
-    background-color: #c82127;
+    background-color: $color--danger;
     color: white;
   }
   &:nth-child(3) .capacityCell:first-child,
   &:nth-child(4) .capacityCell:first-child {
-    background-color: #f7ec13;
+    background-color: $color--warning;
   }
   &:nth-child(5) .capacityCell:first-child,
   &:nth-child(6) .capacityCell:first-child {
-    background-color: #156c37;
+    background-color: $color--success;
     color: white;
   }
 }

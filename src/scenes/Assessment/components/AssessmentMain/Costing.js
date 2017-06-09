@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Peeper} from "../../../../components/Peeper/Peeper";
 import { ExpenseTable } from './ExpenseTable';
-import { capacityLevels } from '../../Assessment';
 import styles from './AssessmentMain.scss';
+import { IndicatorLevels } from '../IndicatorLevels/IndicatorLevels';
 
 export class Costing extends Component {
   constructor(props) {
@@ -47,10 +47,9 @@ export class Costing extends Component {
               show={this.state.peep[indicator.jee_id]}
               togglePeeper={() => this.handlePeep(indicator.jee_id)}
             >
-              <div>
-                <p><b>Current Capacity: </b><strong>{capacityLevels[selectedLevelIndex]} ({selectedLevelIndex + 1})</strong></p>
-                <p><b>Target Capacity: </b><strong>{capacityLevels[targetLevelIndex] || capacityLevels[4]} ({targetLevelIndex + 1})</strong></p>
-              </div>
+              <IndicatorLevels
+                indicator={indicator}
+              />
               <div className={styles.expenseTableLabels}>
                 <div className={styles.expenseRowFake}>&nbsp;</div>
                 <div className={styles.expenseRowName}>&nbsp;</div>

@@ -42,6 +42,7 @@
 .expenseRow {
   display: flex;
   flex-direction: column;
+  padding: 5px 0;
 }
 
 .expenseRowSummary {
@@ -49,11 +50,7 @@
   flex-direction: row;
 }
 
-.expenseRowSummary > div {
-  /*align-items: center;*/
-}
-
-.expenseRowSelect, .expenseRowFake {
+.expenseRowFake {
   flex: 1 0 0;
 }
 
@@ -62,7 +59,6 @@
 }
 
 .expenseRowCosts, .expenseRowHeaders {
-  /*overflow-x: scroll;*/
   text-wrap: normal;
   padding: 5px;
   flex: 2 0 0px;
@@ -83,6 +79,10 @@
   text-align: right;
 }
 
+.expenseRowCard {
+  margin-bottom: 10px;
+}
+
 .expenseRowForm {
   display: flex;
   flex-direction: column;
@@ -98,17 +98,21 @@
 .expenseRowFormStartup > div,
 .expenseRowFormRecurring > div {
   min-height: 20px;
-  padding: 10px 5px;
+  padding: 10px 20px;
   display: flex;
-  flex-basis: 0;
-  flex-grow: 1;
+  flex: 0 1 150px;
+}
+
+.expenseRowFormStartup > div:first-child,
+.expenseRowFormRecurring > div:first-child {
+  padding-left: 0;
 }
 
 .expenseRowFormStartup > div:before {
   content: 'x';
   position: relative;
   top: 50%;
-  left: -13%;
+  left: -20px;
 }
 
 .expenseRowFormStartup > div:first-child:before {
@@ -117,7 +121,6 @@
 
 .expenseRowInput {
   display: flex;
-  width: 80% !important;
 }
 
 .expenseTableLabels {
