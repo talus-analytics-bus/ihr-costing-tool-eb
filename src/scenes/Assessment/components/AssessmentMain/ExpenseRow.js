@@ -61,13 +61,13 @@ export class ExpenseRow extends Component {
     return (
       <div className={styles.expenseRow} key={this.props.expense.sophistication_level[0]}>
         <div className={styles.expenseRowSummary}>
-          <div className={styles.expenseRowSelect}>
+          <div className={styles.expenseRowName}>
             <Checkbox
               checked={this.props.expense.selected}
+              label={this.props.expense.sophistication_name}
               onCheck={() => this.props.selectExpense(this.props.expense.expense_id, this.props.expense.sophistication_level[0])}
             />
-          </div>
-          <div className={styles.expenseRowName}>{this.props.expense.sophistication_name}</div>
+            </div>
           <div className={`${styles.expenseRowCosts} ${styles.expenseCurrency}`}>
             {this.formatCurrency(this.getStartup())}
           </div>

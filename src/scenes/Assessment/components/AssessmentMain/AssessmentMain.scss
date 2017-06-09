@@ -50,11 +50,7 @@
   flex-direction: row;
 }
 
-.expenseRowSummary > div {
-  /*align-items: center;*/
-}
-
-.expenseRowSelect, .expenseRowFake {
+.expenseRowFake {
   flex: 1 0 0;
 }
 
@@ -63,7 +59,6 @@
 }
 
 .expenseRowCosts, .expenseRowHeaders {
-  /*overflow-x: scroll;*/
   text-wrap: normal;
   padding: 5px;
   flex: 2 0 0px;
@@ -106,6 +101,11 @@
   padding: 10px 20px;
   display: flex;
   flex: 0 1 150px;
+}
+
+.expenseRowFormStartup > div:first-child,
+.expenseRowFormRecurring > div:first-child {
+  padding-left: 0;
 }
 
 .expenseRowFormStartup > div:before {
