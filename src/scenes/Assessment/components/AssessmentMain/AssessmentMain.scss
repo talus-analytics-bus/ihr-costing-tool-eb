@@ -103,17 +103,16 @@
 .expenseRowFormStartup > div,
 .expenseRowFormRecurring > div {
   min-height: 20px;
-  padding: 10px 5px;
+  padding: 10px 20px;
   display: flex;
-  flex-basis: 0;
-  flex-grow: 1;
+  flex: 0 1 150px;
 }
 
 .expenseRowFormStartup > div:before {
   content: 'x';
   position: relative;
   top: 50%;
-  left: -13%;
+  left: -20px;
 }
 
 .expenseRowFormStartup > div:first-child:before {
@@ -122,7 +121,6 @@
 
 .expenseRowInput {
   display: flex;
-  width: 80% !important;
 }
 
 .expenseTableLabels {
