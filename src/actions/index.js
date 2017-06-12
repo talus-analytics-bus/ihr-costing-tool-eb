@@ -124,10 +124,11 @@ export const goToCapacity = (core, capacity) => ({
   capacity,
 });
 
-export const toggleEditingExpense = (expense_id, sophistication_level) => ({
+export const toggleEditingExpense = (expense_id, sophistication_level, sophistication_name) => ({
   type: TOGGLE_EDITING_EXPENSE,
   expense_id,
   sophistication_level,
+  sophistication_name,
 })
 
 export const updateExpenseValues = (expense_id, sophistication_level, values) => ({

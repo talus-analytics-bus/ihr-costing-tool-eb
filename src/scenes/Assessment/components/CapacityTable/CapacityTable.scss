@@ -49,7 +49,7 @@
   flex: 1;
   border-right: 1px solid gray;
   padding: 5px 15px;
-  transition: all 0.2s;
+  transition: all 0.2s ease-in-out;
 
   &:first-child {
     font-weight: 600;
