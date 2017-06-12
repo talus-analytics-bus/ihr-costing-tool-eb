@@ -48,11 +48,11 @@ export class ExpenseRow extends Component {
 
   cancel = () => {
     this.reset();
-    this.props.toggleEditingExpense(this.props.expense.expense_id, this.props.expense.sophistication_level[0]);
+    this.props.toggleEditingExpense(this.props.expense.expense_id, this.props.expense.sophistication_level[0], this.props.expense.sophistication_name);
   }
 
   save = () => {
-    this.props.changeValues(this.props.expense.expense_id, this.props.expense.sophistication_level[0], this.state);
+    this.props.changeValues(this.props.expense.expense_id, this.props.expense.sophistication_level[0], this.props.expense.sophistication_name, this.state);
   }
 
 
@@ -79,7 +79,7 @@ export class ExpenseRow extends Component {
               this.props.expense.editing ||
                 <RaisedButton
                   label="Edit"
-                  onClick={() => this.props.toggleEditingExpense(this.props.expense.expense_id, this.props.expense.sophistication_level[0])}
+                  onClick={() => this.props.toggleEditingExpense(this.props.expense.expense_id, this.props.expense.sophistication_level[0], this.props.expense.sophistication_name)}
                 />
             }
           </div>

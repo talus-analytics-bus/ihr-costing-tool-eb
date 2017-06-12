@@ -56,23 +56,6 @@ export class Assessment extends Component {
     }
   }
 
-  setDefaults = (expense) => {
-    const geoLevelMapping = (name) => {
-      const key = name.split('_').join(' ');
-
-      return `${key.slice(0, 1).toUpperCase()}${key.slice(1)}`;
-    }
-
-    /*return {
-      ...expense,
-      multiplier_staff: this.props.advanced.staff.epi_count.value || this.props.advanced.staff.chw_count,
-      multiplier_health_capacity: this.props.advanced.hospitals[expense.multiplier_area ? expense.multiplier_area.split('_').join('') : 'chc'].value,
-      multiplier_population: this.props.population.value,
-      multiplier_area_name: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].name.toLowerCase(),
-      multiplier_area_value: this.props.geo_levels[geoLevelMapping(expense.multiplier_area)].value,
-    }*/
-  }
-
   getValues = (expense) => ({
     cost: this.getMultiplier('cost', expense),
     duration: expense.cost_duration || 0,

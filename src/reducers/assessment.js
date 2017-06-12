@@ -264,7 +264,9 @@ export const assessmentReducer = (state = initialState, action) => {
               ...indicator,
               expenses: indicator.expenses.map((expense) => ({
                 ...expense,
-                editing: expense.expense_id === action.expense_id && expense.sophistication_level.includes(action.sophistication_level) ? !expense.editing : expense.editing,
+                editing: expense.expense_id === action.expense_id
+                && expense.sophistication_level.includes(action.sophistication_level)
+                && expense.sophistication_name === action.sophistication_name ? !expense.editing : expense.editing,
               }))
             }))
           }))
