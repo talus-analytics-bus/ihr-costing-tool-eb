@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import styles from './App.scss';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -13,18 +13,17 @@ import {
 import globeIcon from './images/globe.png';
 import georgetownLogo from './images/georgetown_wide.png';
 import talusLogo from './images/talus.png';
-import { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
+import {Breadcrumbs} from './components/Breadcrumbs/Breadcrumbs';
 
-import { Home } from './scenes/Home/Home';
-import { Instructions } from './scenes/Instructions/Instructions';
-import { IdentificationActive } from './scenes/Identification/IdentificationActive';
-import { Upload } from './scenes/Upload/Upload';
-import { Start } from './scenes/Start/Start';
-import { AssessmentActive } from './scenes/Assessment/AssessmentActive';
-import { Costing } from './scenes/Costing/Costing';
-// import { Results } from './scenes/Results/Results';
-import { Results2 } from './scenes/Results2/Results2';
-import { Directory } from './scenes/Directory/Directory';
+import {Home} from './scenes/Home/Home';
+import {Instructions} from './scenes/Instructions/Instructions';
+import {IdentificationActive} from './scenes/Identification/IdentificationActive';
+import {Upload} from './scenes/Upload/Upload';
+import {Start} from './scenes/Start/Start';
+import {AssessmentActive} from './scenes/Assessment/AssessmentActive';
+import {Costing} from './scenes/Costing/Costing';
+import {Results2} from './scenes/Results2/Results2';
+import {Directory} from './scenes/Directory/Directory';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -38,12 +37,12 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Router onUpdate={() => window.scrollTo(0, 0)}>
           <div className={styles.container}>
-			  <Toolbar className={styles.header}>
-				  <img
+            <Toolbar className={styles.header}>
+              <img
                 alt={'Globe'}
                 className={styles.logo}
                 src={globeIcon}
-				  />
+              />
               <div className={styles.toolbarTitle}>
                 {<Link to="/">IHR Costing Tool</Link>}
               </div>
@@ -61,32 +60,34 @@ class App extends Component {
               <Route path="/directory" component={Directory}></Route>
             </div>
             <div className={styles.footer}>
-				<table>
-					<tr>
-					<th>
-						<a href="https://www.georgetown.edu/" target="_blank">
-						<img
-						  alt={'Georgetown University'}
-						  className={styles.georgetownLogo}
-						  src={georgetownLogo}
-						/>
-					  </a>
-					</th>
-					<th>
-						<span className={styles.builtBy}>Built by</span>
-					</th>
-					<th>
-						<a href="http://www.talusanalytics.com" target="_blank">
-						<img
-						  alt={'Talus Analytics'}
-						  className={styles.talusLogo}
-						  src={talusLogo}
-						/>
-					  </a>
-					</th>
-					</tr>
-				</table>
-			</div>
+              <table>
+                <tbody>
+                <tr>
+                  <th>
+                    <a href="https://www.georgetown.edu/" target="_blank">
+                      <img
+                        alt={'Georgetown University'}
+                        className={styles.georgetownLogo}
+                        src={georgetownLogo}
+                      />
+                    </a>
+                  </th>
+                  <th>
+                    <span className={styles.builtBy}>Built by</span>
+                  </th>
+                  <th>
+                    <a href="http://www.talusanalytics.com" target="_blank">
+                      <img
+                        alt={'Talus Analytics'}
+                        className={styles.talusLogo}
+                        src={talusLogo}
+                      />
+                    </a>
+                  </th>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </Router>
       </MuiThemeProvider>

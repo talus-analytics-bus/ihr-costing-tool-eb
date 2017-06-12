@@ -5,9 +5,8 @@ import styles from './MapPicker.css';
 import {CountryPath} from "../CountryPath/CountryPath";
 import FlatButton from 'material-ui/FlatButton';
 
-let currentProjection;
 const projection = (width, height) => {
-  return currentProjection = d3.geoMercator()
+  return d3.geoMercator()
     .scale(120)
     .translate([width / 2, height / 1.5]);
 }

@@ -66,6 +66,7 @@ export class CapacityTable extends Component {
               {
                 this.props.activeCapacity.indicators.map((indicator, index) =>
                   <CapacityTableHeaderCell
+                    key={index}
                     active={this.state.activeColumn === index}
                     activeText={indicator.name}
                     inactiveText={indicator.jee_id}
