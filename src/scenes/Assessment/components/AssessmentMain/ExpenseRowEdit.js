@@ -6,11 +6,26 @@ import Popover from 'material-ui/Popover';
 import styles from './AssessmentMain.scss';
 
 export class ExpenseRowEdit extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      anchorEl: {}
+    };
+  }
+
   nullHintText = (value) => {
     if (value) {
       return '';
     }
     return 'n/a';
+  }
+
+  handleSource = (event) => {
+    this.setState({
+      anchorEl: event.currentTarget
+    });
+    this.props.handleSource(event);
   }
 
   render = () => {
@@ -115,10 +130,15 @@ export class ExpenseRowEdit extends Component {
           />
           <RaisedButton
             label="View sources"
+            disabled={!this.props.expense.sources}
+            onClick={this.handleSource}
           />
           <Popover
+            anchorEl={this.state.anchorEl}
+            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
             open={this.props.currentState.sourceOpen}
-            onClick={this.props.handleSource}
+            onRequestClose={this.handleSource}
           >
             <Card>
               <CardText>
