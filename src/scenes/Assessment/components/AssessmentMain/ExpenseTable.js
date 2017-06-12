@@ -4,15 +4,20 @@ import styles from './AssessmentMain.scss';
 import {ExpenseRowActive} from './ExpenseRowActive';
 
 export class ExpenseTable extends Component {
-  categories = () => [...new Set(this.props.expenses.map((expense) => expense.category))]
+  // get unique expense id's and set this as expense groups
+  expenseGroups = () => [...new Set(this.props.expenses.map((expense) => ({
+    id: expense.expense_id,
+    name: expense.name,
+  })))];
 
-  expensesInCategory = (expenses, category) => expenses
+  // filters expenses by expense group
+  expensesInGroup = (expenses, group) => expenses
     .filter((expense) => {
       const countryHasNoIntermediate2 = this.props.geoLevels["Level 3"].name === null;
       const expenseIsIntermediate2 = expense.multiplier_area === "level_3";
       const expenseIsApplicable = !countryHasNoIntermediate2 || !expenseIsIntermediate2;
-      const inCategory = expense.category === category;
-      const showExpense = inCategory && expenseIsApplicable;
+      const inGroup = expense.expense_id === group;
+      const showExpense = inGroup && expenseIsApplicable;
 
       return showExpense;
     });
@@ -21,13 +26,13 @@ export class ExpenseTable extends Component {
     return (
       <div className={styles.expenseTable}>
         {
-          this.categories().map((category) =>
-            <div key={category}>
+          this.expenseGroups().map((group) =>
+            <div key={group.id}>
               <p>
-                {category}
+                {group.name}
               </p>
               {
-                this.expensesInCategory(this.props.expenses, category)
+                this.expensesInGroup(this.props.expenses, group.id)
                   .map((expense, index) =>
                     <ExpenseRowActive expense={expense} activeCurrency={this.props.activeCurrency} key={index}/>
                   )
