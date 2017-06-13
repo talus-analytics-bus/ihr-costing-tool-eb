@@ -5,10 +5,21 @@ import {ExpenseRowActive} from './ExpenseRowActive';
 
 export class ExpenseTable extends Component {
   // get unique expense id's and set this as expense groups
-  expenseGroups = () => [...new Set(this.props.expenses.map((expense) => ({
-    id: expense.expense_id,
-    name: expense.name,
-  })))];
+  expenseGroups = () => {
+    return this.props.expenses.reduce((acc, expense) => {
+      if (!acc.unique.hasOwnProperty(expense.expense_id)) {
+        acc.unique[expense.expense_id] = true;
+        acc.expenses = acc.expenses.concat([{
+          id: expense.expense_id,
+          name: expense.name,
+        }]);
+      }
+      return acc;
+    }, {
+      unique: {}, // this keeps track of the unique id's
+      expenses: [], // this is the list of expenses
+    }).expenses;
+  }
 
   // filters expenses by expense group
   expensesInGroup = (expenses, group) => expenses
