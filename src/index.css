@@ -5,8 +5,7 @@ html, body {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
-
+  font-family: Georgia, serif;
 }
 
 body > div {
@@ -14,4 +13,41 @@ body > div {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+h1 {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #AA0000;
+  display: block;
+  font-size: 2em;
+  -webkit-margin-before: 0.67em;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: Helvetica, Arial, sans-serif;
+  display: block;
+  font-size: 1.5em;
+  -webkit-margin-before: 0.83em;
+  -webkit-margin-after: 0.83em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+}
+
+button {
+  font-family: Helvetica, Arial, sans-serif !important;
 }
