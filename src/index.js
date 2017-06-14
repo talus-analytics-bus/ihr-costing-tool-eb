@@ -7,6 +7,9 @@ import { ihrApp } from './reducers';
 import './index.css';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
+process.env.BABEL_ENV = 'development';
+
 injectTapEventPlugin();
 
 let store = createStore(
