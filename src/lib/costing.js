@@ -41,7 +41,7 @@ export const getConvertedCost = (cost, currency) => {
   const exchange_rates = currency.details.exchange_rates || [];
 
   if (exchange_rates.length > 0) {
-    return cost * exchange_rates[0].multiplier;
+    return (cost * exchange_rates[0].multiplier).toFixed(2);
   }
-  return cost;
+  return cost.toFixed(2);
 }

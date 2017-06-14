@@ -1,5 +1,6 @@
 import {
-  getCost
+  getCost,
+  getConvertedCost,
 } from './costing';
 
 describe('.getCost()', () => {
@@ -23,4 +24,20 @@ describe('.getCost()', () => {
     expect(getCost(state)).toEqual(expected);
   });
 
+});
+
+describe('.getConvertedCost', () => {
+  it('should return converted cost in two decimal places', () => {
+    const cost = 123;
+    const currency = {
+      details: {
+        exchange_rates: [
+          {multiplier: 0.122}
+        ]
+      }
+    };
+    const expected = 15.01;
+
+    expect(getConvertedCost(cost, currency)).toEqual(expected.toString());
+  });
 });

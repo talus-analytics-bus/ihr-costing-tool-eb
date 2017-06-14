@@ -7,7 +7,7 @@ import xMarkImage from '../../../../images/x.png';
 import checkMarkImage from '../../../../images/check.png';
 import arrowImage from '../../../../images/chevron_right.png';
 
-import styles from './TableOfContents.css';
+import styles from './TableOfContents.scss';
 
 class Capacity extends Component {
   isCurrent = () => this.props.active.capacity === this.props.capacityIndex && this.props.active.core === this.props.coreIndex;
