@@ -55,6 +55,14 @@ export class CapacityTable extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.activeCapacity) {
+      this.setState({
+        activeColumn: 0
+      });
+    }
+  }
+
   render() {
     return (
       <div className={styles.capacityTableContainer}>
